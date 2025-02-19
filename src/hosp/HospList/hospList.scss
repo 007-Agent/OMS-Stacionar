@@ -1,0 +1,74 @@
+.list__chabge {
+  width: 420px;
+  margin: 8px 0px 0px 8px;
+  border-radius: 8px;
+  padding: 8px;
+  border: 3px solid rgba(108, 167, 176, 0.5);
+
+  cursor: pointer;
+  //   div {
+  //     width: 420px;
+  //     margin: 8px 0px 0px 8px;
+  //     border-radius: 8px;
+  //     padding: 8px;
+  //     border: 3px solid rgba(108, 167, 176, 0.5);
+  //     cursor: pointer;
+  //   }
+  h3 {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 8px 0px;
+    color: rgb(108, 167, 176);
+    font-size: 24px;
+  }
+  .list__fio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 8px 0px;
+    color: rgb(108, 167, 176);
+    font-size: 24px;
+    span {
+      display: flex;
+      justify-content: center;
+      color: rgb(0, 0, 0);
+      font-size: 24px;
+    }
+    h2 {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      color: rgb(0, 0, 0);
+
+      font-size: 24px;
+    }
+  }
+  .list__meet {
+    display: flex;
+    justify-content: center;
+    margin: 8px 8px 0px;
+    color: rgb(108, 167, 176);
+
+    font-size: 18px;
+  }
+  p {
+    display: flex;
+    justify-content: center;
+    margin: 8px 8px 0px;
+    color: rgb(108, 167, 176);
+
+    font-size: 18px;
+  }
+}
+.list__content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  max-height: 750px; /* Установите максимальную высоту */
+  overflow-y: auto; /* Включите вертикальную прокрутку */
+  border: 1px solid #ccc; /* Опционально: добавьте границу */
+  padding: 10px; /* Опционально: добавьте отступы */
+  border-top: none;
+  border-left: none;
+}

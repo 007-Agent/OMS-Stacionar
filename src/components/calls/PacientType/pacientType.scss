@@ -1,0 +1,55 @@
+.pacient__info {
+  color: rgb(108, 167, 176);
+  font-family: Arial;
+  font-size: 24px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  margin-bottom: 70px;
+  .icon__type {
+    width: 45px;
+    height: 45px;
+    color: rgb(108, 167, 176);
+    flex-shrink: 0;
+    flex-grow: 0;
+    text-align: right;
+    cursor: pointer;
+    margin: 0px 0px 0px 4px;
+  }
+  h3 {
+    box-sizing: border-box;
+    cursor: default;
+    padding: 4px 8px 0px 0px;
+    border: none;
+    color: rgb(108, 167, 176);
+    outline: none;
+    text-align: left;
+    font-family: Arial;
+    font-size: 24px;
+  }
+  input {
+    box-sizing: border-box;
+    flex: 1 0 0%;
+    outline: none;
+    // white-space: nowrap;
+    // overflow: hidden;
+    min-height: 36px;
+    padding: 4px 4px 2px;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    color: rgb(0, 0, 0);
+    text-align: left;
+
+    font-size: 24px;
+  }
+  .pacient__panel {
+    outline: none;
+    user-select: none;
+    box-sizing: border-box;
+    
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+  }
+}

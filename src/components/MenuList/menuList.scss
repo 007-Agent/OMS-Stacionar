@@ -2,11 +2,11 @@
   height: 100%;
   width: 300px;
   position: fixed;
-  z-index: 20;
-  top: 0px;
-  left: 0px;
+  z-index: 1000;
+  top: 0;
+  left: -100%;
   overflow-x: hidden;
-  transition: 0.5s;
+  transition: left 0.5s;
   background-color: rgb(209, 214, 220);
   padding-top: 60px;
   border-top: none;
@@ -15,9 +15,19 @@
   border-left: none;
   border-image: initial;
   .menu__wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     text-align: center;
+    .menu__close {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      color: rgba(108, 167, 176, 0.5);
+      top: -45px;
+      right: 10px;
+    }
     ul {
       text-align: left;
       padding: 0px 16px;
@@ -33,4 +43,7 @@
       }
     }
   }
+}
+.menu__content.open {
+  left: 0;
 }
