@@ -1,0 +1,36 @@
+.menu__content {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 20;
+  top: 0px;
+  left: 0px;
+  overflow-x: hidden;
+  transition: 0.5s;
+  background-color: rgb(209, 214, 220);
+  padding-top: 60px;
+  border-top: none;
+  border-right: 1px solid rgba(108, 167, 176, 0.5);
+  border-bottom: none;
+  border-left: none;
+  border-image: initial;
+  .menu__wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    ul {
+      text-align: left;
+      padding: 0px 16px;
+      li {
+        display: block;
+        text-decoration: none;
+        transition: 0.3s;
+        cursor: pointer;
+        font-family: Arial;
+        font-size: 24px;
+        padding: 8px 8px 8px 32px;
+        color: rgb(0, 0, 0);
+      }
+    }
+  }
+}
