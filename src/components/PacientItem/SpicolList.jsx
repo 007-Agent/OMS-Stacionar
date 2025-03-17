@@ -7,7 +7,7 @@ export const SpicolList = () => {
       <div className="spisok__container">
         <div className="spisok__wrapper">
           <ul className="spisok__list">
-            <div className="spicok__info">
+            <div >
               <h3>85243А</h3>
               <h2>Сычёв Александр</h2>
               <p>Повторное обследование ....</p>

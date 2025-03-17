@@ -1,311 +1,41 @@
 import React from "react";
 import "./hospList.scss";
-export const HospList = () => {
+// import { Link } from 'react-router-dom'
+
+function HospList(props) {
+  // простая наычальная карта с главными данными о пациенте!
+  const info = props.info || {};
+
+  // const onClick = event => {
+
+  //   props.onClick(event.index) // Передаем индекс
+  //   props.onFrame(event.index) // Передаем индекс
+  // }
+
+  // const onClick = () => {
+  //   props.onClick({ index: props.index })
+  // }
+  // let dateIn = new Date(info.dateIn)
+  // let dateOut = new Date(info.to)
+
   return (
-    <>
-      <div>
-        <div style={{ textAlign: "center" }}>
-          <div className="list__content">
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
-            <ul className="list__chabge">
-              <div>
-                <h3>C132-21</h3>
-                <div className="list__fio">
-                  <span>П7459</span>
-                  <h2>Сычёв Александр Николаевич</h2>
-                </div>
-                <div className="list__meet">7 лет 11 мес.</div>
-                <p>Повторное обследование ....</p>
-              </div>
-            </ul>
+    <div>
+      <ul className="">
+        <div className="list__chabge">
+          <h3>{info.ward}</h3>
+          <div className="list__fio">
+            <span>{info.nib}</span>
+            <h2>{info.fio}</h2>
           </div>
+          <div className="list__meet">{info.age}</div>
+          <p className="list__meet">
+            {" "}
+            Пребывание с {info.dateIn} по {info.to}
+          </p>
         </div>
-      </div>
-    </>
+      </ul>
+    </div>
   );
-};
+}
+
+export default HospList;

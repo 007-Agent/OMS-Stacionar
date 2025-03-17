@@ -2,10 +2,15 @@ import React from "react";
 import "./menuList.scss";
 import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
-
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/authSlice";
 export const MenuList = ({ onClose, menu }) => {
+  const dispatch = useDispatch();
   const handleLinkClick = () => {
     onClose(); // Закрываем меню при клике на ссылку
+  };
+  const handleExitUser = () => {
+    dispatch(logoutUser());
   };
   return (
     <div className={`menu__content ${menu ? "open" : ""}`}>
@@ -28,9 +33,7 @@ export const MenuList = ({ onClose, menu }) => {
             </Link>
           </li>
           <li>
-            <Link to="/exit" onClick={handleLinkClick}>
-              Выход
-            </Link>
+            <button onClick={handleExitUser}>Выход</button>
           </li>
         </ul>
       </div>

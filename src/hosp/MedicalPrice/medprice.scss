@@ -1,0 +1,49 @@
+.list__medform {
+  display: flex;
+  justify-content: center; /* Убедитесь, что это значение вам действительно нужно */
+  gap: 0 50px;
+  list-style-type: none;
+  color: rgb(108, 167, 176);
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+.medical__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 50px;
+}
+.med__main {
+  position: relative;
+  .medic__icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    float: left;
+    color: rgb(108, 167, 176);
+    right: 150px;
+    top: -9px;
+  }
+  .select__type {
+    box-sizing: border-box;
+    flex: 1 0 0%;
+    outline: none;
+    white-space: nowrap;
+    overflow: hidden;
+    min-height: 36px;
+    padding: 4px 4px 2px;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    color: rgb(0, 0, 0);
+    text-align: left;
+    cursor: pointer;
+    font-size: 24px;
+    max-width: 400px;
+    option {
+      background: rgb(206 214 215 / 50%);
+      padding: 8px;
+      color: black;
+    }
+  }
+}

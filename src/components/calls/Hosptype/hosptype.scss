@@ -8,6 +8,7 @@
   height: 40px;
   display: flex;
   margin-bottom: 70px;
+
   input {
     box-sizing: border-box;
     flex: 1 0 0%;
@@ -19,7 +20,7 @@
     border: 1px solid rgba(108, 167, 176, 0.5);
     color: rgb(0, 0, 0);
     text-align: left;
-
+    cursor: pointer;
     font-size: 24px;
   }
   h3 {
@@ -38,4 +39,23 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   width: 100%;
+}
+.select__type {
+  box-sizing: border-box;
+  flex: 1 0 0%;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 36px;
+  padding: 4px 4px 2px;
+  border: 1px solid rgba(108, 167, 176, 0.5);
+  color: rgb(0, 0, 0);
+  text-align: left;
+  cursor: pointer;
+  font-size: 24px;
+  option {
+    background: rgb(206 214 215 / 50%);
+    padding: 8px;
+    color: black;
+  }
 }
