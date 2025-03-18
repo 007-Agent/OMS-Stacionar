@@ -32,8 +32,10 @@ function MedicalPrice(props) {
     try {
       const response = await axios.post("/rest/hosp/full", query);
       setInfo(response.data.data); // Предполагаем, что данные находятся в response.data
+      
     } catch (err) {
       console.error("Ошибка при выполнении запроса:", err);
+      
     }
   };
   const handleMenuShow = (event) => {
@@ -70,7 +72,8 @@ function MedicalPrice(props) {
       console.error("ID не найден");
     }
   }, [id]); // Зависимость от id, чтобы выполнять запрос при его изменении
-
+  console.log(info.records, "fjfweiofhweiohfwefhwe");
+  console.log(info, "ddddddddddd");
   return (
     <>
       <div className="med__main">

@@ -4,7 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { Record } from "../../../components/Record/Record";
 
 export const DiaryEntry = (props) => {
-  const [records, setRecords] = useState([props.data]);
+  const [records, setRecords] = useState(props.data);
   console.log(props.user);
   console.log(props.data, "RECORDSSS");
 
@@ -21,7 +21,10 @@ export const DiaryEntry = (props) => {
   // };
   const addRecord = () => {
     const newData = props.data;
-
+    if (!Array.isArray(newData)) {
+      console.error("props.data is not an array or is undefined");
+      return; // Выход из функции, если newData не массив
+    }
     console.log(newData);
     const found = newData.find((v) => v.data?.list);
 
@@ -44,6 +47,33 @@ export const DiaryEntry = (props) => {
       console.log(records, "records");
     }
   };
+
+  const content = props.data
+    ? props.data.reduce((acc, cur) => {
+        console.log(props.data, "state data");
+        if (cur.data && Array.isArray(cur.data.list)) {
+          // Проверка на наличие и массив
+          console.log(cur.data, "CURDATA");
+          cur.data.list.forEach((v) => {
+            const value = cur;
+            console.log(value, "VALUE DIARY");
+            console.log(v, "V");
+            acc.push(
+              <Record
+                key={v.key} // ключ передаём записи
+                name={props.name} // имя передаём
+                project={props.project}
+                user={props.user}
+                value={value}
+                textValue={v} // передали пользователя действующего
+              />
+            );
+          });
+        }
+        return acc; // Не забываем возвращать аккумулятор
+      }, [])
+    : null;
+
   return (
     <div className="diary__main">
       <div>
@@ -51,15 +81,16 @@ export const DiaryEntry = (props) => {
         <div className="diary__table">
           <CiCirclePlus className="diary__plus" onClick={addRecord} />
           <div className="diary__list">
-            {/* {records.map((record) => (
+            {/* {records.map((record, i) => (
               <Record
-                key={record.id}
+                key={record.key}
                 user={props.user}
                 project={props.project}
                 name={props.name}
                 data={props.data}
-              /> 
+              />
             ))} */}
+            {content}
           </div>
         </div>
       </div>
