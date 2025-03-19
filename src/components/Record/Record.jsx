@@ -1,23 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./record.scss";
 
 import axios from "axios";
 
 export const Record = (props) => {
-  const value = props.value.data.list;
-  // props.value;
+  const value = props.value;
+  const obj = JSON.parse(props.value?.data?.list?.[0]?.name);
+
+  console.log(obj.text, "OOOBBBBJECT");
   console.log(value, "ЧТО ТАКОЕ ЭТО");
-  const textVal = props.textValue.name;
-  const recordText = JSON.stringify(textVal); // Преобразуем строку в объект
-  const initialText = recordText.text; // Получаем начальное значение текста
+  const title = obj.text;
+  console.log(props.user.name, "POLZOVATEL");
+  // Преобразуем строку в объект
+  const initialText = title; // Получаем начальное значение текста
   const [text, setText] = useState(initialText);
   const [result, setResult] = useState(props.value);
+  const [debouncedText, setDebouncedText] = useState(text);
   console.log(result);
+  // console.log(parsedName, "НУЖЕН ОБЪЕКТ");
   // Получаем начальное значение текста
 
   // const [record, setRecord] = useState(value);
   const now = new Date();
-
   const strDate = (date) => {
     return `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}.${date.getFullYear()}`;
   };
@@ -25,10 +29,10 @@ export const Record = (props) => {
   const cutTime = (date) => {
     return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
   };
-
   const formattedDate = `${String(now.getDate()).padStart(2, "0")}.${String(now.getMonth() + 1).padStart(2, "0")}.${now.getFullYear()} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
 
   // const recordData = JSON.parse(value.name); // Здесь вы преобразуете строку в объект
+
   // const textValue = recordData.text;
   // console.log(textValue);
 
@@ -56,6 +60,38 @@ export const Record = (props) => {
 
   //   // Обновляем состояние record
   // };
+
+  // Таймер для дебаунса
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedText(text);
+    }, 2000); // Задержка в 300 мс (можно настроить по вашему усмотрению)
+
+    // Очистка таймера при изменении текста
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [text]);
+
+  // function toObj(json) {
+  //   if (!json) return {}
+  //   const obj = JSON.parse(json)
+  //   return 'string' === typeof obj ? JSON.parse(obj) : obj
+  // }
+  // function getObj() {
+  //   return toObj(this.state.value?.data?.list?.[0]?.name) || {}
+  // }
+
+  // function getKey() {
+  //   return this.state.value?.data?.list?.[0]?.key
+  // }
+
+  // function getText() {
+  //   const obj = this.getObj()
+  //   const text = obj?.text
+  //   return text && text.length ? text : null
+  // }
+
   const handleChange = (event) => {
     const newText = event.target.value;
     setText(newText);
@@ -64,7 +100,7 @@ export const Record = (props) => {
   const handleSubmit = () => {
     const current = new Date();
     // const user = { id: props.userId, name: props.userName };
-    const values = props.value;
+    const values = value;
     console.log(values.data.list[0]);
     const obj = JSON.stringify(values.data.list[0].name);
     console.log(obj, "IBJ");
@@ -103,9 +139,10 @@ export const Record = (props) => {
         <div className="record__date">
           <div className="record__date">
             <h3>Дата: </h3>
-            <span>{formattedDate}</span>
+            <span>{obj.date}</span>
+            <span>{obj.time}</span>
           </div>
-          <p>effrff</p>
+          <p>{props.user.name}</p>
         </div>
         <textarea
           // value={initialText ? initialText : text}
