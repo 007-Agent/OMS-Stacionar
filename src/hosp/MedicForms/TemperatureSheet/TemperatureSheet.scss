@@ -1,0 +1,55 @@
+.temp__main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  h2 {
+    display: flex;
+
+    justify-content: center;
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 30px;
+    margin-bottom: 50px;
+  }
+  .diary__tltle {
+    display: flex;
+    justify-content: center;
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 30px;
+    margin-bottom: 50px ;
+    @media (max-width: 800px) {
+      text-align: center;
+    }
+  }
+}
+
+.diary__table {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+  padding: 16px;
+  border: 1px solid rgb(108, 167, 176);
+  flex: 1 1 0%;
+  border-radius: 8px;
+  min-height: 50px;
+
+  .diary__plus {
+    display: flex;
+    justify-content: right;
+    width: 35px;
+    height: 35px;
+    color: rgb(108, 167, 176);
+    cursor: pointer;
+    right: 10px;
+  }
+  .diary__list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px 0;
+  }
+}

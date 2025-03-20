@@ -1,0 +1,132 @@
+.content {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0px 0px;
+  .row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0px 0px;
+  }
+  .thead {
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 16px;
+    td {
+      text-align: center;
+      border: 1px solid rgb(108, 167, 176);
+      padding: 4px 0px;
+      font-weight: bold;
+    }
+  }
+  .tbody {
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 18px;
+    input {
+      box-sizing: border-box;
+      flex: 1 0 0%;
+      outline: none;
+      white-space: nowrap;
+      overflow: hidden;
+      min-height: 28px;
+      padding: 4px 4px 2px;
+      border: none;
+      color: rgb(0, 0, 0);
+      text-align: center;
+      font-family: Arial;
+      font-size: 20px;
+      width: 128px;
+    }
+    td {
+      text-align: center;
+      border: 1px solid rgb(108, 167, 176);
+      padding: 4px 0px;
+      font-weight: bold;
+    }
+  }
+  .table_button {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0px 0px;
+    margin-bottom: 20px;
+    .body_button {
+      color: rgb(108, 167, 176);
+      font-family: Arial;
+      font-size: 16px;
+      input {
+        box-sizing: border-box;
+        flex: 1 0 0%;
+        outline: none;
+        white-space: nowrap;
+        overflow: hidden;
+        min-height: 28px;
+        padding: 4px 4px 2px;
+        border: none;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        font-family: Arial;
+        font-size: 20px;
+        width: 80px;
+      }
+      td {
+        text-align: center;
+        border: 1px solid rgb(108, 167, 176);
+        padding: 4px 0px;
+      }
+    }
+
+    .head_button {
+      color: rgb(108, 167, 176);
+      font-family: Arial;
+      font-size: 16px;
+      td {
+        text-align: center;
+        border: 1px solid rgb(0, 0, 0);
+        padding: 4px 0px;
+        font-weight: bold;
+      }
+    }
+  }
+  .click__save {
+    background-color: #4caf50; /* Зеленый фон */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Отступы */
+    border: none; /* Без границы */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+    font-size: 16px; /* Размер шрифта */
+    transition:
+      background-color 0.3s,
+      transform 0.2s;
+  }
+  .click__exit {
+    background-color: #f70000; /* Зеленый фон */
+    color: white; /* Белый текст */
+    padding: 10px 20px; /* Отступы */
+    border: none; /* Без границы */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Указатель при наведении */
+    font-size: 16px; /* Размер шрифта */
+    transition:
+      background-color 0.3s,
+      transform 0.2s;
+  }
+  .button__list {
+    display: flex;
+    padding-left: 83px;
+    gap: 0 30px;
+  }
+}
+@media (max-width: 800px) {
+  input {
+    width: 80px;
+  }
+}

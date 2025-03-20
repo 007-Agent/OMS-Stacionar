@@ -16,6 +16,7 @@ export const Record = (props) => {
   const [text, setText] = useState(initialText);
   const [result, setResult] = useState(props.value);
   const [debouncedText, setDebouncedText] = useState(text);
+  const [isTextModified, setIsTextModified] = useState(false);
   console.log(result);
   // console.log(parsedName, "НУЖЕН ОБЪЕКТ");
   // Получаем начальное значение текста
@@ -95,9 +96,11 @@ export const Record = (props) => {
   const handleChange = (event) => {
     const newText = event.target.value;
     setText(newText);
+    setIsTextModified(true);
   };
 
   const handleSubmit = () => {
+    setIsTextModified(false);
     const current = new Date();
     // const user = { id: props.userId, name: props.userName };
     const values = value;
@@ -152,7 +155,12 @@ export const Record = (props) => {
           placeholder="Напишите запись"
           onChange={handleChange}
         />
-        <button onClick={handleSubmit}>Сохранить</button>
+        {isTextModified &&
+          text && ( // Проверяем, изменился ли текст и есть ли текст в поле
+            <button onClick={handleSubmit} className="save__button">
+              Сохранить
+            </button>
+          )}
       </div>
     </>
   );
