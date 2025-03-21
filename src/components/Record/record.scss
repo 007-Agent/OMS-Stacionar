@@ -2,22 +2,51 @@
   display: flex;
   flex-direction: column;
   gap: 5px 0;
+  .save__button {
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    background-color: rgb(108, 167, 176);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
+    font-size: 18px;
+    opacity: 1;
+    width: 140px;
+  }
+  .button__info {
+    display: flex;
+    align-items: center;
+    gap: 0 30px;
+  }
 }
 
 .record__input {
   box-sizing: border-box;
-  flex: 1 0 0%;
   outline: none;
   white-space: normal;
-  overflow: hidden;
-  min-height: 38px;
-  padding: 4px 4px 2px;
+  overflow: hidden; /* Скрывает прокрутку */
+  min-height: 38px; /* Минимальная высота */
+  padding: 4px 4px 2px; /* Внутренние отступы */
   border: 1px solid rgba(108, 167, 176, 0.5);
   color: rgb(0, 0, 0);
   text-align: left;
-  font-family: Arial;
+  
   font-size: 24px;
-  width: 860px;
+  width: 860px; /* Ширина */
+  resize: none;
+  @media (max-width: 600px) {
+    width: 700px; // На планшетах каждый элемент занимает 48% ширины
+  }
+  @media (max-width: 800px) {
+    width: 760px; // На планшетах каждый элемент занимает 48% ширины
+  }
 }
 .record__date {
   display: flex;
@@ -61,23 +90,5 @@
     text-align: left;
 
     font-size: 22px;
-  }
-  .save__button {
-    cursor: pointer;
-    user-select: none;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    background-color: rgb(108, 167, 176);
-    color: rgb(255, 255, 255);
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid rgba(108, 167, 176, 0.5);
-    font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
-    font-size: 18px;
-    opacity: 1;
-    width: 140px;
   }
 }

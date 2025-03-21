@@ -7,6 +7,27 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+    height: 30px;
+    .date__info {
+      display: flex;
+      gap: 0 15px;
+      span {
+        display: flex;
+
+        color: rgb(92, 140, 148);
+
+        font-size: 20px;
+        font-weight: 600;
+      }
+      h2 {
+        display: flex;
+
+        color: rgb(92, 140, 148);
+
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
   }
   .table {
     table-layout: fixed;
@@ -96,28 +117,40 @@
     }
   }
   .click__save {
-    background-color: #4caf50; /* Зеленый фон */
-    color: white; /* Белый текст */
-    padding: 10px 20px; /* Отступы */
-    border: none; /* Без границы */
-    border-radius: 5px; /* Закругленные углы */
-    cursor: pointer; /* Указатель при наведении */
-    font-size: 16px; /* Размер шрифта */
-    transition:
-      background-color 0.3s,
-      transform 0.2s;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    background-color: rgb(108, 167, 176);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
+    font-size: 18px;
+    opacity: 1;
+    width: 140px;
   }
   .click__exit {
-    background-color: #f70000; /* Зеленый фон */
-    color: white; /* Белый текст */
-    padding: 10px 20px; /* Отступы */
-    border: none; /* Без границы */
-    border-radius: 5px; /* Закругленные углы */
-    cursor: pointer; /* Указатель при наведении */
-    font-size: 16px; /* Размер шрифта */
-    transition:
-      background-color 0.3s,
-      transform 0.2s;
+    cursor: pointer;
+    user-select: none;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    background-color: rgb(108, 167, 176);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
+    font-size: 18px;
+    opacity: 1;
+    width: 140px;
   }
   .button__list {
     display: flex;

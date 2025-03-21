@@ -2,21 +2,41 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Создание асинхронной функции для авторизации
-export const login = createAsyncThunk('auth/login', async ({ username, password }) => {
-    const url = '/api/login' +
-      '?username=' +
-      encodeURIComponent(username) +
-      '&password=' +
-      encodeURIComponent(password);
-const response = await axios.post(url);
-  // const response = await axios.post('/api/login', { username, password });
-  // Сохраняем токен в localStorage
-  localStorage.setItem('token', response.data.data);
-  return response.data.data; 
+// export const loginUser = createAsyncThunk('auth/login', async ({ username, password }) => {
+//     const url = '/api/login' +
+//       '?username=' +
+//       encodeURIComponent(username) +
+//       '&password=' +
+//       encodeURIComponent(password);
+// const response = await axios.post(url);
+//   // const response = await axios.post('/api/login', { username, password });
+//   // Сохраняем токен в localStorage
+//   localStorage.setItem('token', response.data.data);
+//   return response.data.data; 
   
- // Возвращаем данные пользователя(объект)
-  });
-
+//  // Возвращаем данные пользователя(объект)
+//   }
+//   catch (error) {
+//     // Если произошла ошибка, возвращаем сообщение об ошибке
+//     return rejectWithValue(error.response.data.message || 'Ошибка входа'); // Здесь вы можете настроить сообщение
+// }
+// );
+export const loginUser  = createAsyncThunk('auth/login', async ({ username, password }, { rejectWithValue }) => {
+  const url = '/api/login' +
+    '?username=' +
+    encodeURIComponent(username) +
+    '&password=' +
+    encodeURIComponent(password);
+  
+  try {
+      const response = await axios.post(url);
+      localStorage.setItem('token', response.data.data);
+      return response.data.data; 
+  } catch (error) {
+      // Если произошла ошибка, возвращаем сообщение об ошибке
+      return rejectWithValue(error.response.data.message || 'Ошибка входа'); // Здесь вы можете настроить сообщение
+  }
+});
 export const checkAuth  = createAsyncThunk('auth/check', async () => {
   const response = await axios.get('/api/login/check');
   return response.data.data;
@@ -53,14 +73,14 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload; 
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message; // Сохраняем сообщение об ошибке
       })

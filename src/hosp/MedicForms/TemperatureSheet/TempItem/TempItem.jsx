@@ -20,65 +20,68 @@ export const TempItem = (props) => {
     setIsTextModified(true);
     const value = values;
     const obj = JSON.parse(value?.data?.list?.[0].name);
-    if ("date" === event.name) {
+    console.log(obj, "HANDLEOBJ");
+    if ("date" === event.target.name) {
       obj.date = strDate(event.value);
       value.data.list[0].name = JSON.stringify(obj);
-      value.data.list[0].date = event.value;
-    } else if ("time" === event.name) {
+      value.data.list[0].date = event.target.value;
+    } else if ("time" === event.target.name) {
       obj.time = cutTime(event.value);
       value.data.list[0].name = JSON.stringify(obj);
-      value.data.list[0].time = event.value;
-    } else if ("day" === event.name) {
+      value.data.list[0].time = event.target.value;
+    } else if ("day" === event.target.name) {
       obj.day = event.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moTemp" === event.name) {
-      obj.moTemp = event.value;
+    } else if ("moTemp" === event.target.name) {
+      obj.moTemp = event.target.value;
+
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evTemp" === event.name) {
-      obj.evTemp = event.value;
+    } else if ("evTemp" === event.target.name) {
+      obj.evTemp = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moArtPress" === event.name) {
-      obj.moArtPress = event.value;
+    } else if ("moArtPress" === event.target.name) {
+      obj.moArtPress = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evArtPress" === event.name) {
-      obj.evArtPress = event.value;
+    } else if ("evArtPress" === event.target.name) {
+      obj.evArtPress = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moPulse" === event.name) {
-      obj.moPulse = event.value;
+    } else if ("moPulse" === event.target.name) {
+      obj.moPulse = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evPulse" === event.name) {
-      obj.evPulse = event.value;
+    } else if ("evPulse" === event.target.name) {
+      obj.evPulse = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("breath" === event.name) {
+    } else if ("breath" === event.target.name) {
       obj.breath = event.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("weight" === event.name) {
-      obj.weight = event.value;
+    } else if ("weight" === event.target.name) {
+      obj.weight = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("liquid" === event.name) {
-      obj.liquid = event.value;
+    } else if ("liquid" === event.target.name) {
+      obj.liquid = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("water" === event.name) {
-      obj.water = event.value;
+    } else if ("water" === event.target.name) {
+      obj.water = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("enuresis" === event.name) {
-      obj.enuresis = event.value;
+    } else if ("enuresis" === event.target.name) {
+      obj.enuresis = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("stool" === event.name) {
-      obj.stool = event.value;
+    } else if ("stool" === event.target.name) {
+      obj.stool = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("bath" === event.name) {
-      obj.bath = event.value;
+    } else if ("bath" === event.target.name) {
+      obj.bath = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
-    } else if ("pediculosis" === event.name) {
-      obj.pediculosis = event.value;
+    } else if ("pediculosis" === event.target.name) {
+      obj.pediculosis = event.target.value;
       value.data.list[0].name = JSON.stringify(obj);
     }
     // value.data.list[0].name =  newRecord
     setResult(value);
-    console.log(values, "Values efiwefnuiwenfuiwebnfweuibfwuifbwe");
+    console.log(value, "Values efiwefnuiwenfuiwebnfweuibfwuifbwe");
   }
   function save() {
+    setIsTextModified(false);
     axios
       .post(`/rest/${props.project}/${props.name}/update`, {
         data: [result],
@@ -97,7 +100,11 @@ export const TempItem = (props) => {
   return (
     <div className={styles.content}>
       <div className={styles.row}>
-        <div></div>
+        <div className={styles.date__info}>
+          <span>{obj.date}</span>
+          <span>{obj.time}</span>
+          {/* <h2>{`День болезни: ${obj.day}`}</h2> */}
+        </div>
         <div>{obj.user?.name}</div>
       </div>
 
@@ -120,16 +127,27 @@ export const TempItem = (props) => {
         <tbody className={styles.tbody}>
           <tr>
             <td>
-              <input type="text" onChange={handleChange} value={obj.moTemp} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.moTemp}
+                name={"moTemp"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.evTemp} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.evTemp}
+                name={"evTemp"}
+              />
             </td>
             <td>
               <input
                 type="text"
                 onChange={handleChange}
                 value={obj.moArtPress}
+                name={"moArtPress"}
               />
             </td>
             <td>
@@ -137,13 +155,24 @@ export const TempItem = (props) => {
                 type="text"
                 onChange={handleChange}
                 value={obj.evArtPress}
+                name={"evArtPress"}
               />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.moPulse} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.moPulse}
+                name={"moPulse"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.evPulse} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.evPulse}
+                name={"evPulse"}
+              />
             </td>
           </tr>
         </tbody>
@@ -165,49 +194,84 @@ export const TempItem = (props) => {
         <tbody className={styles.body_button}>
           <tr>
             <td>
-              <input type="text" onChange={handleChange} value={obj.breath} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.breath}
+                name={"breath"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.weight} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.weight}
+                name={"weight"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.liquid} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.liquid}
+                name={"liquid"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.water} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.water}
+                name={"water"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.enuresis} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.enuresis}
+                name={"enuresis"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.stool} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.stool}
+                name={"stool"}
+              />
             </td>
             <td>
-              <input type="text" onChange={handleChange} value={obj.bath} />
+              <input
+                type="text"
+                onChange={handleChange}
+                value={obj.bath}
+                name={"bath"}
+              />
             </td>
             <td>
               <input
                 type="text"
                 onChange={handleChange}
                 value={obj.pediculosis}
+                name={"pediculosis"}
               />
             </td>
           </tr>
         </tbody>
       </table>
       <div className={styles.button__list}>
-      {isTextModified && ( // Проверяем, изменился ли текст и есть ли текст в поле
-        <button onClick={save} className={styles.click__save}>
-          Сохранить
-        </button>
-      )}
-      {isTextModified && ( // Проверяем, изменился ли текст и есть ли текст в поле
-        <button onClick={HandleInfoDelete} className={styles.click__exit}>
-          Отмена
-        </button>
-      )}
+        {isTextModified && ( // Проверяем, изменился ли текст и есть ли текст в поле
+          <button onClick={save} className={styles.click__save}>
+            Сохранить
+          </button>
+        )}
+        {isTextModified && ( // Проверяем, изменился ли текст и есть ли текст в поле
+          <button onClick={HandleInfoDelete} className={styles.click__exit}>
+            Отмена
+          </button>
+        )}
       </div>
-      
     </div>
   );
 };

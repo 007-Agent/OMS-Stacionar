@@ -1,18 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./main.scss";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import HospList from "./HospList/HospList";
 import { Link } from "react-router-dom";
 import Search from "../components/Search/Search";
 import { SearchContext } from "../App";
 import LoginForm from "../components/Login/LoginForm";
+import { checkAuth } from "../redux/authSlice";
+
 
 function Main(props) {
   const [list, setList] = useState([]);
-  const [type, setType] = useState(); // Добавляем состояние для типа
+  const [type, setType] = useState(0); // Добавляем состояние для типа
   const { searchValue } = useContext(SearchContext);
+
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   console.log(user);
   const handleMenuShow = (event) => {
     setType(event.target.value); // Сохраняем индекс выбранного элемента
@@ -23,6 +27,9 @@ function Main(props) {
   //     .toLowerCase()
   //     .includes(searchValue ? searchValue.toLowerCase() : "");
   // });
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
   const refresh = () => {
     const query = { type, family: searchValue };
@@ -34,6 +41,21 @@ function Main(props) {
     });
     console.log(list);
   };
+
+  // useEffect(() => {
+  //   const authenticateAndFetch = async () => {
+  //     try {
+  //       await dispatch(checkAuth()).unwrap(); // Проверяем авторизацию
+  //       refresh(); // Если авторизован, выполняем запрос
+  //     } catch (error) {
+  //       console.error("Ошибка авторизации:", error);
+  //     } finally {
+  //       setIsLoading(false); // Завершаем загрузку
+  //     }
+  //   };
+
+  //   authenticateAndFetch();
+  // }, [dispatch]);
 
   useEffect(() => {
     refresh();
@@ -68,7 +90,9 @@ function Main(props) {
           </div>
         </div>
         <div className="list__patient">
-          {user ? (
+          {props.isLoading ? (
+            <p>Загрузка...</p> // Показываем индикатор загрузки
+          ) : user ? (
             list?.map((item) => (
               <Link
                 to={`/patient-detail/${item.id}`}
@@ -81,6 +105,19 @@ function Main(props) {
           ) : (
             <LoginForm /> // Отображаем форму для авторизации, если пользователь не авторизован
           )}
+          {/* {user ? (
+            list?.map((item) => (
+              <Link
+                to={`/patient-detail/${item.id}`}
+                key={item.id}
+                user={props.user}
+              >
+                <HospList info={item} />
+              </Link>
+            ))
+          ) : (
+            <LoginForm /> // Отображаем форму для авторизации, если пользователь не авторизован
+          )} */}
         </div>
       </div>
     </div>

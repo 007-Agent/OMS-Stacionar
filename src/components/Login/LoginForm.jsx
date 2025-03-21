@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/authSlice"; // Импортируйте вашу функцию авторизации
+import { loginUser } from "../../redux/authSlice"; // Импортируйте вашу функцию авторизации
 import "./login.scss";
-import { checkAuth } from "../../redux/authSlice";
+// import { checkAuth } from "../../redux/authSlice";
 const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,9 +12,10 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login({ username, password }));
-    dispatch(checkAuth());
+    dispatch(loginUser({ username, password }));
+    // dispatch(checkAuth());
   };
+
   const handleCancel = () => {
     setUsername(""); // Сбрасываем имя пользователя
     setPassword(""); // Сбрасываем пароль
@@ -47,10 +48,12 @@ const LoginForm = () => {
           <button type="submit" disabled={status === "loading"}>
             {status === "loading" ? "Logging in..." : "Login"}
           </button>
-          {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+          {error && <p style={{ color: "red" }}>Нет такого пользователя</p>}{" "}
           {/* Отображаем ошибку */}
         </div>
       </form>
+      {error && <p style={{ color: "red" }}>Нет такого пользователя</p>}{" "}
+      {/* Показываем сообщение об ошибке */}
     </div>
   );
 };

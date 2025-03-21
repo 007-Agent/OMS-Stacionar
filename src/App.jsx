@@ -9,19 +9,17 @@ import MedicalPrice from "./hosp/MedicalPrice/MedicalPrice";
 import { Header } from "./components/HeaderInfo/header/HeaderMain/Header";
 import { PacientList } from "./hosp/PacienList/PacientList";
 import { useDispatch, useSelector } from "react-redux";
-
 import { checkAuth } from "./redux/authSlice";
+// import LoginForm from "./components/Login/LoginForm";
+// import { checkAuth } from "./redux/authSlice";
 export const SearchContext = createContext();
 function App() {
-  const user = useSelector((state) => state.auth.user);
+  const { user, checkStatus } = useSelector((state) => state.auth);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState();
 
-  useEffect(() => {
-    // Проверяем авторизацию при загрузке приложения
-    dispatch(checkAuth());
-  }, [dispatch]);
+
 
   return (
     <>

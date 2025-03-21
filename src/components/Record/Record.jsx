@@ -98,6 +98,11 @@ export const Record = (props) => {
     setText(newText);
     setIsTextModified(true);
   };
+  function HandleInfoDelete(event) {
+    if (props.onDelete) {
+      props.onDelete({ key: event.key });
+    }
+  }
 
   const handleSubmit = () => {
     setIsTextModified(false);
@@ -154,13 +159,23 @@ export const Record = (props) => {
           className="record__input"
           placeholder="Напишите запись"
           onChange={handleChange}
+          onInput={(e) => {
+            e.target.style.height = "auto"; // Сброс высоты
+            e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
+          }}
         />
-        {isTextModified &&
-          text && ( // Проверяем, изменился ли текст и есть ли текст в поле
+        {isTextModified && text && (
+          // Проверяем, изменился ли текст и есть ли текст в поле
+
+          <div className="button__info">
             <button onClick={handleSubmit} className="save__button">
               Сохранить
             </button>
-          )}
+            <button onClick={HandleInfoDelete} className="save__button">
+              Удалить
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

@@ -47,6 +47,16 @@ export const DiaryEntry = (props) => {
     }
     return dest;
   };
+  const DeleteTempItem = (event) => {
+    const newData = props.data.map((item) => {
+      if (item.data && item.data.list) {
+        const newList = item.data.list.filter((v) => v.key !== event.key);
+        item.data.list = newList;
+      }
+      return item;
+    });
+    setRecords(newData);
+  };
 
   const addRecord = () => {
     const newData = clone(records);
@@ -100,7 +110,8 @@ export const DiaryEntry = (props) => {
                 project={props.project}
                 user={props.user}
                 value={value}
-                textValue={v} // передали пользователя действующего
+                textValue={v}
+                onDelete={DeleteTempItem} // передали пользователя действующего
               />
             );
           });
