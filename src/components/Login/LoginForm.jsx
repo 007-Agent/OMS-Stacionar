@@ -9,6 +9,8 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.auth.status);
   const error = useSelector((state) => state.auth.error);
+  console.log(error, "ERR");
+  console.log(status, "STTUS");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,12 +50,14 @@ const LoginForm = () => {
           <button type="submit" disabled={status === "loading"}>
             {status === "loading" ? "Logging in..." : "Login"}
           </button>
-          {error && <p style={{ color: "red" }}>Нет такого пользователя</p>}{" "}
+          {status === "failed" ? (
+            <p style={{ color: "red" }}>Нет такого пользователя</p>
+          ) : (
+            ""
+          )}{" "}
           {/* Отображаем ошибку */}
         </div>
       </form>
-      {error && <p style={{ color: "red" }}>Нет такого пользователя</p>}{" "}
-      {/* Показываем сообщение об ошибке */}
     </div>
   );
 };

@@ -10,7 +10,7 @@ export const Record = (props) => {
   console.log(obj.text, "OOOBBBBJECT");
   console.log(value, "ЧТО ТАКОЕ ЭТО");
   const title = obj.text;
-  console.log(props.user.name, "POLZOVATEL");
+  // console.log(props.user.name, "POLZOVATEL");
   // Преобразуем строку в объект
   const initialText = title; // Получаем начальное значение текста
   const [text, setText] = useState(initialText);
