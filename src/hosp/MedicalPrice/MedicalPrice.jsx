@@ -20,7 +20,7 @@ function MedicalPrice(props) {
 
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedComponent, setSelectedComponent] = useState(<PrimaryCheck />);
+  const [selectedComponent, setSelectedComponent] = useState();
 
   const [info, setInfo] = useState({});
   const { id } = useParams();
@@ -46,7 +46,14 @@ function MedicalPrice(props) {
 
   const handleClick = (index) => {
     if (index === "0") {
-      setSelectedComponent(<PrimaryCheck />);
+      setSelectedComponent(
+        <PrimaryCheck
+          project={PROJECT}
+          user={props.user}
+          data={info.inspection}
+          name={"inspection"}
+        />
+      );
     } else if (index === "1") {
       setSelectedComponent(<DoctorExamination />);
     } else if (index === "2") {

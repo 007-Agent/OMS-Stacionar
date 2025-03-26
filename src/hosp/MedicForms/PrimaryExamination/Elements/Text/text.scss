@@ -1,0 +1,15 @@
+.text__from {
+  box-sizing: border-box;
+  outline: none;
+  white-space: normal;
+  overflow: hidden; /* Скрывает прокрутку */
+  min-height: 38px; /* Минимальная высота */
+  padding: 4px 4px 2px; /* Внутренние отступы */
+  border: 1px solid rgba(108, 167, 176, 0.5);
+  color: rgb(0, 0, 0);
+  text-align: left;
+
+  font-size: 24px;
+  width: 860px; /* Ширина */
+  resize: none;
+}
