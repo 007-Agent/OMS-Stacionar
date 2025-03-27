@@ -1,15 +1,39 @@
-.text__from {
-  box-sizing: border-box;
-  outline: none;
-  white-space: normal;
-  overflow: hidden; /* Скрывает прокрутку */
-  min-height: 38px; /* Минимальная высота */
-  padding: 4px 4px 2px; /* Внутренние отступы */
-  border: 1px solid rgba(108, 167, 176, 0.5);
-  color: rgb(0, 0, 0);
-  text-align: left;
+.primary__form {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  gap: 5px 0;
+  margin-bottom: 15px;
+  padding-left: 15px;
 
-  font-size: 24px;
-  width: 860px; /* Ширина */
-  resize: none;
+  .text__from {
+    box-sizing: border-box;
+    outline: none;
+    white-space: normal;
+    overflow: hidden; /* Скрывает прокрутку */
+    min-height: 38px; /* Минимальная высота */
+    padding: 4px 4px 2px; /* Внутренние отступы */
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    color: rgb(0, 0, 0);
+    text-align: left;
+    border-radius: 3px;
+    font-size: 24px;
+    width: 860px; /* Ширина */
+    resize: none;
+    margin-bottom: 5px;
+  }
+  .title__primary {
+    box-sizing: border-box;
+    cursor: default;
+    padding: 4px;
+    border: none;
+    color: rgb(108, 167, 176);
+    outline: none;
+    text-align: left;
+    font-family: Arial;
+    font-size: 24px;
+    display: inline;
+    opacity: 1;
+    z-index: 1;
+  }
 }

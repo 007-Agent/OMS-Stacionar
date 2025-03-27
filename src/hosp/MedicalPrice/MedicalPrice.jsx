@@ -20,7 +20,7 @@ function MedicalPrice(props) {
 
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedComponent, setSelectedComponent] = useState();
+  const [selectedComponent, setSelectedComponent] = useState(<PrimaryCheck />);
 
   const [info, setInfo] = useState({});
   const { id } = useParams();

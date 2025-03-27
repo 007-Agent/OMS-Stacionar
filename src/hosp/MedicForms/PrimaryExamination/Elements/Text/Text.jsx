@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./text.scss";
 
 export const Text = (props) => {
+  // console.log(props.v, "VVVVVVVVVVV");
+  const [textValue, setTextValue] = useState("");
   const clone = (source, exclude) => {
     let dest = null;
     if (typeof source === "function") {
@@ -42,12 +44,26 @@ export const Text = (props) => {
       });
     }
   };
+  // const handleChange = (event) => {
+  //   if (props.onChange) {
+  //     const value = clone(props.v);
+  //     value.data.list = [];
+  //     if (event.target.value && event.target.value.trim() !== "") {
+  //       value.data.list.push({ id: null, order: 0, name: event.target.value });
+  //     }
+
+  //     change(value);
+  //   }
+  // };
   const handleChange = (event) => {
+    const newValue = event.target.value; // Получаем новое значение из текстового поля
+    setTextValue(newValue); // Обновляем состояние
+
     if (props.onChange) {
       const value = clone(props.v);
       value.data.list = [];
-      if (event.target.value && event.target.value.trim() !== "") {
-        value.data.list.push({ id: null, order: 0, name: event.target.value });
+      if (newValue && newValue.trim() !== "") {
+        value.data.list.push({ id: null, order: 0, name: newValue });
       }
 
       change(value);
@@ -55,11 +71,16 @@ export const Text = (props) => {
   };
 
   return (
-    <div>
+    <div className="primary__form">
+      <h2 className="title__primary">{props.v.data.name}:</h2>
       <textarea
         name="text"
         className="text__from"
         onChange={handleChange}
+        onInput={(e) => {
+          e.target.style.height = "auto"; // Сброс высоты
+          e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
+        }}
       ></textarea>
     </div>
   );
