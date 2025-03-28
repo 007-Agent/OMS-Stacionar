@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice'; // Импортируем редюсер
+import textReducer from './InfoTitle';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    text: textReducer,
   },
+  
 });
 
 export default store;

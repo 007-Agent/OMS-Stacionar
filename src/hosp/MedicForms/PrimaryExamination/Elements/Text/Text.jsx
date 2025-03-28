@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./text.scss";
-
+import { useDispatch } from "react-redux";
+import { setText } from "../../../../../redux/InfoTitle";
 export const Text = (props) => {
   // console.log(props.v, "VVVVVVVVVVV");
+  const dispatch = useDispatch();
   const [textValue, setTextValue] = useState("");
   const clone = (source, exclude) => {
     let dest = null;
@@ -42,19 +44,21 @@ export const Text = (props) => {
         index: props.index,
         value: value,
       });
+
+      console.log("Dispatching setText with value:", {
+        name: props.name,
+        index: props.index,
+        value: value,
+      });
+      dispatch(
+        setText({
+          name: props.name,
+          index: props.index,
+          value: value,
+        })
+      );
     }
   };
-  // const handleChange = (event) => {
-  //   if (props.onChange) {
-  //     const value = clone(props.v);
-  //     value.data.list = [];
-  //     if (event.target.value && event.target.value.trim() !== "") {
-  //       value.data.list.push({ id: null, order: 0, name: event.target.value });
-  //     }
-
-  //     change(value);
-  //   }
-  // };
   const handleChange = (event) => {
     const newValue = event.target.value; // Получаем новое значение из текстового поля
     setTextValue(newValue); // Обновляем состояние
