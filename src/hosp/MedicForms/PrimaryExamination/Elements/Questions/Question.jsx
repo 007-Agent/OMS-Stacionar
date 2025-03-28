@@ -16,13 +16,23 @@ export const QuestionsComponent = (props) => {
       );
     }
   };
+  let value = null;
 
   return (
     <div>
       {data.map((v, index) => {
         if (v.id !== null) {
+          // if (v.data.list.length > 0 && v.data.list[0]) {
+          //   value = v.data.list[0].name;
+          // }
           return (
-            <Text v={v} index={index} key={v.data.id} onChange={handleChange} />
+            <Text
+              v={v}
+              index={index}
+              key={v.data.id}
+              onChange={handleChange}
+              
+            />
           );
         } else {
           return (

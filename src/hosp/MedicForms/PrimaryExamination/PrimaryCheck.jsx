@@ -9,6 +9,7 @@ import { setText } from "../../../redux/InfoTitle";
 export const PrimaryCheck = (props) => {
   const [currentComponent, setCurrentComponent] = useState(null);
   const textInfo = useSelector((state) => state.text.textInfo);
+
   console.log(textInfo, "REDUX");
   // Полный массив вопросов
   const clone = (source, exclude) => {
@@ -38,6 +39,7 @@ export const PrimaryCheck = (props) => {
     }
     return dest;
   };
+
   const [data2, setData] = useState(props.data);
   const data = props.data;
   const handleShowComponent = (componentType) => {
@@ -47,7 +49,7 @@ export const PrimaryCheck = (props) => {
         questions = data.slice(0, 10); // Вопросы с 1 по 18
         break;
       case "medicalHistory":
-        questions = data.slice(18, 25); // Вопросы с 19 по 28
+        questions = data.slice(10, 25); // Вопросы с 19 по 28
         break;
       case "generalHistory":
         questions = data.slice(25, 84); // Вопросы с 29 по 34
@@ -78,20 +80,20 @@ export const PrimaryCheck = (props) => {
   // };
 
   const handleChange = (event) => {
+    
     console.log(event, "propsEVENT");
     const index = event.index;
     if (index >= 0) {
-      const data = clone(data2);
       // объект со всеми вопросами
-      console.log(data, "DATA#1");
-      data[index] = event.value;
+      console.log(data2, "DATA#1");
+      data2[index] = event.value;
       // выбираем нужный вопрос и добавляем туда данные, точнее изменяем их, у нас в data[0] храниться data, id, name , мы вставляем то же самое, то есть изменяем!
-      console.log(data[index], "INDEX");
-      console.log(data, "DATA#222");
+      console.log(data2[index], "INDEX");
+      console.log(data2, "DATA#222");
+      setData(data2);
     }
-    setData(data);
   };
-  console.log(data, "MAIN CHECK");
+  console.log(data2, "MAIN CHECK");
 
   const handleClickSave = () => {
     axios
@@ -99,14 +101,17 @@ export const PrimaryCheck = (props) => {
         data: data2,
       })
       .then((response) => {
-        const clonedData = clone(response.data.data); // Клонируем данные из ответа
-        setData(clonedData); // Обновляем состояние
-        // Вызываем уведомление после обновления состояния
-        console.log(response.data.data, "RESUUULT"); // Логируем результат
-      })
-      .catch((error) => {
-        console.error("There was an error updating the data!", error); // Обработка ошибок
+        console.log(response.data);
       });
+    // .then((response) => {
+    //   const clonedData = clone(response.data.data); // Клонируем данные из ответа
+    //   setData(clonedData); // Обновляем состояние
+    //   // Вызываем уведомление после обновления состояния
+    //   console.log(response.data.data, "RESUUULT"); // Логируем результат
+    // })
+    // .catch((error) => {
+    //   console.error("There was an error updating the data!", error); // Обработка ошибок
+    // });
   };
 
   return (

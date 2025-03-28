@@ -78,6 +78,7 @@ export const Text = (props) => {
     <div className="primary__form">
       <h2 className="title__primary">{props.v.data.name}:</h2>
       <textarea
+        // value={props.value}
         name="text"
         className="text__from"
         onChange={handleChange}
