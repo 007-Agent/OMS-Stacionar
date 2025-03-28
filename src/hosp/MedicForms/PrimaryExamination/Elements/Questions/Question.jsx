@@ -5,6 +5,8 @@ import "./question.scss";
 export const QuestionsComponent = (props) => {
   console.log(props.questions);
   const data = props.questions;
+  const OriginalIndex = props.index;
+  console.log(OriginalIndex, "ORIGINAL");
 
   const handleChange = (event) => {
     if (props.onChange) {
@@ -25,15 +27,7 @@ export const QuestionsComponent = (props) => {
           // if (v.data.list.length > 0 && v.data.list[0]) {
           //   value = v.data.list[0].name;
           // }
-          return (
-            <Text
-              v={v}
-              index={index}
-              key={v.data.id}
-              onChange={handleChange}
-              
-            />
-          );
+          return <Text v={v} key={v.data.id} onChange={handleChange} />;
         } else {
           return (
             <div className="title__content" key={index}>{`${v.name}:`}</div>
