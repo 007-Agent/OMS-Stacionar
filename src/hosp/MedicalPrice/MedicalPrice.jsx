@@ -113,6 +113,7 @@ function MedicalPrice(props) {
             </div>
           )}
         </div>
+        <h2 className="fio__name">{info.fio}</h2>
         {isLoading && selectedComponent}
       </div>
     </>

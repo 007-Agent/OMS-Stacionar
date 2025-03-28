@@ -18,7 +18,7 @@
     text-align: left;
     border-radius: 3px;
     font-size: 24px;
-    width: 860px; /* Ширина */
+    width: 100%; /* Ширина */
     resize: none;
     margin-bottom: 5px;
   }
@@ -35,5 +35,10 @@
     display: inline;
     opacity: 1;
     z-index: 1;
+  }
+}
+@media (max-width: 840px) {
+  .title__primary {
+    font-size: 21px;
   }
 }
