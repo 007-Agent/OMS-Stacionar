@@ -123,7 +123,9 @@ export const PrimaryCheck = (props) => {
         </button>
       </div>
       <div className="primary__content">{currentComponent}</div>
-      <button onClick={handleClickSave}>Save</button>
+      <button onClick={handleClickSave} className="button__save">
+        Сохранить
+      </button>
     </div>
   );
 };

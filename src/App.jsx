@@ -18,10 +18,7 @@ function App() {
 
   // const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState();
-
-
-
-  return (
+return (
     <>
       <SearchContext.Provider value={{ searchValue, setSearchValue }}>
         <Header />
@@ -37,5 +34,4 @@ function App() {
     </>
   );
 }
-
 export default App;

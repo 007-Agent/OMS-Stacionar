@@ -20,8 +20,8 @@ function MedicalPrice(props) {
 
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedComponent, setSelectedComponent] = useState(<PrimaryCheck />);
-
+  const [selectedComponent, setSelectedComponent] = useState();
+  const cont = <div>Выберите тип медицинской формы</div>
   const [info, setInfo] = useState({});
   const { id } = useParams();
 
@@ -45,7 +45,7 @@ function MedicalPrice(props) {
   // console.log(info.inspection, "infooooo");
 
   const handleClick = (index) => {
-    if (index === "0") {
+    if (index === "1") {
       setSelectedComponent(
         <PrimaryCheck
           project={PROJECT}
@@ -54,9 +54,9 @@ function MedicalPrice(props) {
           name={"inspection"}
         />
       );
-    } else if (index === "1") {
-      setSelectedComponent(<DoctorExamination />);
     } else if (index === "2") {
+      setSelectedComponent(<DoctorExamination />);
+    } else if (index === "3") {
       setSelectedComponent(
         <TemperatureSheet
           project={PROJECT}
@@ -65,7 +65,7 @@ function MedicalPrice(props) {
           name={"temperature"}
         />
       );
-    } else if (index === "3") {
+    } else if (index === "4") {
       setSelectedComponent(
         <DiaryEntry
           project={PROJECT}
@@ -75,7 +75,8 @@ function MedicalPrice(props) {
         />
       );
     } else {
-      setSelectedComponent(null);
+      
+      setSelectedComponent(cont);
     }
   };
 
@@ -102,10 +103,11 @@ function MedicalPrice(props) {
               className="select__type"
               onChange={handleMenuShow}
             >
-              <option value="0">Первичный осмотр</option>
-              <option value="1">Осмотр врачом</option>
-              <option value="2">Температурный лист</option>
-              <option value="3">Дневниковые записи</option>
+              <option value="0">-</option>
+              <option value="1">Первичный осмотр</option>
+              <option value="2">Осмотр врачом</option>
+              <option value="3">Температурный лист</option>
+              <option value="4">Дневниковые записи</option>
             </select>
           ) : (
             <div className="outlone__info">
@@ -113,7 +115,7 @@ function MedicalPrice(props) {
             </div>
           )}
         </div>
-        <h2 className="fio__name">{info.fio}</h2>
+        <h2 className="fio__name">{`Пациент: ${info.fio}`}</h2>
         {isLoading && selectedComponent}
       </div>
     </>

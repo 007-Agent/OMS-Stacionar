@@ -39,7 +39,7 @@
   text-align: left;
   
   font-size: 24px;
-  width: 860px; /* Ширина */
+  width: 100%; /* Ширина */
   resize: none;
   @media (max-width: 600px) {
     width: 700px; // На планшетах каждый элемент занимает 48% ширины

@@ -83,7 +83,7 @@ export const Text = (props) => {
         className="text__from"
         onChange={handleChange}
         onInput={(e) => {
-          e.target.style.height = "auto"; // Сброс высоты
+          e.target.style.height = "38px"; // Сброс высоты
           e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
         }}
       ></textarea>
