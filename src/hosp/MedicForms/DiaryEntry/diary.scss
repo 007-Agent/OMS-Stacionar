@@ -42,3 +42,8 @@
     gap: 15px 0;
   }
 }
+@media (max-width: 960px) {
+  .diary__main {
+    max-width: 870px;
+  }
+}
