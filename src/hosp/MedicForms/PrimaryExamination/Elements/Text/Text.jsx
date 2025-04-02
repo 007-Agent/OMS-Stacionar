@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import "./text.scss";
 import { useDispatch } from "react-redux";
 import { setText } from "../../../../../redux/InfoTitle";
+import debounce from "lodash.debounce";
 export const Text = (props) => {
   // console.log(props.v, "VVVVVVVVVVV");
   const dispatch = useDispatch();
-  const [textValue, setTextValue] = useState("");
+
+  const textInput = props.v?.data?.list?.[0]?.name;
+  const textareaRef = React.useRef(null);
+  console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
+  const initialText = textInput;
+  const [textValue, setTextValue] = useState(initialText);
+  const [textareaHeight, setTextareaHeight] = useState("38px");
   const clone = (source, exclude) => {
     let dest = null;
     if (typeof source === "function") {
@@ -59,31 +66,52 @@ export const Text = (props) => {
       );
     }
   };
-  const handleChange = (event) => {
-    const newValue = event.target.value; // Получаем новое значение из текстового поля
-    setTextValue(newValue); // Обновляем состояние
 
-    if (props.onChange) {
-      const value = clone(props.v);
+  // const handleChange = (event) => {
+  //   const newValue = event.target.value; // Получаем новое значение из текстового поля
+  //   setTextValue(newValue); // Обновляем состояние
+
+  //   if (props.onChange) {
+  //     const value = clone(props.v);
+  //     value.data.list = [];
+  //     if (newValue && newValue.trim() !== "") {
+  //       value.data.list.push({ id: null, order: 0, name: newValue });
+  //     }
+
+  //     change(value);
+  //   }
+  // };
+  const handleChange = React.useCallback(
+    debounce((event) => {
+      const newValue = event.target.value; // Получаем новое значение из текстового поля
+      setTextValue(newValue); // Обновляем состояние
+
+      const value = clone(props.v); // Клонируем объект
       value.data.list = [];
       if (newValue && newValue.trim() !== "") {
         value.data.list.push({ id: null, order: 0, name: newValue });
       }
 
       change(value);
-    }
-  };
+    }, 3000), // Установите задержку, например, 300 мс
+    [props.v] // Зависимость, чтобы использовать актуальное значение props.v
+  );
 
   return (
     <div className="primary__form">
       <h2 className="title__primary">{props.v.data.name}:</h2>
+
       <textarea
-        // value={props.value}
+        value={textValue}
         name="text"
         className="text__from"
         onChange={handleChange}
         onInput={(e) => {
-          e.target.style.height = "38px"; // Сброс высоты
+          e.target.style.minHeight = "20px"; // Сброс высоты
+          e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
+        }}
+        onClick={(e) => {
+          e.target.style.minHeight = "20px"; // Сброс высоты
           e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
         }}
       ></textarea>

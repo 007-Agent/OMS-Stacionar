@@ -4,6 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 
 // import Temperature from '../../MetaRecords/Temperature/Temperature'
 import "./temperatureSheet.scss";
+
 import TempItem from "./TempItem/TempItem";
 export const TemperatureSheet = (props) => {
   const [records, setRecords] = useState(props.data);

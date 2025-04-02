@@ -3,24 +3,22 @@
   flex-direction: column;
   border: none;
 
-
   padding-left: 15px;
   margin-bottom: 15px;
 
   .text__from {
-    box-sizing: border-box;
-    outline: none;
-    white-space: normal;
-    overflow: hidden; /* Скрывает прокрутку */
-    height: 38px; /* Минимальная высота */
-    padding: 4px 4px 2px; /* Внутренние отступы */
+    // box-sizing: border-box;
+    
+    // outline: none;
+    // white-space: normal;
+    overflow: hidden;
+    height: 30px;
+    padding: 4px 4px 2px;
     border: 1px solid rgba(108, 167, 176, 0.5);
     color: rgb(0, 0, 0);
     text-align: left;
-    border-radius: 3px;
-    font-size: 24px;
-    width: 100%; /* Ширина */
-    resize: none;
+    font-family: Arial;
+    font-size: 21px;
     margin-bottom: 5px;
   }
   .title__primary {
@@ -39,10 +37,12 @@
   }
 }
 @media (max-width: 960px) {
-  .primary__form{
+  .primary__form {
     .title__primary {
       font-size: 21px;
     }
+    .text__from{
+      font-size: 19px;
+    }
   }
-  }
- 
+}

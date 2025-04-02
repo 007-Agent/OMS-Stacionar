@@ -17,7 +17,7 @@ export default defineConfig({
     outDir: 'docs',
   },
   server: {
-    port: 5000,
+    port: 9000,
     proxy: {
       '/api': {
         target: 'http://10.16.1.28:8080',

@@ -50,7 +50,7 @@ function Main(props) {
     axios.post("/rest/hosp/list", query).then((response) => {
       setList(response.data.data); // Предполагается, что ответ содержит данные в response.data
     });
-    console.log(list);
+    console.log(list, "LISTIKS");
   };
 
   return (
@@ -93,7 +93,7 @@ function Main(props) {
           )} */}
           {checkStatus === "loading" ? (
             <p>Проверка авторизации...</p> // Индикатор загрузки
-          ) : user && user.name === null || user === null ? (
+          ) : (user && user.name === null) || user === null ? (
             <LoginForm /> // Если пользователь не авторизован
           ) : (
             list.map((item) => (
