@@ -81,20 +81,24 @@ export const Text = (props) => {
   //     change(value);
   //   }
   // };
-  const handleChange = React.useCallback(
-    debounce((event) => {
-      const newValue = event.target.value; // Получаем новое значение из текстового поля
-      setTextValue(newValue); // Обновляем состояние
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setTextValue(newValue);
 
-      const value = clone(props.v); // Клонируем объект
-      value.data.list = [];
-      if (newValue && newValue.trim() !== "") {
-        value.data.list.push({ id: null, order: 0, name: newValue });
-      }
+    const value = clone(props.v);
+    value.data.list = [];
+    if (newValue && newValue.trim() !== "") {
+      value.data.list.push({ id: null, order: 0, name: newValue });
+    }
 
+    // Вызываем дебаунс только для изменения состояния Redux
+    debouncedChange(value);
+  };
+  const debouncedChange = React.useCallback(
+    debounce((value) => {
       change(value);
-    }, 3000), // Установите задержку, например, 300 мс
-    [props.v] // Зависимость, чтобы использовать актуальное значение props.v
+    }, 3000),
+    []
   );
 
   return (

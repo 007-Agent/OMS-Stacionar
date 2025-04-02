@@ -62,6 +62,7 @@ export const PrimaryCheck = (props) => {
 
   const handleChange = (event) => {
     console.log(event, "propsEVENT");
+    console.log(textInfo, "TEXTINFO REDUX");
     const index = event.index;
     if (index >= 0) {
       // объект со всеми вопросами
