@@ -6,7 +6,7 @@ import debounce from "lodash.debounce";
 import { MiniText } from "../../../../../components/Answer/MiniText/MiniText";
 import { Text } from "../../../../../components/Answer/Text/Text";
 export const Question = (props) => {
-  // console.log(props.v, "VVVVVVVVVVV");
+  console.log(props.v, "VVVVVVVVVVV");
   const dispatch = useDispatch();
 
   // const textInput = props.v?.data?.list?.[0]?.name;
@@ -112,6 +112,10 @@ export const Question = (props) => {
   //   }, 3000),
   //   []
   // );
+  let information = null;
+  if(props.v){
+    information = <div>{props.v.name}</div>
+  }
   let content = null;
   if (props.v && props.v.data) {
     const data = props.v.data;
@@ -119,7 +123,7 @@ export const Question = (props) => {
     if (data.type === 4) {
       content = <Text v={data} onChange={handleTextChange} />;
     } else if (data.type === 1) {
-      content = <MiniText v={data} onChange={handleTextChange}/>;
+      content = <MiniText v={data} onChange={handleTextChange} />;
     } else {
       content = <div>Нет данных</div>;
     }
@@ -129,6 +133,7 @@ export const Question = (props) => {
 
   return (
     <div className="primary__form">
+      {information}
       {content}
       {/* <h2 className="title__primary">{props.v.data.name}:</h2>
       <textarea

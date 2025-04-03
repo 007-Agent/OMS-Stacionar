@@ -1,0 +1,54 @@
+.info__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+  .info__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 8px 0px 0px;
+    color: rgb(0, 0, 0);
+    font-family: Arial;
+    font-size: 24px;
+  }
+  .info__age {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0px 0px;
+    width: 100%;
+    text-align: right;
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 18px;
+  }
+  .info__money {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0px 0px;
+    width: 100%;
+    text-align: right;
+    color: rgb(108, 167, 176);
+    font-family: Arial;
+    font-size: 18px;
+  }
+  .allergy {
+    display: flex;
+    justify-content: flex-end;
+    margin: 8px 0px 0px;
+    width: 100%;
+    text-align: right;
+    color: rgb(0, 0, 0);
+    font-family: Arial;
+    font-size: 24px;
+  }
+}
+@media (max-width: 960px) {
+  .info__content {
+    max-width: 800px;
+        margin: 0 auto;
+  }
+}

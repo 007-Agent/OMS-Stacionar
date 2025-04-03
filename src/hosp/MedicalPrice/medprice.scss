@@ -1,5 +1,9 @@
 .med__main {
   margin-bottom: 60px;
+  border: 2px dotted rgb(221, 221, 221);
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 20px;
 }
 .list__medform {
   display: flex;
@@ -35,7 +39,7 @@
     float: left;
     color: rgb(108, 167, 176);
     right: 150px;
-    top: -9px;
+    top: 9px;
     @media (max-width: 800px) {
       right: 60px;
     }
@@ -68,9 +72,14 @@
     color: rgb(134, 40, 12);
     margin: 0px 0px 4px;
     text-align: center;
-    margin-bottom: 15px
+    margin-bottom: 15px;
   }
 }
 
-@media (max-width: 840px) {
+@media (max-width: 960px) {
+  .med__main {
+    .outlone__info {
+      font-size: 30px;
+    }
+  }
 }

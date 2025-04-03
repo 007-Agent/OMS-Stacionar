@@ -25,7 +25,7 @@ export const MiniText = (props) => {
 
   return (
     <div className="title__form">
-      <h2 className="title">{props.v.name}</h2>
+      <h2 className="title">{props.v.name}:</h2>
       <input
         type="text"
         className="title__input"

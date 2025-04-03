@@ -28,11 +28,11 @@ export const PrimaryCheck = (props) => {
         break;
       case "generalHistory":
         startIndex = 25;
-        endIndex = 84;
+        endIndex = 76;
         break;
       case "resultHistory":
-        startIndex = 85;
-        endIndex = 90;
+        startIndex = 76;
+        endIndex = 88;
         break;
       default:
         questions = [];
@@ -45,16 +45,23 @@ export const PrimaryCheck = (props) => {
       <div>
         {questions.map((v, index) => {
           const originalIndex = startIndex + index; // Рассчитываем оригинальный индекс
-          return v.id !== null ? (
-            <Question
-              key={v.data.id}
-              v={v}
-              index={originalIndex}
-              onChange={handleChange} // Передаем оригинальный индекс
-            />
-          ) : (
-            <div className="title__content" key={index}>{`${v.name}:`}</div>
-          );
+          if (v.id !== null) {
+            return (
+              <Question
+                key={v.data.id} // Убедитесь, что v.data.id уникален
+                v={v}
+                index={originalIndex}
+                onChange={handleChange} // Передаем оригинальный индекс
+              />
+            );
+          } else {
+            // Возвращаем div только если index === 65
+            return index === 65 ? (
+              <div className="title__content" key={index}>
+                {`${v.name}:`}
+              </div>
+            ) : null;
+          }
         })}
       </div>
     );
@@ -130,4 +137,3 @@ export const PrimaryCheck = (props) => {
     </div>
   );
 };
-

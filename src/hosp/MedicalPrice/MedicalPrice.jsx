@@ -4,7 +4,7 @@ import { MdClear } from "react-icons/md";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import { Info } from "../Info/Info";
 import "./medprice.scss";
 import { DiaryEntry } from "../MedicForms/DiaryEntry/DiaryEntry";
 import { PrimaryCheck } from "../MedicForms/PrimaryExamination/PrimaryCheck";
@@ -116,7 +116,10 @@ function MedicalPrice(props) {
             </div>
           )}
         </div>
-        <h2 className="fio__name">{`Пациент: ${info.fio}`}</h2>
+        <div>
+          <Info info={info} />
+        </div>
+
         {isLoading && selectedComponent}
       </div>
     </>
