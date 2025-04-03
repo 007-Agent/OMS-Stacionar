@@ -18,7 +18,7 @@ export const Info = (props) => {
         {info.age} ({info.birthday})
       </div>
       {info.finance ? <div className="info__money">{info.finance}</div> : null}
-      <div className="allergy">Аллергия: {allergy} </div>
+      <div className="allergy">Аллергия: {allergy}</div>
     </div>
   );
 };

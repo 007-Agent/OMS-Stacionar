@@ -117,7 +117,7 @@ function MedicalPrice(props) {
           )}
         </div>
         <div>
-          <Info info={info} />
+          {isLoading &&<Info info={info} />}
         </div>
 
         {isLoading && selectedComponent}
