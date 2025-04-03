@@ -1,0 +1,40 @@
+.title__form {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgb(108, 167, 176);
+  height: 30px;
+  max-width: 700px;
+
+  .title__input {
+    box-sizing: border-box;
+    flex: 1 0 0%;
+    outline: none;
+    white-space: normal;
+    overflow: hidden;
+    min-height: 32px;
+    padding: 4px 4px 2px;
+    border: none;
+    color: rgb(0, 0, 0);
+    text-align: right;
+    
+    font-size: 21px;
+    overflow-wrap: break-word;
+  }
+  .title {
+    box-sizing: border-box;
+    cursor: default;
+    padding: 4px;
+    border: none;
+    color: rgb(108, 167, 176);
+    outline: none;
+    text-align: left;
+    
+    font-size: 21px;
+    display: inline;
+    opacity: 1;
+    z-index: 1;
+  }
+
+}

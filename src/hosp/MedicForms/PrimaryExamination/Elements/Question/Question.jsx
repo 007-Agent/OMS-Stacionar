@@ -1,18 +1,20 @@
 import React, { useState } from "react";
-import "./text.scss";
+import "./question.scss";
 import { useDispatch } from "react-redux";
 import { setText } from "../../../../../redux/InfoTitle";
 import debounce from "lodash.debounce";
-export const Text = (props) => {
+import { MiniText } from "../../../../../components/Answer/MiniText/MiniText";
+import { Text } from "../../../../../components/Answer/Text/Text";
+export const Question = (props) => {
   // console.log(props.v, "VVVVVVVVVVV");
   const dispatch = useDispatch();
 
-  const textInput = props.v?.data?.list?.[0]?.name;
-  const textareaRef = React.useRef(null);
-  console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
-  const initialText = textInput;
-  const [textValue, setTextValue] = useState(initialText);
-  const [textareaHeight, setTextareaHeight] = useState("38px");
+  // const textInput = props.v?.data?.list?.[0]?.name;
+  // const textareaRef = React.useRef(null);
+  // console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
+  // const initialText = textInput;
+  // const [textValue, setTextValue] = useState(initialText);
+  // const [textareaHeight, setTextareaHeight] = useState("38px");
   const clone = (source, exclude) => {
     let dest = null;
     if (typeof source === "function") {
@@ -66,7 +68,17 @@ export const Text = (props) => {
       );
     }
   };
+  const handleTextChange = (text) => {
+    if (props.onChange) {
+      const value = clone(props.v);
+      value.data.list = [];
+      if (text && text.trim() !== "") {
+        value.data.list.push({ id: null, order: 0, name: text });
+      }
 
+      change(value);
+    }
+  };
   // const handleChange = (event) => {
   //   const newValue = event.target.value; // Получаем новое значение из текстового поля
   //   setTextValue(newValue); // Обновляем состояние
@@ -81,30 +93,44 @@ export const Text = (props) => {
   //     change(value);
   //   }
   // };
-  const handleChange = (event) => {
-    const newValue = event.target.value;
-    setTextValue(newValue);
+  // const handleChange = (event) => {
+  //   const newValue = event.target.value;
+  //   setTextValue(newValue);
 
-    const value = clone(props.v);
-    value.data.list = [];
-    if (newValue && newValue.trim() !== "") {
-      value.data.list.push({ id: null, order: 0, name: newValue });
+  //   const value = clone(props.v);
+  //   value.data.list = [];
+  //   if (newValue && newValue.trim() !== "") {
+  //     value.data.list.push({ id: null, order: 0, name: newValue });
+  //   }
+
+  //   // Вызываем дебаунс только для изменения состояния Redux
+  //   debouncedChange(value);
+  // };
+  // const debouncedChange = React.useCallback(
+  //   debounce((value) => {
+  //     change(value);
+  //   }, 3000),
+  //   []
+  // );
+  let content = null;
+  if (props.v && props.v.data) {
+    const data = props.v.data;
+    console.log(data, "TYPE");
+    if (data.type === 4) {
+      content = <Text v={data} onChange={handleTextChange} />;
+    } else if (data.type === 1) {
+      content = <MiniText v={data} onChange={handleTextChange}/>;
+    } else {
+      content = <div>Нет данных</div>;
     }
-
-    // Вызываем дебаунс только для изменения состояния Redux
-    debouncedChange(value);
-  };
-  const debouncedChange = React.useCallback(
-    debounce((value) => {
-      change(value);
-    }, 3000),
-    []
-  );
+  } else {
+    content = <div>Неизвестный тип данных</div>; // Уточнили текст
+  }
 
   return (
     <div className="primary__form">
-      <h2 className="title__primary">{props.v.data.name}:</h2>
-
+      {content}
+      {/* <h2 className="title__primary">{props.v.data.name}:</h2>
       <textarea
         value={textValue}
         name="text"
@@ -118,7 +144,7 @@ export const Text = (props) => {
           e.target.style.minHeight = "20px"; // Сброс высоты
           e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
         }}
-      ></textarea>
+      ></textarea> */}
     </div>
   );
 };

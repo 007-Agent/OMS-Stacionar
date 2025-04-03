@@ -10,7 +10,7 @@ import { Header } from "./components/HeaderInfo/header/HeaderMain/Header";
 import { PacientList } from "./hosp/PacienList/PacientList";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./redux/authSlice";
-import RedirectOnReload from "./components/Redirect/Redirect";
+
 // import LoginForm from "./components/Login/LoginForm";
 // import { checkAuth } from "./redux/authSlice";
 export const SearchContext = createContext();

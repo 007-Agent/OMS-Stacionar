@@ -1,0 +1,29 @@
+.text__content {
+    display: flex;
+    flex-direction: column;
+  .text__primary {
+    box-sizing: border-box;
+    cursor: default;
+    padding: 4px;
+    border: none;
+    color: rgb(108, 167, 176);
+    outline: none;
+    text-align: left;
+   
+    font-size: 21px;
+    display: inline;
+    opacity: 1;
+    z-index: 1;
+  }
+  .text__from {
+    overflow: hidden;
+    height: 30px;
+    padding: 4px 4px 2px;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    color: rgb(0, 0, 0);
+    text-align: left;
+    
+    font-size: 21px;
+    margin-bottom: 5px;
+  }
+}
