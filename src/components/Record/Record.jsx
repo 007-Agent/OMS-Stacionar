@@ -150,7 +150,6 @@ export const Record = (props) => {
             <span>{obj.date}</span>
             <span>{obj.time}</span>
           </div>
-          <p>{props.user.name}</p>
         </div>
         <textarea
           // value={initialText ? initialText : text}

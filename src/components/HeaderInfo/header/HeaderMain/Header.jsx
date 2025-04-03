@@ -3,9 +3,10 @@ import { AiOutlineMenu } from "react-icons/ai";
 import "./header.scss";
 import { MenuList } from "../../../MenuList/MenuList";
 
-export const Header = () => {
+export const Header = (props) => {
   const [menu, setMenu] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const user = props.user;
 
   // const clickMenuShow = () => {
   //   setMenu(!menu);
@@ -42,7 +43,11 @@ export const Header = () => {
             onClick={clickMenuShow}
           />
 
-          <h3>Пользователь</h3>
+          {user ? (
+            <h3>{`Пользователь:  ${user.name} `}</h3>
+          ) : (
+            <h3>Нет пользователя!</h3>
+          )}
         </div>
       </div>
 

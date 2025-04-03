@@ -1,4 +1,4 @@
-import { React, useState, createContext, useEffect } from "react";
+import { React, useState, createContext, useEffect, Navigate } from "react";
 
 // import store from "./redux/store";
 import { Routes, Route } from "react-router-dom";
@@ -10,18 +10,25 @@ import { Header } from "./components/HeaderInfo/header/HeaderMain/Header";
 import { PacientList } from "./hosp/PacienList/PacientList";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./redux/authSlice";
+import RedirectOnReload from "./components/Redirect/Redirect";
 // import LoginForm from "./components/Login/LoginForm";
 // import { checkAuth } from "./redux/authSlice";
 export const SearchContext = createContext();
 function App() {
   const { user, checkStatus } = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+    console.log(checkStatus, "status");
+    console.log(user === null);
+  }, [dispatch]);
   // const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState();
-return (
+  return (
     <>
       <SearchContext.Provider value={{ searchValue, setSearchValue }}>
-        <Header />
+        <Header user={user} />
+
         <Routes>
           <Route path="/" element={<Main user={user} />} />
           <Route

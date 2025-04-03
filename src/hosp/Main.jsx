@@ -27,11 +27,7 @@ function Main(props) {
   //     .toLowerCase()
   //     .includes(searchValue ? searchValue.toLowerCase() : "");
   // });
-  useEffect(() => {
-    dispatch(checkAuth());
-    console.log(checkStatus, "status");
-    console.log(user === null);
-  }, [dispatch]);
+  
 
   useEffect(() => {
     refresh();
@@ -44,7 +40,7 @@ function Main(props) {
   // }, [type, searchValue]);
   const refresh = () => {
     const query = { type, family: searchValue };
-    // console.log(query);
+    console.log(query);
 
     // Выполняем Axios запрос
     axios.post("/rest/hosp/list", query).then((response) => {
@@ -97,11 +93,7 @@ function Main(props) {
             <LoginForm /> // Если пользователь не авторизован
           ) : (
             list.map((item) => (
-              <Link
-                to={`/patient-detail/${item.id}`}
-                key={item.id}
-                user={props.user}
-              >
+              <Link to={`/patient-detail/${item.id}`} key={item.id} user={user}>
                 <HospList info={item} />
               </Link>
             ))

@@ -4,6 +4,7 @@ import { MdClear } from "react-icons/md";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
+
 import "./medprice.scss";
 import { DiaryEntry } from "../MedicForms/DiaryEntry/DiaryEntry";
 import { PrimaryCheck } from "../MedicForms/PrimaryExamination/PrimaryCheck";
@@ -17,11 +18,11 @@ function MedicalPrice(props) {
   // const PrimaryExamination = () => <div>Содержимое первичного осмотра</div>;
   // const DoctorExamination = () => <div>Содержимое осмотра лечащим врачом</div>;
   // const TemperatureSheet = () => <div>Содержимое температурного листа</div>;
-
+  const { user, checkStatus } = useSelector((state) => state.auth);
   const [index, setIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState();
-  const cont = <div>Выберите тип медицинской формы</div>
+  const cont = <div>Выберите тип медицинской формы</div>;
   const [info, setInfo] = useState({});
   const { id } = useParams();
 
@@ -75,7 +76,6 @@ function MedicalPrice(props) {
         />
       );
     } else {
-      
       setSelectedComponent(cont);
     }
   };
@@ -89,6 +89,7 @@ function MedicalPrice(props) {
   }, [id]); // Зависимость от id, чтобы выполнять запрос при его изменении
   console.log(info.records, "fjfweiofhweiohfwefhwe");
   console.log(info, "ddddddddddd");
+
   return (
     <>
       <div className="med__main">
