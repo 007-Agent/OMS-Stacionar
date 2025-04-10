@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { CiCirclePlus } from "react-icons/ci";
-
+import { nanoid } from "nanoid";
 // import Temperature from '../../MetaRecords/Temperature/Temperature'
 import "./temperatureSheet.scss";
 
@@ -65,7 +65,7 @@ export const TemperatureSheet = (props) => {
     if (found) {
       const current = new Date();
       const newRecord = {
-        key: crypto.randomUUID(),
+        key: nanoid(),
         name: JSON.stringify({
           type: "temperature",
           user: { id: props.user.id, name: props.user.name },

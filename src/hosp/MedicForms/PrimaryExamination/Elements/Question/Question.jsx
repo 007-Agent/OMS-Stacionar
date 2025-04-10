@@ -5,6 +5,8 @@ import { setText } from "../../../../../redux/InfoTitle";
 import debounce from "lodash.debounce";
 import { MiniText } from "../../../../../components/Answer/MiniText/MiniText";
 import { Text } from "../../../../../components/Answer/Text/Text";
+import { ListType } from "../../../../../components/Answer/List/ListType";
+import { ListBox } from "../../../../../components/Answer/ListBox/ListBox";
 export const Question = (props) => {
   console.log(props.v, "VVVVVVVVVVV");
   const dispatch = useDispatch();
@@ -79,42 +81,17 @@ export const Question = (props) => {
       change(value);
     }
   };
-  // const handleChange = (event) => {
-  //   const newValue = event.target.value; // Получаем новое значение из текстового поля
-  //   setTextValue(newValue); // Обновляем состояние
-
-  //   if (props.onChange) {
-  //     const value = clone(props.v);
-  //     value.data.list = [];
-  //     if (newValue && newValue.trim() !== "") {
-  //       value.data.list.push({ id: null, order: 0, name: newValue });
-  //     }
-
-  //     change(value);
-  //   }
-  // };
-  // const handleChange = (event) => {
-  //   const newValue = event.target.value;
-  //   setTextValue(newValue);
-
-  //   const value = clone(props.v);
-  //   value.data.list = [];
-  //   if (newValue && newValue.trim() !== "") {
-  //     value.data.list.push({ id: null, order: 0, name: newValue });
-  //   }
-
-  //   // Вызываем дебаунс только для изменения состояния Redux
-  //   debouncedChange(value);
-  // };
-  // const debouncedChange = React.useCallback(
-  //   debounce((value) => {
-  //     change(value);
-  //   }, 3000),
-  //   []
-  // );
+  const handleRefChange = (event) => {
+    console.log(event, "ТУТАТАТА");
+    if (props.onChange) {
+      let value = clone(props.v);
+      value.data.list = event.value.slice();
+      change(value);
+    }
+  };
   let information = null;
-  if(props.v){
-    information = <div>{props.v.name}</div>
+  if (props.v) {
+    information = <div>{props.v.name}</div>;
   }
   let content = null;
   if (props.v && props.v.data) {
@@ -124,6 +101,28 @@ export const Question = (props) => {
       content = <Text v={data} onChange={handleTextChange} />;
     } else if (data.type === 1) {
       content = <MiniText v={data} onChange={handleTextChange} />;
+    } else if (data.type === 7) {
+      let value = data.list;
+      console.log(value, "dataList");
+      content = (
+        <ListType
+          v={data}
+          id={props.v.data.id}
+          value={value}
+          onChange={handleRefChange}
+        />
+      );
+    } else if (data.type === 6) {
+      let value = data.list;
+      console.log(value, "dataListBOX");
+      content = (
+        <ListBox
+          v={data}
+          id={props.v.data.id}
+          value={value}
+          onChange={handleRefChange}
+        />
+      );
     } else {
       content = <div>Нет данных</div>;
     }

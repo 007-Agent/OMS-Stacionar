@@ -18,17 +18,18 @@ export default defineConfig({
   },
   server: {
     port: 9000,
+    host: true,
     proxy: {
       '/api': {
-        target: 'http://10.16.1.28:8080',
+        target: 'http://127.0.0.1:8080',
         changeOrigin: true,
       },
       '/rest': {
-        target: 'http://10.16.1.28:8080',
+        target: 'http://127.0.0.1:8080',
         changeOrigin: true,
       },
       '/policy': {
-        target: 'http://10.16.1.28:8080',
+        target: 'http://127.0.0.1:8080',
         changeOrigin: true,
       },
     },

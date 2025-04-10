@@ -121,7 +121,7 @@ export const PrimaryCheck = (props) => {
           className="button"
           onClick={() => handleShowComponent("generalHistory")}
         >
-          Общие сведения
+          Физик. исследования
         </button>
         <button
           className="button"

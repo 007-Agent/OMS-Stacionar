@@ -1,0 +1,77 @@
+.modal__main {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition-property: background-color;
+  transition-duration: 250ms;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Отступы между элементами */
+  overflow-y: auto; /* Вертикальная прокрутка */
+}
+
+.item {
+  cursor: pointer;
+  padding: 7px 0; /* Учитываем, что padding задан дважды, оставляем только нужный */
+  border-bottom: 1px solid red;
+  border: 1px solid #9d9d9d;
+  border-radius: 5px;
+  font-size: 25px;
+  font-family: Arial;
+}
+
+.content {
+  position: absolute;
+  top: 50%; /* Центрируем по вертикали */
+  left: 50%; /* Центрируем по горизонтали */
+  transform: translate(-50%, -50%); /* Центрируем */
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Отступы между элементами */
+  max-height: 80%; /* Ограничиваем максимальную высоту */
+  overflow-y: auto; /* Вертикальная прокрутка */
+  border: 1px solid #ccc; /* Для визуального разделения */
+  padding: 10px;
+  background-color: rgb(209, 214, 220);
+  width: 500px;
+}
+
+.top__test {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 30px;
+}
+
+.targetElement {
+  box-sizing: border-box;
+  flex: 1 0 0%;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  min-height: 0;
+  padding: 4px 4px 2px;
+  border: none;
+  color: rgb(108, 167, 176);
+  text-align: left;
+  font-family: Arial;
+  font-size: 22px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  color: rgb(108, 167, 176);
+}

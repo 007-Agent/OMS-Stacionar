@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./diary.scss";
 import { CiCirclePlus } from "react-icons/ci";
 import { Record } from "../../../components/Record/Record";
-
+import { nanoid } from 'nanoid'
 export const DiaryEntry = (props) => {
   const [records, setRecords] = useState(props.data);
   console.log(props.user);
@@ -71,7 +71,7 @@ export const DiaryEntry = (props) => {
     if (found) {
       const current = new Date();
       const newRecord = {
-        key: crypto.randomUUID(),
+        key: nanoid(),
         name: JSON.stringify({
           type: "record",
           user: { id: props.user.id, name: props.user.name },

@@ -1,0 +1,127 @@
+.list__form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  margin: 8px 0;
+  padding: 0;
+  width: 100%;
+}
+
+.list__full {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: column wrap;
+  padding: 8px;
+  border: 1px solid rgba(108, 167, 176, 0.5);
+  flex: 1 1 0%;
+  border-radius: 8px 22px 22px 8px;
+}
+
+.list__title {
+  box-sizing: border-box;
+  cursor: default;
+  padding: 4px;
+  border: none;
+  color: rgb(108, 167, 176);
+  outline: none;
+  text-align: left;
+  font-family: Arial;
+  font-size: 24px;
+  display: inline;
+  opacity: 1;
+  z-index: 1;
+  align-self: flex-start;
+  margin: 0 0 -16px 8px;
+  background-color: rgb(255, 255, 255);
+}
+
+.list__check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0 0;
+  height: 45px;
+}
+
+.list__change {
+  outline: none;
+  user-select: none;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    rgba(52, 121, 130, 0.15),
+    rgb(255, 255, 255)
+  );
+  background-color: rgba(52, 121, 130, 0.15);
+  border-radius: 4px 16px 16px 4px;
+  height: auto;
+}
+
+.list__tabindex {
+  outline: none;
+  user-select: none;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    rgba(52, 121, 130, 0.15),
+    rgb(255, 255, 255)
+  );
+  background-color: rgba(52, 121, 130, 0.15);
+  border-radius: 4px 16px 16px 4px;
+  height: 40px;
+}
+
+.list__content {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.icon {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  color: green;
+  flex-shrink: 0;
+  flex-grow: 0;
+  text-align: right;
+  cursor: pointer;
+  margin: 0 0 0 4px;
+}
+
+.list__text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  font-family: Arial;
+  font-size: 24px;
+  text-align: right;
+}
+
+.title {
+  flex: 1 1 auto;
+  width: 100%;
+  margin: 0 16px 0 0;
+}
+
+.minus {
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  color: rgb(221, 34, 34);
+  flex-grow: 0;
+  cursor: pointer;
+}
