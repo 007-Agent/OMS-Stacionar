@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./primary.scss";
 import axios from "axios";
 // Импортируем Text компонент
@@ -8,8 +8,10 @@ import { Question } from "./Elements/Question/Question";
 export const PrimaryCheck = (props) => {
   const [currentComponent, setCurrentComponent] = useState(null);
   const textInfo = useSelector((state) => state.text.textInfo);
-
+  const [Loading, setLoading] = useState(false);
+  console.log(textInfo, "TEXTINFO");
   const [data2, setData] = useState(props.data);
+
   const data = props.data;
 
   const handleShowComponent = (componentType) => {
@@ -70,6 +72,7 @@ export const PrimaryCheck = (props) => {
   const handleChange = (event) => {
     console.log(event, "propsEVENT");
     console.log(textInfo, "TEXTINFO REDUX");
+    setLoading(true);
     const index = event.index;
     if (index >= 0) {
       // объект со всеми вопросами
@@ -81,6 +84,19 @@ export const PrimaryCheck = (props) => {
       setData(data2);
     }
   };
+
+  // useEffect(() => {
+  //   const index = textInfo.indexQuest;
+  //   // Проверяем, есть ли индекс вопроса и элемент в textInfo
+  //   if (index >= 0 && textInfo.item.length > 0) {
+  //     const index = textInfo.indexQuest;
+  //     data2[index].data.list = textInfo; // Создаем копию массива
+  //     // Добавляем новый элемент
+  //     setData(data2); // Обновляем состояние
+
+  //   }
+  // }, [textInfo]);
+
   console.log(data2, "MAIN CHECK");
 
   const handleClickSave = () => {

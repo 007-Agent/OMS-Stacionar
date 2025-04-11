@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import "./listbox.scss";
-import { ModalChange } from "../ModalChange/ModalList";
+
 import axios from "axios";
 import { FiMinusCircle } from "react-icons/fi";
 import { ModalBox } from "../ListBox/ModalBox/ModalBox";
@@ -102,7 +102,7 @@ export const ListBox = (props) => {
         });
         setIsLoading(false);
       }
-
+      setIsLoading(false);
       console.log(value, "????");
     }
   };
@@ -115,6 +115,7 @@ export const ListBox = (props) => {
     console.log(event, "DELETE");
     let index = event;
     console.log(index);
+
     if (index >= 0) {
       let value = clone(valueNew);
       console.log(value, "valuedelete");
@@ -182,7 +183,7 @@ export const ListBox = (props) => {
         <div className="list__check">
           <div className="list__content">
             <div className="list__tabindex"></div>
-            <FaPlusCircle className="icon" onClick={handleClickSetState} />
+            <FaPlusCircle className="icon-2" onClick={handleClickSetState} />
           </div>
         </div>
       </div>
@@ -193,6 +194,7 @@ export const ListBox = (props) => {
           onClick={handleRefChange}
           list={valueNew}
           onClose={handleCloseModal}
+          index={props.index}
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import "./list.scss";
 import { ModalList } from "../ModalChange/ModalList";
@@ -10,6 +10,7 @@ const REF_URL_TABLE = "/rest/pol/ref";
 
 export const ListType = (props) => {
   const [valueNew, setValue] = useState(props.value);
+
   console.log(valueNew, "PROPEEER");
   const v = props.v;
   // console.log(props.value, 'PROPEEER121212')
@@ -93,6 +94,7 @@ export const ListType = (props) => {
       console.log(value, "EVIIIIIIIIIIIIIIIIIIIIIIIIMT");
       console.log(event.item, "EVIIIIIIIIIIIIIIIIIIIIIIIIMT");
       setValue(value);
+
       if (props.onChange) {
         props.onChange({
           name: "",
@@ -145,7 +147,7 @@ export const ListType = (props) => {
   console.log(items);
   return (
     <div className="list__form">
-      <div className="list__title">{props.v.name} rfrfrrfr</div>
+      <div className="list__title">{props.v.name}ededed</div>
 
       <div className="list__full">
         {list}
@@ -162,6 +164,7 @@ export const ListType = (props) => {
           v={v}
           onClick={handleRefChange}
           list={valueNew}
+          index={props.index}
         />
       )}
     </div>

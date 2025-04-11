@@ -81,14 +81,14 @@ export const Question = (props) => {
       change(value);
     }
   };
-  const handleRefChange = (event) => {
-    console.log(event, "ТУТАТАТА");
-    if (props.onChange) {
-      let value = clone(props.v);
-      value.data.list = event.value.slice();
-      change(value);
-    }
-  };
+  // const handleRefChange = (event) => {
+  //   console.log(event, "ТУТАТАТА");
+  //   if (props.onChange) {
+  //     let value = clone(props.v);
+  //     value.data.list = event.value.slice();
+  //     change(value);
+  //   }
+  // };
   let information = null;
   if (props.v) {
     information = <div>{props.v.name}</div>;
@@ -99,9 +99,9 @@ export const Question = (props) => {
     console.log(data, "TYPE");
     if (data.type === 4) {
       content = <Text v={data} onChange={handleTextChange} />;
-    } else if (data.type === 1) {
+    } else if (data.type === 2) {
       content = <MiniText v={data} onChange={handleTextChange} />;
-    } else if (data.type === 7) {
+    } else if (data.type === 1) {
       let value = data.list;
       console.log(value, "dataList");
       content = (
@@ -109,10 +109,11 @@ export const Question = (props) => {
           v={data}
           id={props.v.data.id}
           value={value}
-          onChange={handleRefChange}
+          // onChange={handleRefChange}
+          index={props.index}
         />
       );
-    } else if (data.type === 6) {
+    } else if (data.type === 7) {
       let value = data.list;
       console.log(value, "dataListBOX");
       content = (
@@ -120,7 +121,8 @@ export const Question = (props) => {
           v={data}
           id={props.v.data.id}
           value={value}
-          onChange={handleRefChange}
+          // onChange={handleRefChange}
+          index={props.index}
         />
       );
     } else {

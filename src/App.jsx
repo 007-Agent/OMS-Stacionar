@@ -24,9 +24,12 @@ function App() {
   }, [dispatch]);
   // const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState();
+ 
   return (
     <>
-      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+      <SearchContext.Provider
+        value={{ searchValue, setSearchValue }}
+      >
         <Header user={user} />
 
         <Routes>
