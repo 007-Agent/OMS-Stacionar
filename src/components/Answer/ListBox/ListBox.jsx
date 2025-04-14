@@ -175,7 +175,7 @@ export const ListBox = (props) => {
     //     />
     //   )}
     // </div>
-    <div className="list__form">
+    <div className="list__form" onClick={props.onClose}>
       <div className="list__title">{props.v.name}</div>
 
       <div className="list__full">
