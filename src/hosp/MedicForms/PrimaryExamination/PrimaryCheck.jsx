@@ -22,19 +22,19 @@ export const PrimaryCheck = (props) => {
     switch (componentType) {
       case "complaints":
         startIndex = 0;
-        endIndex = 10;
+        endIndex = 8;
         break;
       case "medicalHistory":
-        startIndex = 10;
-        endIndex = 25;
+        startIndex = 8;
+        endIndex = 22;
         break;
       case "generalHistory":
-        startIndex = 25;
-        endIndex = 76;
+        startIndex = 23;
+        endIndex = 73;
         break;
       case "resultHistory":
-        startIndex = 76;
-        endIndex = 88;
+        startIndex = 74;
+        endIndex = 79;
         break;
       default:
         questions = [];
@@ -57,12 +57,7 @@ export const PrimaryCheck = (props) => {
               />
             );
           } else {
-            // Возвращаем div только если index === 65
-            return index === 65 ? (
-              <div className="title__content" key={index}>
-                {`${v.name}:`}
-              </div>
-            ) : null;
+            <div className="title__content" key={index}>{`${v.name}:`}</div>;
           }
         })}
       </div>

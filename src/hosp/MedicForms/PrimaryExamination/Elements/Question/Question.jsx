@@ -81,14 +81,14 @@ export const Question = (props) => {
       change(value);
     }
   };
-  // const handleRefChange = (event) => {
-  //   console.log(event, "ТУТАТАТА");
-  //   if (props.onChange) {
-  //     let value = clone(props.v);
-  //     value.data.list = event.value.slice();
-  //     change(value);
-  //   }
-  // };
+  const handleRefChange = (event) => {
+    console.log(event, "ТУТАТАТА");
+    if (props.onChange) {
+      let value = clone(props.v);
+      value.data.list = event.value.slice();
+      change(value);
+    }
+  };
   let information = null;
   if (props.v) {
     information = <div>{props.v.name}</div>;
@@ -109,7 +109,7 @@ export const Question = (props) => {
           v={data}
           id={props.v.data.id}
           value={value}
-          // onChange={handleRefChange}
+          onChange={handleRefChange}
           index={props.index}
         />
       );
@@ -121,7 +121,7 @@ export const Question = (props) => {
           v={data}
           id={props.v.data.id}
           value={value}
-          // onChange={handleRefChange}
+          onChange={handleRefChange}
           index={props.index}
         />
       );

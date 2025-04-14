@@ -56,7 +56,14 @@ function MedicalPrice(props) {
         />
       );
     } else if (index === "2") {
-      setSelectedComponent(<DoctorExamination />);
+      setSelectedComponent(
+        <DoctorExamination
+          project={PROJECT}
+          user={props.user}
+          data={info.secondcheck}
+          name={"temperature"}
+        />
+      );
     } else if (index === "3") {
       setSelectedComponent(
         <TemperatureSheet
@@ -116,9 +123,7 @@ function MedicalPrice(props) {
             </div>
           )}
         </div>
-        <div>
-          {isLoading &&<Info info={info} />}
-        </div>
+        <div>{isLoading && <Info info={info} />}</div>
 
         {isLoading && selectedComponent}
       </div>

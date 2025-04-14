@@ -147,7 +147,7 @@ export const ListType = (props) => {
   console.log(items);
   return (
     <div className="list__form">
-      <div className="list__title">{props.v.name}ededed</div>
+      <div className="list__title">{props.v.name}</div>
 
       <div className="list__full">
         {list}
