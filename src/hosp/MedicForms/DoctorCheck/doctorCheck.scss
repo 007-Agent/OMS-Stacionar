@@ -8,7 +8,7 @@
   flex: 1 1 0%;
   border-radius: 8px 22px 22px 8px;
   padding: 10px;
-  .title__content {
+  .text__info {
     box-sizing: border-box;
     cursor: default;
     padding: 4px;
@@ -20,6 +20,7 @@
     font-size: 24px;
     display: inline;
     margin-bottom: 5px;
+    padding-left: 15px;
   }
   .button__save {
     cursor: pointer;
@@ -42,19 +43,6 @@
   }
 }
 
-.title__content {
-  box-sizing: border-box;
-  cursor: default;
-  padding: 4px;
-  border: none;
-  color: rgb(108, 167, 176);
-  outline: none;
-  text-align: left;
-  font-family: Arial;
-  font-size: 24px;
-  display: inline;
-  margin-bottom: 5px;
-}
 .button__form {
   display: flex;
   gap: 0 20px;
@@ -78,19 +66,6 @@
 
     font-size: 18px;
     opacity: 1;
-  }
-  .title__content {
-    box-sizing: border-box;
-    cursor: default;
-    padding: 4px;
-    border: none;
-    color: rgb(150, 8, 3);
-    outline: none;
-    text-align: left;
-    font-family: Arial;
-    font-size: 24px;
-    display: inline;
-    margin-bottom: 5px;
   }
 }
 .primary__content {

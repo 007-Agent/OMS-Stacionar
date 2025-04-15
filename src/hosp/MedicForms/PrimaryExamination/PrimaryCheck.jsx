@@ -4,14 +4,14 @@ import axios from "axios";
 // Импортируем Text компонент
 import { useSelector } from "react-redux";
 import { Question } from "./Elements/Question/Question";
-
+import { FaArrowAltCircleUp } from "react-icons/fa";
 export const PrimaryCheck = (props) => {
   const [currentComponent, setCurrentComponent] = useState(null);
   const textInfo = useSelector((state) => state.text.textInfo);
   const [Loading, setLoading] = useState(false);
   console.log(textInfo, "TEXTINFO");
   const [data2, setData] = useState(props.data);
-
+  const [result, setResult] = useState(false);
   const data = props.data;
 
   const handleShowComponent = (componentType) => {
@@ -45,7 +45,7 @@ export const PrimaryCheck = (props) => {
     questions = data.slice(startIndex, endIndex);
     setCurrentComponent(
       <div>
-        {questions.map((v, index) => {
+        {/* {questions.map((v, index) => {
           const originalIndex = startIndex + index; // Рассчитываем оригинальный индекс
           if (v.id !== null) {
             return (
@@ -57,11 +57,28 @@ export const PrimaryCheck = (props) => {
               />
             );
           } else {
-            <div className="title__content" key={index}>{`${v.name}:`}</div>;
+            <div className="title__text" key={index}>{`${v.name}:`}</div>;
           }
+        })} */}
+        {questions.map((v, index) => {
+          const originalIndex = startIndex + index; // Рассчитываем оригинальный индекс
+          return v.id !== null ? (
+            <Question
+              key={v.data.id}
+              v={v}
+              index={originalIndex}
+              onChange={handleChange} // Передаем оригинальный индекс
+            />
+          ) : (
+            <div className="title__text" key={index}>{`${v.name}:`}</div>
+          );
         })}
       </div>
     );
+  };
+
+  const handleScrollClick = () => {
+    window.scrollTo(110, 110);
   };
 
   const handleChange = (event) => {
@@ -77,6 +94,7 @@ export const PrimaryCheck = (props) => {
       console.log(data2[index], "INDEX");
       console.log(data2, "DATA#222");
       setData(data2);
+      setResult(true);
     }
   };
 
@@ -142,9 +160,14 @@ export const PrimaryCheck = (props) => {
         </button>
       </div>
       <div className="primary__content">{currentComponent}</div>
-      <button onClick={handleClickSave} className="button__save">
-        Сохранить
-      </button>
+
+      {result && (
+        <button onClick={handleClickSave} className="button__save">
+          Сохранить
+        </button>
+      )}
+
+      <FaArrowAltCircleUp className="marker" onClick={handleScrollClick} />
     </div>
   );
 };

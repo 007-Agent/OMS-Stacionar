@@ -56,7 +56,7 @@ export const DoctorExamination = (props) => {
             onChange={handleChange} // Передаем оригинальный индекс
           />
         ) : (
-          <div className="text__content" key={index}>{`${v.name}:`}</div>
+          <div className="text__info" key={index}>{`${v.name}:`}</div>
         );
       })}
     </div>
