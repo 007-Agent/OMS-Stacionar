@@ -12,6 +12,7 @@ export const PrimaryCheck = (props) => {
   console.log(textInfo, "TEXTINFO");
   const [data2, setData] = useState(props.data);
   const [result, setResult] = useState(false);
+  const [save, setSave] = useState(false);
   const data = props.data;
 
   const handleShowComponent = (componentType) => {
@@ -119,16 +120,10 @@ export const PrimaryCheck = (props) => {
       })
       .then((response) => {
         console.log(response.data);
+        setSave(true);
       });
-    // .then((response) => {
-    //   const clonedData = clone(response.data.data); // Клонируем данные из ответа
-    //   setData(clonedData); // Обновляем состояние
-    //   // Вызываем уведомление после обновления состояния
-    //   console.log(response.data.data, "RESUUULT"); // Логируем результат
-    // })
-    // .catch((error) => {
-    //   console.error("There was an error updating the data!", error); // Обработка ошибок
-    // });
+    setTimeout(() => setSave(false), 5000);
+    setTimeout(() => setResult(false), 5000);
   };
 
   return (
@@ -161,11 +156,14 @@ export const PrimaryCheck = (props) => {
       </div>
       <div className="primary__content">{currentComponent}</div>
 
-      {result && (
-        <button onClick={handleClickSave} className="button__save">
-          Сохранить
-        </button>
-      )}
+      <div className="result__save">
+        {result && (
+          <button onClick={handleClickSave} className="button__save">
+            Сохранить
+          </button>
+        )}
+        {save && <div className="saving">Данные отправленны!</div>}
+      </div>
 
       <FaArrowAltCircleUp className="marker" onClick={handleScrollClick} />
     </div>

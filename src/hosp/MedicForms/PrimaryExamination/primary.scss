@@ -28,6 +28,23 @@
     width: 138px;
     margin-left: 15px;
   }
+  .result__save {
+    display: flex;
+    align-items: center;
+    gap: 0 30px;
+  }
+  .saving {
+    box-sizing: border-box;
+    cursor: default;
+    padding: 4px;
+    border: none;
+    color: rgb(150, 8, 3);
+    outline: none;
+    text-align: left;
+    font-family: Arial;
+    font-size: 22px;
+    display: inline;
+  }
 }
 
 .button__form {

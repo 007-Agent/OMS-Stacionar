@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./question.scss";
 import { useDispatch } from "react-redux";
-import { setText } from "../../../../../redux/InfoTitle";
+// import { setText } from "../../../../../redux/InfoTitle";
 import debounce from "lodash.debounce";
 import { MiniText } from "../../../../../components/Answer/MiniText/MiniText";
 import { Text } from "../../../../../components/Answer/Text/Text";
@@ -9,7 +9,7 @@ import { ListType } from "../../../../../components/Answer/List/ListType";
 import { ListBox } from "../../../../../components/Answer/ListBox/ListBox";
 export const Question = (props) => {
   console.log(props.v, "VVVVVVVVVVV");
-  const dispatch = useDispatch();
+
 
   // const textInput = props.v?.data?.list?.[0]?.name;
   // const textareaRef = React.useRef(null);
@@ -61,13 +61,7 @@ export const Question = (props) => {
         index: props.index,
         value: value,
       });
-      dispatch(
-        setText({
-          name: props.name,
-          index: props.index,
-          value: value,
-        })
-      );
+      
     }
   };
   const handleTextChange = (text) => {

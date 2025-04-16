@@ -151,30 +151,6 @@ export const ListBox = (props) => {
   console.log(valueNew, "LISTIK");
   console.log(items);
   return (
-    // <div style={styles.list__form}>
-    //   <div style={styles.list__title}>{props.v.name}</div>
-
-    //   <div style={styles.list__full}>
-    //     {list}
-    //     <div style={styles.list__check}>
-    //       <div style={styles.list__change}>
-    //         <div style={styles.list__content}>
-    //           <div style={styles.list__tabindex}></div>
-    //           <FaPlusCircle style={styles.icon} onClick={handleClickSetState} />
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   {isLoading && (
-    //     <ModalBox
-    //       items={items}
-    //       v={v}
-    //       onClick={handleRefChange}
-    //       list={valueNew}
-    //       onClose={handleCloseModal}
-    //     />
-    //   )}
-    // </div>
     <div className="list__form" onClick={props.onClose}>
       <div className="list__title">{props.v.name}</div>
 
