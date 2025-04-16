@@ -79,7 +79,7 @@ export const PrimaryCheck = (props) => {
   };
 
   const handleScrollClick = () => {
-    window.scrollTo(110, 110);
+    window.scrollTo({ top: 110, left: 110, behavior: "smooth" });
   };
 
   const handleChange = (event) => {
