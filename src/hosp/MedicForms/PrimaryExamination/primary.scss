@@ -88,17 +88,18 @@
     font-size: 22px;
     display: inline;
     margin-bottom: 5px;
-    padding-left: 15px;
+    margin-bottom: 15px;
   }
 }
 .marker {
   position: absolute;
   right: 64px;
   bottom: -76px;
-
+  cursor: pointer;
   width: 46px;
   height: 46px;
   color: rgb(108, 167, 176);
+  padding-bottom: 15px;
 }
 @media (max-width: 960px) {
   .primary__main {

@@ -15,6 +15,7 @@ export const TempItem = (props) => {
   const [result, setResult] = useState(props.value);
   const [text, setText] = useState();
   const [isTextModified, setIsTextModified] = useState(false);
+  const [isSaved, setIsSaved] = React.useState(false);
 
   function handleChange(event) {
     setIsTextModified(true);
@@ -82,6 +83,8 @@ export const TempItem = (props) => {
   }
   function save() {
     setIsTextModified(false);
+    saved();
+   
     axios
       .post(`/rest/${props.project}/${props.name}/update`, {
         data: [result],
@@ -92,6 +95,21 @@ export const TempItem = (props) => {
         console.log(response, "res");
       });
   }
+
+  // функция, вызываемая при клике "Сохранить"
+  const saved = () => {
+    // тут ваша логика сохранения
+    // после успешного сохранения обновляем состояние
+    setIsSaved((prev) => !prev); // меняем состояние, чтобы сработал useEffect
+  };
+
+
+
+  // внутри useEffect:
+  React.useEffect(() => {
+    console.log("useEffect сработал после сохранения");
+  }, [isSaved]);
+
   function HandleInfoDelete(event) {
     if (props.onDelete) {
       props.onDelete({ key: event.key });

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { Question } from "./Elements/Question/Question";
 import { FaArrowAltCircleUp } from "react-icons/fa";
+import { BiPrinter } from "react-icons/bi";
 export const PrimaryCheck = (props) => {
   const [currentComponent, setCurrentComponent] = useState(null);
   const textInfo = useSelector((state) => state.text.textInfo);
@@ -14,7 +15,9 @@ export const PrimaryCheck = (props) => {
   const [result, setResult] = useState(false);
   const [save, setSave] = useState(false);
   const data = props.data;
-
+  const id = props.id;
+  const newID = 33165;
+  const repCoding = "stat.card.sancur";
   const handleShowComponent = (componentType) => {
     let questions;
     let startIndex;
@@ -46,21 +49,6 @@ export const PrimaryCheck = (props) => {
     questions = data.slice(startIndex, endIndex);
     setCurrentComponent(
       <div>
-        {/* {questions.map((v, index) => {
-          const originalIndex = startIndex + index; // Рассчитываем оригинальный индекс
-          if (v.id !== null) {
-            return (
-              <Question
-                key={v.data.id} // Убедитесь, что v.data.id уникален
-                v={v}
-                index={originalIndex}
-                onChange={handleChange} // Передаем оригинальный индекс
-              />
-            );
-          } else {
-            <div className="title__text" key={index}>{`${v.name}:`}</div>;
-          }
-        })} */}
         {questions.map((v, index) => {
           const originalIndex = startIndex + index; // Рассчитываем оригинальный индекс
           return v.id !== null ? (
@@ -76,6 +64,49 @@ export const PrimaryCheck = (props) => {
         })}
       </div>
     );
+  };
+
+  const clickHandlePrinterPDF = async () => {
+    const url = "/rest/hosp/statcard";
+
+    try {
+      const response = await axios.post(url, {
+        id,
+        repCode: "stat.card.sancur",
+      });
+      console.log(response.data.data, "ответ от сервера");
+      if (response.status === 200) {
+        let base64Data = response.data.data;
+
+        if (typeof base64Data !== "string") {
+          console.error("Полученные данные не являются строкой:", base64Data);
+          return;
+        }
+
+        base64Data = base64Data.replace(/-/g, "+").replace(/_/g, "/");
+
+        const padding = base64Data.length % 4;
+        if (padding) {
+          base64Data += "=".repeat(4 - padding);
+        }
+
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Uint8Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const blob = new Blob([byteNumbers], { type: "application/pdf" });
+
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute("download", "stat_card.pdf");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      console.error("Ошибка при получении файла:", error);
+    }
   };
 
   const handleScrollClick = () => {
@@ -128,6 +159,7 @@ export const PrimaryCheck = (props) => {
 
   return (
     <div className="primary__main">
+      <BiPrinter onClick={clickHandlePrinterPDF} />
       <div className="button__form">
         <button
           className="button"

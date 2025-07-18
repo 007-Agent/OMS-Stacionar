@@ -1,32 +1,3 @@
-.record__content {
-  display: flex;
-  flex-direction: column;
-  gap: 5px 0;
-  .save__button {
-    cursor: pointer;
-    user-select: none;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 14px;
-    background-color: rgb(108, 167, 176);
-    color: rgb(255, 255, 255);
-    border-radius: 8px;
-    text-align: center;
-    border: 1px solid rgba(108, 167, 176, 0.5);
-    font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
-    font-size: 18px;
-    opacity: 1;
-    width: 140px;
-  }
-  .button__info {
-    display: flex;
-    align-items: center;
-    gap: 0 30px;
-  }
-}
-
 .record__input {
   box-sizing: border-box;
   outline: none;
@@ -37,7 +8,7 @@
   border: 1px solid rgba(108, 167, 176, 0.5);
   color: rgb(0, 0, 0);
   text-align: left;
-  
+
   font-size: 24px;
   width: 100%; /* Ширина */
   resize: none;
@@ -47,6 +18,29 @@
   @media (max-width: 800px) {
     width: 760px; // На планшетах каждый элемент занимает 48% ширины
   }
+}
+.record__content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px 0;
+}
+.save__click {
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  background-color: rgb(108, 167, 176);
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid rgba(108, 167, 176, 0.5);
+  font-family: Arial, sans-serif; /* Добавлен запасной шрифт */
+  font-size: 18px;
+  opacity: 1;
+  width: 140px;
 }
 .record__date {
   display: flex;
@@ -92,15 +86,57 @@
     font-size: 22px;
   }
 }
+span {
+  box-sizing: border-box;
+
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+
+  padding: 4px 4px 2px;
+  border: none;
+  color: rgb(0, 0, 0);
+  text-align: left;
+
+  font-size: 22px;
+}
+.button__info {
+  max-width: 100px;
+  display: flex;
+  align-items: center;
+  gap: 0 30px;
+  margin-top: 20px;
+}
+.record__textarea {
+  box-sizing: border-box;
+  outline: none;
+  white-space: normal;
+  overflow: hidden; /* Скрывает прокрутку */
+  min-height: 38px; /* Минимальная высота */
+  padding: 4px 4px 2px; /* Внутренние отступы */
+
+  color: rgb(0, 0, 0);
+  text-align: left;
+
+  font-size: 24px;
+  width: 700px; /* Ширина */
+  resize: none;
+  @media (max-width: 600px) {
+    width: 700px; // На планшетах каждый элемент занимает 48% ширины
+  }
+  @media (max-width: 800px) {
+    width: 760px; // На планшетах каждый элемент занимает 48% ширины
+  }
+}
 @media (max-width: 960px) {
-  .record__content{
-    h3{
+  .record__content {
+    h3 {
       font-size: 20px;
     }
-    span{
+    span {
       font-size: 20px;
     }
-    .record__input{
+    .record__input {
       font-size: 20px;
     }
   }

@@ -143,39 +143,39 @@ export const Record = (props) => {
 
   return (
     <>
-      <div className="record__content">
-        <div className="record__date">
-          <div className="record__date">
-            <h3>Дата: </h3>
-            <span>{obj.date}</span>
-            <span>{obj.time}</span>
-          </div>
-        </div>
-        <textarea
-          // value={initialText ? initialText : text}
-          value={text}
-          type="text"
-          className="record__input"
-          placeholder="Напишите запись"
-          onChange={handleChange}
-          onInput={(e) => {
-            e.target.style.height = "auto"; // Сброс высоты
-            e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
-          }}
-        />
-        {isTextModified && text && (
-          // Проверяем, изменился ли текст и есть ли текст в поле
+      <tbody>
+        <tr>
+          <td style={{ border: "1px solid black", textAlign: "center" }}>
+            <span className="span">{obj.date}</span>
+            <span className="span">{obj.time}</span>
+          </td>
+          <td style={{ border: "1px solid black" }}>
+            <textarea
+              value={text}
+              type="text"
+              className="record__textarea"
+              placeholder="Напишите запись"
+              onChange={handleChange}
+              onInput={(e) => {
+                e.target.style.height = "38px"; // Сброс высоты
+                e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
+              }}
+            />
+          </td>
+        </tr>
+      </tbody>
 
-          <div className="button__info">
-            <button onClick={handleSubmit} className="save__button">
-              Сохранить
-            </button>
-            <button onClick={HandleInfoDelete} className="save__button">
-              Удалить
-            </button>
-          </div>
-        )}
-      </div>
+      {isTextModified && text && (
+        // Проверяем, изменился ли текст и есть ли текст в поле
+        <div className="button__info">
+          <button onClick={handleSubmit} className="save__click">
+            Сохранить
+          </button>
+          <button onClick={HandleInfoDelete} className="save__click">
+            Удалить
+          </button>
+        </div>
+      )}
     </>
   );
 };
