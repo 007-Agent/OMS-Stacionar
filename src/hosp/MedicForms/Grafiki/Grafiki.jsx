@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   LineChart,
   Line,
@@ -10,202 +10,568 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Grafiki(props) {
-  const initialTemperatures = Array.from({ length: 14 }, (_, i) => ({
-    day: i + 1,
-    temp: null,
-  }));
-  const [records, setRecords] = useState(props.data);
-  const [temperatures, setTemperatures] = useState(initialTemperatures);
-  const [inputTemp, setInputTemp] = useState("");
-  const [inputDay, setInputDay] = useState(1);
-  const arr = props.value;
-  console.log(arr, " Массив нафиг!!!");
-  // const [showLine, setShowLine] = useState(false);
+const TemperatureRecharts = (props) => {
+  const [measurements, setMeasurements] = React.useState([]);
+  const [newDate, setNewDate] = React.useState("");
+  const [newMorning, setNewMorning] = React.useState("");
+  const [newEvening, setNewEvening] = React.useState("");
+  const arrNew = props.arr;
+  console.log(arrNew, "NEWWWWW");
 
-  const addTemperature = () => {
-    const newTemp = parseFloat(inputTemp);
-    const dayIndex = inputDay - 1; // индекс массива
+  const content = (arrNew || []).reduce((acc, cur) => {
+    if (!Array.isArray(cur) || !cur[0]?.name) {
+      return acc;
+    }
 
-    if (!isNaN(newTemp) && inputDay >= 1 && inputDay <= 14) {
-      const newData = [...temperatures];
-      newData[dayIndex] = { day: inputDay, temp: newTemp };
-      setTemperatures(newData);
+    try {
+      const result = JSON.parse(cur[0]?.name?.moTemp);
+      console.log(result, "МУДЕНЬ");
+      if (result) {
+        acc.push(result);
+      }
+    } catch (error) {
+      console.error("Ошибка парсинга JSON:", error);
+    }
+
+    return acc;
+  }, []);
+  console.log(content, "ПРЕДМАССИВ");
+  console.log(arrNew, "ГРАФИКИ");
+
+  const handleAddMeasurement = () => {
+    if (newDate && newMorning && newEvening) {
+      const newMeasurement = {
+        date: newDate,
+        day: measurements.length + 1,
+        formattedDate: new Date(newDate).toLocaleDateString("ru-RU", {
+          day: "numeric",
+          month: "short",
+        }),
+        morning: parseFloat(newMorning),
+        evening: parseFloat(newEvening),
+      };
+      setMeasurements([...measurements, newMeasurement]);
+      setNewDate("");
+      setNewMorning("");
+      setNewEvening("");
     }
   };
 
-  const clone = (source, exclude) => {
-    let dest = null;
-    if (typeof source === "function") {
-      dest = source;
-    } else if (source instanceof Array) {
-      dest = source.slice();
-      for (let i = 0; i < dest.length; i++) {
-        dest[i] = clone(dest[i], exclude);
-      }
-    } else if (React.isValidElement(source)) {
-      dest = source;
-    } else if (source instanceof Date) {
-      dest = new Date(source.getTime());
-    } else if (source instanceof Object) {
-      dest = {};
-      let keys = Object.keys(source);
-      for (let i = 0; i < keys.length; i++) {
-        if (exclude && exclude.indexOf(keys[i]) >= 0) {
-          continue;
-        }
-        dest[keys[i]] = clone(source[keys[i]], exclude);
-      }
-    } else {
-      dest = source;
-    }
-    return dest;
-  };
+  // Генерируем пустые данные для отображения осей
+  const displayData =
+    measurements.length > 0
+      ? measurements
+      : [{ day: 1, morning: null, evening: null }];
 
-  const arrTemp = records
-    ? records.reduce((acc, cur) => {
-        if (cur.data && cur.data.list) {
-          cur.data.list.forEach((v, index) => {
-            console.log(v, "PROJECT");
-            const value = clone(cur);
-            console.log(clone(cur), "CLONNNER");
-            console.log(value, "VALUE DIARY");
-            console.log(v, "V");
-            value.data.list = [v];
-            const result = JSON.parse(value?.data?.list?.[0]?.name);
-            console.log(result, "object");
-
-            acc.push(result.moTemp);
-          });
-        }
-        return acc; // возвращаем аккумулятор
-      }, [])
-    : null;
   return (
-    <div style={{ width: "100%", height: 400 }}>
-      {arrTemp}
-      <h2>График температуры пациента</h2>
-
-      {/* Поле ввода температуры и дня */}
+    <>
+      <table style={{ borderCollapse: "collapse", width: "100%" }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f2f2f2" }}>
+            <th>Дата</th>
+            <th>Утро (°C)</th>
+            <th>Вечер (°C)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
       <div
         style={{
-          marginBottom: "20px",
-          padding: "15px",
-          backgroundColor: "#f0f4f8", // светлый фон
-          borderRadius: "10px", // скругленные углы
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // тень
-          display: "flex",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: "10px", // промежутки между элементами
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+          padding: "20px",
         }}
       >
-        <input
-          type="number"
-          value={inputTemp}
-          onChange={(e) => setInputTemp(e.target.value)}
-          placeholder="Введите температуру"
+        <div
           style={{
-            padding: "10px 15px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            border: "2px solid #ccc",
-            outline: "none",
-            transition: "border-color 0.3s",
-            width: "200px",
+            marginBottom: "20px",
+            display: "flex",
+            gap: "10px",
+            alignItems: "center",
+            flexWrap: "wrap",
           }}
-          onFocus={(e) => (e.target.style.borderColor = "#66afe9")}
-          onBlur={(e) => (e.target.style.borderColor = "#ccc")}
-        />
-        <input
-          type="number"
-          value={inputDay}
-          onChange={(e) => setInputDay(parseInt(e.target.value))}
-          placeholder="День (1-14)"
-          min={1}
-          max={14}
-          style={{
-            padding: "10px 15px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            border: "2px solid #ccc",
-            outline: "none",
-            transition: "border-color 0.3s",
-            width: "150px",
-          }}
-          onFocus={(e) => (e.target.style.borderColor = "#66afe9")}
-          onBlur={(e) => (e.target.style.borderColor = "#ccc")}
-        />
-        <button
-          onClick={addTemperature}
-          style={{
-            padding: "10px 20px",
-            fontSize: "16px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            cursor: "pointer",
-            transition: "background-color 0.3s, transform 0.2s",
-          }}
-          onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-          onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-          onMouseDown={(e) => (e.target.style.transform = "scale(0.98)")}
-          onMouseUp={(e) => (e.target.style.transform = "scale(1)")}
         >
-          Добавить
-        </button>
-      </div>
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <label>Дата:</label>
+            <input
+              type="date"
+              value={newDate}
+              onChange={(e) => setNewDate(e.target.value)}
+              style={{ padding: "8px" }}
+            />
+          </div>
 
-      {/* График */}
-      <ResponsiveContainer>
-        <LineChart
-          data={temperatures}
-          margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-        >
-          <CartesianGrid stroke="#f5f5f5" />
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <label>Утро (°C):</label>
+            <input
+              type="number"
+              value={newMorning}
+              onChange={(e) => setNewMorning(e.target.value)}
+              step="0.1"
+              min="33"
+              max="42"
+              style={{ width: "80px", padding: "8px" }}
+            />
+          </div>
 
-          {/* Ось X - дни */}
-          <XAxis
-            dataKey="day"
-            label={{ value: "День", position: "insideBottom", offset: -5 }}
-          />
+          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <label>Вечер (°C):</label>
+            <input
+              type="number"
+              value={newEvening}
+              onChange={(e) => setNewEvening(e.target.value)}
+              step="0.1"
+              min="33"
+              max="42"
+              style={{ width: "80px", padding: "8px" }}
+            />
+          </div>
 
-          {/* Ось Y - температура */}
-          <YAxis
-            domain={[33, 42]}
-            ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
-            allowDataOverflow={true}
-            label={{
-              value: "Температура (°C)",
-              angle: -90,
-              position: "insideLeft",
+          <button
+            onClick={handleAddMeasurement}
+            disabled={!newDate || !newMorning || !newEvening}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
             }}
-          />
+          >
+            Добавить
+          </button>
+        </div>
 
-          {/* Всплывающая подсказка */}
-          <Tooltip />
+        <div style={{ position: "relative" }}>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={displayData}
+              margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+              <XAxis
+                dataKey="day"
+                label={{
+                  value: "Дни наблюдения",
+                  position: "insideBottomRight",
+                  offset: -10,
+                  fill: "#666",
+                }}
+                tick={{ fill: "#666" }}
+              />
+              <YAxis
+                domain={[33, 42]}
+                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
+                label={{
+                  value: "Температура (°C)",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#666",
+                }}
+                tick={{ fill: "#666" }}
+              />
+              <Tooltip
+                formatter={(value) =>
+                  value !== null ? [`${value} °C`] : ["Нет данных"]
+                }
+                labelFormatter={(day) => {
+                  const item = measurements.find((m) => m.day === day);
+                  return item ? item.formattedDate : "День " + day;
+                }}
+              />
+              <Legend />
 
-          {/* Легенда */}
-          <Legend />
+              <Line
+                type="monotone"
+                dataKey="morning"
+                name="Утренняя"
+                stroke="#8884d8"
+                strokeWidth={2}
+                activeDot={{ r: 8 }}
+                dot={measurements.length > 0}
+                connectNulls={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="evening"
+                name="Вечерняя"
+                stroke="#82ca9d"
+                strokeWidth={2}
+                activeDot={{ r: 8 }}
+                dot={measurements.length > 0}
+                connectNulls={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
 
-          {/* Линия графика */}
-
-          <Line
-            type="monotone"
-            dataKey="temp"
-            stroke="black"
-            strokeWidth={3}
-            isAnimationActive={true}
-            strokeLinecap="round"
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+          {measurements.length === 0 && (
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                textAlign: "center",
+                color: "#999",
+                backgroundColor: "rgba(255,255,255,0.9)",
+                padding: "20px",
+                borderRadius: "8px",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                maxWidth: "80%",
+              }}
+            >
+              <div style={{ fontSize: "18px", marginBottom: "10px" }}>
+                График температуры пациента
+              </div>
+              <div style={{ fontSize: "14px" }}>
+                Введите данные измерений, чтобы увидеть динамику температуры
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
-}
+};
+export default TemperatureRecharts;
 
-export default Grafiki;
+// import React from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// const data = [
+//   { name: "1", temp1: 36, temp2: 35.8 },
+//   { name: "2", temp1: 36.2, temp2: 36 },
+//   { name: "3", temp1: 36.1, temp2: 36.2 },
+// ];
+
+// const TemperatureRecharts = () => {
+//   const [newDate, setNewDate] = React.useState("");
+//   const [newMorning, setNewMorning] = React.useState("");
+//   const [newEvening, setNewEvening] = React.useState("");
+
+//   const handleAddMeasurement = () => {
+//     if (newDate && newMorning && newEvening) {
+//       const newMeasurement = {
+//         date: newDate,
+//         temp1: parseFloat(newMorning),
+//         temp2: parseFloat(newEvening),
+//       };
+//       setMeasurements([...measurements, newMeasurement]);
+//       setNewDate("");
+//       setNewMorning("");
+//       setNewEvening("");
+//     }
+//   };
+
+//   return (
+//     <>
+//       <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
+//         <input
+//           type="date"
+//           value={newDate}
+//           onChange={(e) => setNewDate(e.target.value)}
+//         />
+//         <input
+//           type="number"
+//           placeholder="Утро"
+//           value={newMorning}
+//           onChange={(e) => setNewMorning(e.target.value)}
+//         />
+//         <input
+//           type="number"
+//           placeholder="Вечер"
+//           value={newEvening}
+//           onChange={(e) => setNewEvening(e.target.value)}
+//         />
+//         <button onClick={handleAddMeasurement}>Добавить измерение</button>
+//       </div>
+//       <ResponsiveContainer width="100%" height={250}>
+//         <LineChart
+//           data={data}
+//           margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+//         >
+//           <CartesianGrid stroke="#ccc" strokeDasharray="" />
+//           <XAxis
+//             dataKey="name"
+//             label={{ value: "Время", position: "insideBottom", offset: -5 }}
+//           />
+//           <YAxis
+//             domain={[33, 42]}
+//             stoke="black"
+//             ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
+//             allowDataOverflow={true}
+//             label={{
+//               value: "Температура (°C)",
+//               angle: -90,
+//               position: "absolute",
+//               marginRight: "15px",
+//             }}
+//           />
+//           <Tooltip />
+//           <Legend />
+
+//           {/* Линии температуры */}
+//           <Line
+//             type="monotone"
+//             dataKey="temp1"
+//             stroke="#8884d8"
+//             strokeWidth={2}
+//             dot={false}
+//             activeDot={{ r: 8 }}
+//           />
+//           <Line
+//             type="monotone"
+//             dataKey="temp2"
+//             stroke="#82ca9d"
+//             strokeWidth={2}
+//             dot={false}
+//             activeDot={{ r: 8 }}
+//           />
+//         </LineChart>
+//       </ResponsiveContainer>
+//     </>
+//   );
+// };
+
+// export default TemperatureRecharts;
+// import React, { useState } from "react";
+// import {
+//   LineChart,
+//   Line,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+// } from "recharts";
+
+// const Grafiki = () => {
+//   const [temperatures, setTemperatures] = useState([
+//     { date: "2023-10-01", morning: 36.6, evening: 37.0 },
+//     { date: "2023-10-02", morning: 36.8, evening: 37.2 },
+//     { date: "2023-10-03", morning: 37.0, evening: 37.5 },
+//   ]);
+
+//   const [inputDate, setInputDate] = useState("");
+//   const [inputMorningTemp, setInputMorningTemp] = useState("");
+//   const [inputEveningTemp, setInputEveningTemp] = useState("");
+
+//   // Форматирование даты без date-fns (например, "2023-10-01" → "01.10.2023")
+//   const formatDate = (dateString) => {
+//     const date = new Date(dateString);
+//     const day = String(date.getDate()).padStart(2, "0");
+//     const month = String(date.getMonth() + 1).padStart(2, "0");
+//     const year = date.getFullYear();
+//     return `${day}.${month}.${year}`;
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     const newData = {
+//       date: inputDate,
+//       morning: parseFloat(inputMorningTemp) || null,
+//       evening: parseFloat(inputEveningTemp) || null,
+//     };
+
+//     const existingIndex = temperatures.findIndex(
+//       (item) => item.date === inputDate
+//     );
+//     let updatedTemperatures;
+
+//     if (existingIndex >= 0) {
+//       updatedTemperatures = [...temperatures];
+//       updatedTemperatures[existingIndex] = newData;
+//     } else {
+//       updatedTemperatures = [...temperatures, newData];
+//     }
+
+//     updatedTemperatures.sort((a, b) => new Date(a.date) - new Date(b.date));
+//     setTemperatures(updatedTemperatures);
+//     setInputMorningTemp("");
+//     setInputEveningTemp("");
+//   };
+
+//   // Подготовка данных для графика
+//   const chartData = temperatures
+//     .flatMap((entry) => [
+//       {
+//         date: entry.date,
+//         time: "Утро",
+//         temp: entry.morning,
+//         displayDate: formatDate(entry.date), // Используем нашу функцию
+//       },
+//       {
+//         date: entry.date,
+//         time: "Вечер",
+//         temp: entry.evening,
+//         displayDate: formatDate(entry.date),
+//       },
+//     ])
+//     .filter((point) => point.temp !== null);
+
+//   return (
+//     <div style={{ maxWidth: "900px", margin: "0 auto", padding: "20px" }}>
+//       <h2 style={{ textAlign: "center" }}>Температурный дневник</h2>
+
+//       {/* Форма ввода */}
+//       <div
+//         style={{
+//           backgroundColor: "#f8f9fa",
+//           padding: "20px",
+//           borderRadius: "10px",
+//           marginBottom: "20px",
+//         }}
+//       >
+//         <form
+//           onSubmit={handleSubmit}
+//           style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
+//         >
+//           <div style={{ flex: 1 }}>
+//             <label style={{ display: "block", marginBottom: "5px" }}>
+//               Дата
+//             </label>
+//             <input
+//               type="date"
+//               value={inputDate}
+//               onChange={(e) => setInputDate(e.target.value)}
+//               required
+//               style={{ width: "100%", padding: "8px" }}
+//             />
+//           </div>
+//           <div style={{ flex: 1 }}>
+//             <label style={{ display: "block", marginBottom: "5px" }}>
+//               Утро (°C)
+//             </label>
+//             <input
+//               type="number"
+//               value={inputMorningTemp}
+//               onChange={(e) => setInputMorningTemp(e.target.value)}
+//               step="0.1"
+//               min="35"
+//               max="42"
+//               placeholder="36.6"
+//               style={{ width: "100%", padding: "8px" }}
+//             />
+//           </div>
+//           <div style={{ flex: 1 }}>
+//             <label style={{ display: "block", marginBottom: "5px" }}>
+//               Вечер (°C)
+//             </label>
+//             <input
+//               type="number"
+//               value={inputEveningTemp}
+//               onChange={(e) => setInputEveningTemp(e.target.value)}
+//               step="0.1"
+//               min="35"
+//               max="42"
+//               placeholder="37.0"
+//               style={{ width: "100%", padding: "8px" }}
+//             />
+//           </div>
+//           <div style={{ display: "flex", alignItems: "flex-end" }}>
+//             <button
+//               type="submit"
+//               style={{
+//                 padding: "8px 15px",
+//                 backgroundColor: "#4CAF50",
+//                 color: "white",
+//                 border: "none",
+//               }}
+//             >
+//               Добавить
+//             </button>
+//           </div>
+//         </form>
+//       </div>
+
+//       {/* Таблица */}
+//       <div style={{ marginBottom: "20px", overflowX: "auto" }}>
+//         <table style={{ width: "100%", borderCollapse: "collapse" }}>
+//           <thead>
+//             <tr style={{ backgroundColor: "#e9ecef" }}>
+//               <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+//                 Дата
+//               </th>
+//               <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+//                 Утро
+//               </th>
+//               <th style={{ padding: "10px", border: "1px solid #ddd" }}>
+//                 Вечер
+//               </th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {temperatures.map((entry) => (
+//               <tr key={entry.date}>
+//                 <td style={{ padding: "10px", border: "1px solid #ddd" }}>
+//                   {formatDate(entry.date)}
+//                 </td>
+//                 <td
+//                   style={{
+//                     padding: "10px",
+//                     border: "1px solid #ddd",
+//                     textAlign: "center",
+//                   }}
+//                 >
+//                   {entry.morning || "—"}
+//                 </td>
+//                 <td
+//                   style={{
+//                     padding: "10px",
+//                     border: "1px solid #ddd",
+//                     textAlign: "center",
+//                   }}
+//                 >
+//                   {entry.evening || "—"}
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       </div>
+
+//       {/* График */}
+//       <div style={{ height: "400px" }}>
+//         <ResponsiveContainer width="100%" height="100%">
+//           <LineChart data={chartData}>
+//             <CartesianGrid strokeDasharray="3 3" />
+//             <XAxis dataKey="displayDate" />
+//             <YAxis domain={[35, 42]} />
+//             <Tooltip
+//               formatter={(value) => [`${value}°C`]}
+//               labelFormatter={(_, payload) => {
+//                 if (!payload.length) return "";
+//                 return `${payload[0].payload.displayDate}, ${payload[0].payload.time}`;
+//               }}
+//             />
+//             <Line
+//               type="monotone"
+//               dataKey="temp"
+//               stroke="#4285F4"
+//               strokeWidth={2}
+//               dot={{ r: 6 }}
+//               activeDot={{ r: 8 }}
+//             />
+//           </LineChart>
+//         </ResponsiveContainer>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Grafiki;
 
 // import React, { useState } from "react";
 // import {

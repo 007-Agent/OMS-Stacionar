@@ -4,16 +4,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { nanoid } from "nanoid";
 // import Temperature from '../../MetaRecords/Temperature/Temperature'
 import "./temperatureSheet.scss";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+
 import TempItem from "./TempItem/TempItem";
 export const TemperatureSheet = (props) => {
   console.log(props.user);
@@ -22,11 +13,13 @@ export const TemperatureSheet = (props) => {
     day: i + 1,
     temp: null,
   }));
+  const [arr, setArr] = useState([props.data.data]);
   const [records, setRecords] = useState(props.data);
   const [temperatures, setTemperatures] = useState(initialTemperatures);
   const [inputTemp, setInputTemp] = useState("");
   const [inputDay, setInputDay] = useState(1);
-  const arr = props.value;
+  console.log(records, "ТРЕШЕР");
+
   console.log(arr, " Массив нафиг!!!");
   // const [showLine, setShowLine] = useState(false);
   const clone = (source, exclude) => {
@@ -77,15 +70,16 @@ export const TemperatureSheet = (props) => {
             console.log(value, "VALUE DIARY");
             console.log(v, "V");
             value.data.list = [v];
-            const result = JSON.parse(value?.data?.list?.[0]?.name);
-            console.log(result, "object");
+            // const result = JSON.parse(value?.data?.list?.[0]?.name);
+            console.log(value.data.list, "objecttt");
 
-            acc.push(result.moTemp);
+            acc.push(value.data.list);
           });
         }
-        return acc; // возвращаем аккумулятор
+        return acc; 
       }, [])
     : null;
+  console.log(arrTemp, "arrTemp");
   const strDate = (date) => {
     return `${String(date.getDate()).padStart(2, "0")}.${String(
       date.getMonth() + 1
@@ -129,6 +123,13 @@ export const TemperatureSheet = (props) => {
       console.log(records, "Обновлённый объект");
     }
   };
+
+  const AddItemArrTemp = (event) => {
+    arrTemp.push(event.data.list);
+    console.log(event.data.list, "УУУУУУУУДДДДД");
+    console.log(arrTemp, "resultEMPPP");
+  };
+
   const DeleteTempItem = (event) => {
     const newData = props.data.map((item) => {
       if (item.data && item.data.list) {
@@ -162,7 +163,8 @@ export const TemperatureSheet = (props) => {
                 user={props.user}
                 value={value}
                 textValue={v}
-                onDelete={DeleteTempItem} // передали пользователя действующего
+                onDelete={DeleteTempItem}
+                onChange={AddItemArrTemp} // передали пользователя действующего
               />
             );
           });
@@ -190,13 +192,13 @@ export const TemperatureSheet = (props) => {
               />
             ))} */}
             {content}
+            {/* {arrTemp} */}
           </div>
         </div>
-        <div style={{ width: "100%", height: 400 }}>
-          {arrTemp}
-          <h2>График температуры пациента</h2>
 
-          {/* Поле ввода температуры и дня */}
+        {/* <div style={{ width: "100%", height: 400 }}>
+          {arrTemp}
+   
           <div
             style={{
               marginBottom: "20px",
@@ -267,7 +269,7 @@ export const TemperatureSheet = (props) => {
             </button>
           </div>
 
-          {/* График */}
+        
           <ResponsiveContainer>
             <LineChart
               data={temperatures}
@@ -275,13 +277,12 @@ export const TemperatureSheet = (props) => {
             >
               <CartesianGrid stroke="#f5f5f5" />
 
-              {/* Ось X - дни */}
               <XAxis
                 dataKey="day"
                 label={{ value: "День", position: "insideBottom", offset: -5 }}
               />
 
-              {/* Ось Y - температура */}
+         
               <YAxis
                 domain={[33, 42]}
                 ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
@@ -293,13 +294,13 @@ export const TemperatureSheet = (props) => {
                 }}
               />
 
-              {/* Всплывающая подсказка */}
+         
               <Tooltip />
 
-              {/* Легенда */}
+             
               <Legend />
 
-              {/* Линия графика */}
+            
 
               <Line
                 type="monotone"
@@ -311,8 +312,8 @@ export const TemperatureSheet = (props) => {
               />
             </LineChart>
           </ResponsiveContainer>
-        </div>
-        );
+        </div>  */}
+        <Grafiki arr={arrTemp} />
       </div>
     </div>
   );

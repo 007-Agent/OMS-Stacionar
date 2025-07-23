@@ -17,74 +17,96 @@ export const TempItem = (props) => {
   const [isTextModified, setIsTextModified] = useState(false);
   const [isSaved, setIsSaved] = React.useState(false);
 
+  // function handleChange(event) {
+  //   setIsTextModified(true);
+  //   const value = values;
+  //   const obj = JSON.parse(value?.data?.list?.[0].name);
+  //   console.log(obj, "HANDLEOBJ");
+  //   if ("date" === event.target.name) {
+  //     obj.date = strDate(event.value);
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //     value.data.list[0].date = event.target.value;
+  //   } else if ("time" === event.target.name) {
+  //     obj.time = cutTime(event.value);
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //     value.data.list[0].time = event.target.value;
+  //   } else if ("day" === event.target.name) {
+  //     obj.day = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("moTemp" === event.target.name) {
+  //     obj.moTemp = event.target.value;
+
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("evTemp" === event.target.name) {
+  //     obj.evTemp = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("moArtPress" === event.target.name) {
+  //     obj.moArtPress = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("evArtPress" === event.target.name) {
+  //     obj.evArtPress = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("moPulse" === event.target.name) {
+  //     obj.moPulse = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("evPulse" === event.target.name) {
+  //     obj.evPulse = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("breath" === event.target.name) {
+  //     obj.breath = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("weight" === event.target.name) {
+  //     obj.weight = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("liquid" === event.target.name) {
+  //     obj.liquid = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("water" === event.target.name) {
+  //     obj.water = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("enuresis" === event.target.name) {
+  //     obj.enuresis = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("stool" === event.target.name) {
+  //     obj.stool = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("bath" === event.target.name) {
+  //     obj.bath = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   } else if ("pediculosis" === event.target.name) {
+  //     obj.pediculosis = event.target.value;
+  //     value.data.list[0].name = JSON.stringify(obj);
+  //   }
+  //   // value.data.list[0].name =  newRecord
+  //   setResult(value);
+  //   console.log(value, "Values efiwefnuiwenfuiwebnfweuibfwuifbwe");
+  // }
   function handleChange(event) {
     setIsTextModified(true);
-    const value = values;
-    const obj = JSON.parse(value?.data?.list?.[0].name);
-    console.log(obj, "HANDLEOBJ");
-    if ("date" === event.target.name) {
-      obj.date = strDate(event.value);
-      value.data.list[0].name = JSON.stringify(obj);
-      value.data.list[0].date = event.target.value;
-    } else if ("time" === event.target.name) {
-      obj.time = cutTime(event.value);
-      value.data.list[0].name = JSON.stringify(obj);
-      value.data.list[0].time = event.target.value;
-    } else if ("day" === event.target.name) {
-      obj.day = event.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moTemp" === event.target.name) {
-      obj.moTemp = event.target.value;
 
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evTemp" === event.target.name) {
-      obj.evTemp = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moArtPress" === event.target.name) {
-      obj.moArtPress = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evArtPress" === event.target.name) {
-      obj.evArtPress = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("moPulse" === event.target.name) {
-      obj.moPulse = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("evPulse" === event.target.name) {
-      obj.evPulse = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("breath" === event.target.name) {
-      obj.breath = event.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("weight" === event.target.name) {
-      obj.weight = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("liquid" === event.target.name) {
-      obj.liquid = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("water" === event.target.name) {
-      obj.water = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("enuresis" === event.target.name) {
-      obj.enuresis = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("stool" === event.target.name) {
-      obj.stool = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("bath" === event.target.name) {
-      obj.bath = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    } else if ("pediculosis" === event.target.name) {
-      obj.pediculosis = event.target.value;
-      value.data.list[0].name = JSON.stringify(obj);
-    }
-    // value.data.list[0].name =  newRecord
-    setResult(value);
-    console.log(value, "Values efiwefnuiwenfuiwebnfweuibfwuifbwe");
+    // 1. Создаём глубокую копию текущего состояния
+    const updatedValue = JSON.parse(JSON.stringify(result));
+
+    // 2. Парсим текущий объект из `name`
+    const currentData = JSON.parse(updatedValue.data.list[0].name);
+
+    // 3. Обновляем нужное поле
+    const { name, value } = event.target;
+    currentData[name] = value;
+
+    // 4. Сохраняем обратно в `name`
+    updatedValue.data.list[0].name = JSON.stringify(currentData);
+
+    // 5. Обновляем состояние
+    setResult(updatedValue);
   }
   function save() {
     setIsTextModified(false);
     saved();
-   
+    if (props.onChange) {
+      props.onChange(result);
+      console.log(result, "ПИСЕЦЦЦ");
+    }
     axios
       .post(`/rest/${props.project}/${props.name}/update`, {
         data: [result],
@@ -102,8 +124,6 @@ export const TempItem = (props) => {
     // после успешного сохранения обновляем состояние
     setIsSaved((prev) => !prev); // меняем состояние, чтобы сработал useEffect
   };
-
-
 
   // внутри useEffect:
   React.useEffect(() => {
@@ -149,7 +169,7 @@ export const TempItem = (props) => {
                 type="text"
                 onChange={handleChange}
                 value={obj.moTemp}
-                name={"moTemp"}
+                name="moTemp"
               />
             </td>
             <td>
