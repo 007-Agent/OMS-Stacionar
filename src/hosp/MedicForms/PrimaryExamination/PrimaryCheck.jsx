@@ -16,6 +16,7 @@ export const PrimaryCheck = (props) => {
   const [save, setSave] = useState(false);
   const data = props.data;
   const id = props.id;
+  console.log(id, "АЙДИ ПАЦ")
   const newID = 33165;
   const repCoding = "stat.card.sancur";
   const handleShowComponent = (componentType) => {
@@ -66,7 +67,7 @@ export const PrimaryCheck = (props) => {
     );
   };
 
-  const clickHandlePrinterPDF = async () => {
+  const clickHandlePrinter = async () => {
     const url = "/rest/hosp/statcard";
 
     try {
@@ -77,7 +78,7 @@ export const PrimaryCheck = (props) => {
       console.log(response.data.data, "ответ от сервера");
       if (response.status === 200) {
         let base64Data = response.data.data;
-
+        console.log(base64Data, "base64Data");
         if (typeof base64Data !== "string") {
           console.error("Полученные данные не являются строкой:", base64Data);
           return;
@@ -86,6 +87,7 @@ export const PrimaryCheck = (props) => {
         base64Data = base64Data.replace(/-/g, "+").replace(/_/g, "/");
 
         const padding = base64Data.length % 4;
+
         if (padding) {
           base64Data += "=".repeat(4 - padding);
         }
@@ -159,7 +161,7 @@ export const PrimaryCheck = (props) => {
 
   return (
     <div className="primary__main">
-      <BiPrinter onClick={clickHandlePrinterPDF} />
+      <BiPrinter onClick={clickHandlePrinter} />
       <div className="button__form">
         <button
           className="button"

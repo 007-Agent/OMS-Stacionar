@@ -54,6 +54,7 @@ function MedicalPrice(props) {
           user={props.user}
           data={info.inspection}
           name={"inspection"}
+          id={id}
         />
       );
     } else if (index === "2") {
