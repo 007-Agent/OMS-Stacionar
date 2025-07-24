@@ -9,34 +9,18 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import "./grafiki.scss";
 
 const TemperatureRecharts = (props) => {
   const [measurements, setMeasurements] = React.useState([]);
   const [newDate, setNewDate] = React.useState("");
   const [newMorning, setNewMorning] = React.useState("");
   const [newEvening, setNewEvening] = React.useState("");
+  const [isListVisible, setIsListVisible] = React.useState(false);
+
+  // const [arrNew, setArrNew] = React.useState(props.arr);
   const arrNew = props.arr;
   console.log(arrNew, "NEWWWWW");
-
-  const content = (arrNew || []).reduce((acc, cur) => {
-    if (!Array.isArray(cur) || !cur[0]?.name) {
-      return acc;
-    }
-
-    try {
-      const result = JSON.parse(cur[0]?.name?.moTemp);
-      console.log(result, "МУДЕНЬ");
-      if (result) {
-        acc.push(result);
-      }
-    } catch (error) {
-      console.error("Ошибка парсинга JSON:", error);
-    }
-
-    return acc;
-  }, []);
-  console.log(content, "ПРЕДМАССИВ");
-  console.log(arrNew, "ГРАФИКИ");
 
   const handleAddMeasurement = () => {
     if (newDate && newMorning && newEvening) {
@@ -57,6 +41,10 @@ const TemperatureRecharts = (props) => {
     }
   };
 
+  const toggleListVisibility = () => {
+    setIsListVisible(!isListVisible);
+  };
+
   // Генерируем пустые данные для отображения осей
   const displayData =
     measurements.length > 0
@@ -73,8 +61,50 @@ const TemperatureRecharts = (props) => {
             <th>Вечер (°C)</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <button
+            onClick={toggleListVisibility}
+            style={{
+              padding: "8px 16px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "4px",
+              cursor: "pointer",
+            }}
+          >
+            {isListVisible ? "Скрыть список" : "Показать список"}
+          </button>
+
+          {isListVisible && (
+            <ul
+              style={{
+                listStyle: "none",
+                padding: "0",
+                marginTop: "10px",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+              }}
+            >
+              {arrNew.map((item, index) => (
+                <li
+                  key={index}
+                  style={{
+                    padding: "8px 16px",
+                    borderBottom: "1px solid #eee",
+                    backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
+                  }}
+                >
+                  <strong>Дата:</strong> {item.date},<strong> Утро:</strong>{" "}
+                  {item.moTemp}°C,
+                  <strong> Вечер:</strong> {item.evTemp}°C
+                </li>
+              ))}
+            </ul>
+          )}
+        </tbody>
       </table>
+
       <div
         style={{
           border: "1px solid #ddd",

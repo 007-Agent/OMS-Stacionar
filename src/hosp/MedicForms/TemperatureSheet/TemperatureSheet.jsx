@@ -13,14 +13,18 @@ export const TemperatureSheet = (props) => {
     day: i + 1,
     temp: null,
   }));
+  const massive = [];
   const [arr, setArr] = useState([props.data.data]);
   const [records, setRecords] = useState(props.data);
+  const [newRecords, setNewRecords] = useState(props.data);
   const [temperatures, setTemperatures] = useState(initialTemperatures);
   const [inputTemp, setInputTemp] = useState("");
   const [inputDay, setInputDay] = useState(1);
   console.log(records, "ТРЕШЕР");
 
   console.log(arr, " Массив нафиг!!!");
+  console.log(newRecords, "newRecords11111");
+
   // const [showLine, setShowLine] = useState(false);
   const clone = (source, exclude) => {
     let dest = null;
@@ -49,37 +53,7 @@ export const TemperatureSheet = (props) => {
     }
     return dest;
   };
-  const addTemperature = () => {
-    const newTemp = parseFloat(inputTemp);
-    const dayIndex = inputDay - 1; // индекс массива
 
-    if (!isNaN(newTemp) && inputDay >= 1 && inputDay <= 14) {
-      const newData = [...temperatures];
-      newData[dayIndex] = { day: inputDay, temp: newTemp };
-      setTemperatures(newData);
-    }
-  };
-
-  const arrTemp = records
-    ? records.reduce((acc, cur) => {
-        if (cur.data && cur.data.list) {
-          cur.data.list.forEach((v, index) => {
-            console.log(v, "PROJECT");
-            const value = clone(cur);
-            console.log(clone(cur), "CLONNNER");
-            console.log(value, "VALUE DIARY");
-            console.log(v, "V");
-            value.data.list = [v];
-            // const result = JSON.parse(value?.data?.list?.[0]?.name);
-            console.log(value.data.list, "objecttt");
-
-            acc.push(value.data.list);
-          });
-        }
-        return acc; 
-      }, [])
-    : null;
-  console.log(arrTemp, "arrTemp");
   const strDate = (date) => {
     return `${String(date.getDate()).padStart(2, "0")}.${String(
       date.getMonth() + 1
@@ -124,12 +98,6 @@ export const TemperatureSheet = (props) => {
     }
   };
 
-  const AddItemArrTemp = (event) => {
-    arrTemp.push(event.data.list);
-    console.log(event.data.list, "УУУУУУУУДДДДД");
-    console.log(arrTemp, "resultEMPPP");
-  };
-
   const DeleteTempItem = (event) => {
     const newData = props.data.map((item) => {
       if (item.data && item.data.list) {
@@ -139,6 +107,38 @@ export const TemperatureSheet = (props) => {
       return item;
     });
     setRecords(newData);
+  };
+
+  const arrTemp = records
+    ? records.reduce((acc, cur) => {
+        if (cur.data && cur.data.list) {
+          cur.data.list.forEach((v, index) => {
+            console.log(v, "PROJECT");
+            const value = clone(cur);
+            console.log(clone(cur), "CLONNNER");
+            console.log(value, "VALUE DIARY");
+            console.log(v, "V");
+            value.data.list = [v];
+            const result = JSON.parse(value?.data?.list?.[0]?.name);
+            console.log(value.data.list, "objecttt");
+
+            acc.push(result);
+          });
+        }
+        return acc;
+      }, [])
+    : null;
+  console.log(arrTemp, "arrTemp");
+
+  const AddItemArrTemp = (event) => {
+    console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
+
+    const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
+    arrTemp[arrTemp.length - 1] = resulobj;
+    console.log(event.data.list, "УУУУУУУУДДДДД");
+    console.log(arrTemp, "resultEMPPP");
+    // massive = arrTemp;
+    // console.log(massive, "MASSQWET");
   };
 
   const content = records
@@ -155,6 +155,7 @@ export const TemperatureSheet = (props) => {
             console.log(value, "VALUE DIARY");
             console.log(v, "V");
             value.data.list = [v];
+
             acc.push(
               <TempItem
                 key={`${cur.key}-${index}`} // ключ передаём записи
@@ -164,11 +165,13 @@ export const TemperatureSheet = (props) => {
                 value={value}
                 textValue={v}
                 onDelete={DeleteTempItem}
-                onChange={AddItemArrTemp} // передали пользователя действующего
+                onClick={AddItemArrTemp} // передали пользователя действующего
               />
             );
           });
         }
+
+        // acc[acc.length - 1] = arrays[0];
         return acc; // Не забываем возвращать
       }, [])
     : null;
@@ -182,137 +185,11 @@ export const TemperatureSheet = (props) => {
         <div className="diary__table">
           <CiCirclePlus className="diary__plus" onClick={addRecord} />
           <div className="diary__list">
-            {/* {records.map((record, i) => (
-              <Record
-                key={record.key}
-                user={props.user}
-                project={props.project}
-                name={props.name}
-                data={props.data}
-              />
-            ))} */}
             {content}
             {/* {arrTemp} */}
           </div>
         </div>
 
-        {/* <div style={{ width: "100%", height: 400 }}>
-          {arrTemp}
-   
-          <div
-            style={{
-              marginBottom: "20px",
-              padding: "15px",
-              backgroundColor: "#f0f4f8", // светлый фон
-              borderRadius: "10px", // скругленные углы
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // тень
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "10px", // промежутки между элементами
-            }}
-          >
-            <input
-              type="number"
-              value={inputTemp}
-              onChange={(e) => setInputTemp(e.target.value)}
-              placeholder="Введите температуру"
-              style={{
-                padding: "10px 15px",
-                fontSize: "16px",
-                borderRadius: "8px",
-                border: "2px solid #ccc",
-                outline: "none",
-                transition: "border-color 0.3s",
-                width: "200px",
-              }}
-              onFocus={(e) => (e.target.style.borderColor = "#66afe9")}
-              onBlur={(e) => (e.target.style.borderColor = "#ccc")}
-            />
-            <input
-              type="number"
-              value={inputDay}
-              onChange={(e) => setInputDay(parseInt(e.target.value))}
-              placeholder="День (1-14)"
-              min={1}
-              max={14}
-              style={{
-                padding: "10px 15px",
-                fontSize: "16px",
-                borderRadius: "8px",
-                border: "2px solid #ccc",
-                outline: "none",
-                transition: "border-color 0.3s",
-                width: "150px",
-              }}
-              onFocus={(e) => (e.target.style.borderColor = "#66afe9")}
-              onBlur={(e) => (e.target.style.borderColor = "#ccc")}
-            />
-            <button
-              onClick={addTemperature}
-              style={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                borderRadius: "8px",
-                border: "none",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                cursor: "pointer",
-                transition: "background-color 0.3s, transform 0.2s",
-              }}
-              onMouseEnter={(e) => (e.target.style.backgroundColor = "#45a049")}
-              onMouseLeave={(e) => (e.target.style.backgroundColor = "#4CAF50")}
-              onMouseDown={(e) => (e.target.style.transform = "scale(0.98)")}
-              onMouseUp={(e) => (e.target.style.transform = "scale(1)")}
-            >
-              Добавить
-            </button>
-          </div>
-
-        
-          <ResponsiveContainer>
-            <LineChart
-              data={temperatures}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid stroke="#f5f5f5" />
-
-              <XAxis
-                dataKey="day"
-                label={{ value: "День", position: "insideBottom", offset: -5 }}
-              />
-
-         
-              <YAxis
-                domain={[33, 42]}
-                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
-                allowDataOverflow={true}
-                label={{
-                  value: "Температура (°C)",
-                  angle: -90,
-                  position: "insideLeft",
-                }}
-              />
-
-         
-              <Tooltip />
-
-             
-              <Legend />
-
-            
-
-              <Line
-                type="monotone"
-                dataKey="temp"
-                stroke="black"
-                strokeWidth={3}
-                isAnimationActive={true}
-                strokeLinecap="round"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>  */}
         <Grafiki arr={arrTemp} />
       </div>
     </div>

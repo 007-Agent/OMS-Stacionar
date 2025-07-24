@@ -100,11 +100,12 @@ export const TempItem = (props) => {
     // 5. Обновляем состояние
     setResult(updatedValue);
   }
+
   function save() {
     setIsTextModified(false);
     saved();
-    if (props.onChange) {
-      props.onChange(result);
+    if (props.onClick) {
+      props.onClick(result);
       console.log(result, "ПИСЕЦЦЦ");
     }
     axios
