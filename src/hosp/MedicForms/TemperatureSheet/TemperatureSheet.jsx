@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Grafiki from "../Grafiki/Grafiki";
+
 import { CiCirclePlus } from "react-icons/ci";
 import { nanoid } from "nanoid";
 // import Temperature from '../../MetaRecords/Temperature/Temperature'
@@ -13,11 +14,14 @@ export const TemperatureSheet = (props) => {
     day: i + 1,
     temp: null,
   }));
-  const massive = [];
-  const [arr, setArr] = useState([props.data.data]);
+
+  const [isListVisible, setIsListVisible] = React.useState(false);
+  const [arr, setArr] = useState([]);
+
   const [records, setRecords] = useState(props.data);
   const [newRecords, setNewRecords] = useState(props.data);
   const [temperatures, setTemperatures] = useState(initialTemperatures);
+
   const [inputTemp, setInputTemp] = useState("");
   const [inputDay, setInputDay] = useState(1);
   console.log(records, "ТРЕШЕР");
@@ -66,9 +70,6 @@ export const TemperatureSheet = (props) => {
     ).padStart(2, "0")}`;
   };
   console.log(props.data, "props.data");
-  // const addRecord = () => {
-  //   setRecords([...records, { id: records.length + 1 }]); // Добавляем новую запись с уникальным id
-  // };
 
   const addRecord = () => {
     const newData = clone(records);
@@ -109,8 +110,8 @@ export const TemperatureSheet = (props) => {
     setRecords(newData);
   };
 
-  const arrTemp = records
-    ? records.reduce((acc, cur) => {
+  const arrTemp = newRecords
+    ? newRecords.reduce((acc, cur) => {
         if (cur.data && cur.data.list) {
           cur.data.list.forEach((v, index) => {
             console.log(v, "PROJECT");
@@ -125,22 +126,43 @@ export const TemperatureSheet = (props) => {
             acc.push(result);
           });
         }
+
         return acc;
       }, [])
     : null;
+  React.useEffect(() => {
+    if (arrTemp) {
+      setArr(arrTemp);
+    }
+  }, [records]);
   console.log(arrTemp, "arrTemp");
-
-  const AddItemArrTemp = (event) => {
-    console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
-
-    const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
-    arrTemp[arrTemp.length - 1] = resulobj;
-    console.log(event.data.list, "УУУУУУУУДДДДД");
-    console.log(arrTemp, "resultEMPPP");
-    // massive = arrTemp;
-    // console.log(massive, "MASSQWET");
+  console.log(arrTemp.length, "LONG");
+  const toggleListVisibility = () => {
+    setIsListVisible(!isListVisible);
   };
 
+  // const AddItemArrTemp = (event) => {
+  //   console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
+
+  //   const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
+
+  //   if (arrTemp.length === 0) {
+  //     arrTemp.push(resulobj);
+  //   }
+  //   arrTemp[arrTemp.length - 1] = resulobj;
+  //   console.log(event.data.list, "УУУУУУУУДДДДД");
+  //   console.log(arrTemp, "resultEMPPP");
+  //   setArr(arrTemp);
+  // };
+  const AddItemArrTemp = (event) => {
+    console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
+    const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
+    console.log(event.data.list, "УУУУУУУУДДДДД");
+    setArr((prev) => [...prev, resulobj]); // Просто добавляем в конец
+  };
+
+  console.log(arr, "КОНЕЧНЫЙ");
+  console.log(arrTemp, "КОНЕЧНЫЙ");
   const content = records
     ? records.reduce((acc, cur) => {
         console.log(records, "state data");
@@ -176,6 +198,7 @@ export const TemperatureSheet = (props) => {
       }, [])
     : null;
 
+  console.log(arrTemp, "ППРОМОУТЕРИНГ");
   return (
     <div className="temp__main">
       <div>
@@ -189,8 +212,20 @@ export const TemperatureSheet = (props) => {
             {/* {arrTemp} */}
           </div>
         </div>
-
-        <Grafiki arr={arrTemp} />
+        <button
+          onClick={toggleListVisibility}
+          style={{
+            padding: "8px 16px",
+            backgroundColor: "#4CAF50",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          {isListVisible ? "Скрыть список" : "Показать список"}
+        </button>
+        {isListVisible && <Grafiki arr={arr} />}
       </div>
     </div>
   );

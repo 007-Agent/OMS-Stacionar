@@ -1,56 +1,20 @@
 import React from "react";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-import "./grafiki.scss";
 
+import "./grafiki.scss";
+import Grafiki from "../Grafiki/Grafiki";
 const TemperatureRecharts = (props) => {
-  const [measurements, setMeasurements] = React.useState([]);
-  const [newDate, setNewDate] = React.useState("");
-  const [newMorning, setNewMorning] = React.useState("");
-  const [newEvening, setNewEvening] = React.useState("");
-  const [isListVisible, setIsListVisible] = React.useState(false);
+  // const [isListVisible, setIsListVisible] = React.useState(false);
   const [result, setResult] = React.useState(props.arr);
 
   // const [arrNew, setArrNew] = React.useState(props.arr);
   const arrNew = props.arr;
   console.log(arrNew, "NEWWWWW");
 
-  const handleAddMeasurement = () => {
-    if (newDate && newMorning && newEvening) {
-      const newMeasurement = {
-        date: newDate,
-        day: measurements.length + 1,
-        formattedDate: new Date(newDate).toLocaleDateString("ru-RU", {
-          day: "numeric",
-          month: "short",
-        }),
-        morning: parseFloat(newMorning),
-        evening: parseFloat(newEvening),
-      };
-      setMeasurements([...measurements, newMeasurement]);
-      setNewDate("");
-      setNewMorning("");
-      setNewEvening("");
-    }
-  };
-
   // const toggleListVisibility = () => {
   //   setIsListVisible(!isListVisible);
   // };
 
   // Генерируем пустые данные для отображения осей
-  const displayData =
-    measurements.length > 0
-      ? measurements
-      : [{ day: 1, morning: null, evening: null }];
 
   return (
     <>
@@ -89,162 +53,7 @@ const TemperatureRecharts = (props) => {
         </ul>
       </table>
 
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: "8px",
-          padding: "20px",
-        }}
-      >
-        <div
-          style={{
-            marginBottom: "20px",
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Дата:</label>
-            <input
-              type="date"
-              value={newDate}
-              onChange={(e) => setNewDate(e.target.value)}
-              style={{ padding: "8px" }}
-            />
-          </div>
-
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Утро (°C):</label>
-            <input
-              type="number"
-              value={newMorning}
-              onChange={(e) => setNewMorning(e.target.value)}
-              step="0.1"
-              min="33"
-              max="42"
-              style={{ width: "80px", padding: "8px" }}
-            />
-          </div>
-
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Вечер (°C):</label>
-            <input
-              type="number"
-              value={newEvening}
-              onChange={(e) => setNewEvening(e.target.value)}
-              step="0.1"
-              min="33"
-              max="42"
-              style={{ width: "80px", padding: "8px" }}
-            />
-          </div>
-
-          <button
-            onClick={handleAddMeasurement}
-            disabled={!newDate || !newMorning || !newEvening}
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Добавить
-          </button>
-        </div>
-
-        <div style={{ position: "relative" }}>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart
-              data={displayData}
-              margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
-              <XAxis
-                dataKey="day"
-                label={{
-                  value: "Дни наблюдения",
-                  position: "insideBottomRight",
-                  offset: -10,
-                  fill: "#666",
-                }}
-                tick={{ fill: "#666" }}
-              />
-              <YAxis
-                domain={[33, 42]}
-                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
-                label={{
-                  value: "Температура (°C)",
-                  angle: -90,
-                  position: "insideLeft",
-                  fill: "#666",
-                }}
-                tick={{ fill: "#666" }}
-              />
-              <Tooltip
-                formatter={(value) =>
-                  value !== null ? [`${value} °C`] : ["Нет данных"]
-                }
-                labelFormatter={(day) => {
-                  const item = measurements.find((m) => m.day === day);
-                  return item ? item.formattedDate : "День " + day;
-                }}
-              />
-              <Legend />
-
-              <Line
-                type="monotone"
-                dataKey="morning"
-                name="Утренняя"
-                stroke="#8884d8"
-                strokeWidth={2}
-                activeDot={{ r: 8 }}
-                dot={measurements.length > 0}
-                connectNulls={false}
-              />
-              <Line
-                type="monotone"
-                dataKey="evening"
-                name="Вечерняя"
-                stroke="#82ca9d"
-                strokeWidth={2}
-                activeDot={{ r: 8 }}
-                dot={measurements.length > 0}
-                connectNulls={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-
-          {measurements.length === 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                textAlign: "center",
-                color: "#999",
-                backgroundColor: "rgba(255,255,255,0.9)",
-                padding: "20px",
-                borderRadius: "8px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                maxWidth: "80%",
-              }}
-            >
-              <div style={{ fontSize: "18px", marginBottom: "10px" }}>
-                График температуры пациента
-              </div>
-              <div style={{ fontSize: "14px" }}>
-                Введите данные измерений, чтобы увидеть динамику температуры
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <Grafiki arr={arrNew} />
     </>
   );
 };

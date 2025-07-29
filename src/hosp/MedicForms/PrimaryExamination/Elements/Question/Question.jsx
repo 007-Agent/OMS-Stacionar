@@ -10,7 +10,6 @@ import { ListBox } from "../../../../../components/Answer/ListBox/ListBox";
 export const Question = (props) => {
   console.log(props.v, "VVVVVVVVVVV");
 
-
   // const textInput = props.v?.data?.list?.[0]?.name;
   // const textareaRef = React.useRef(null);
   // console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
@@ -61,7 +60,6 @@ export const Question = (props) => {
         index: props.index,
         value: value,
       });
-      
     }
   };
   const handleTextChange = (text) => {

@@ -9,8 +9,8 @@ export const TempItem = (props) => {
   const obj = JSON.parse(values?.data?.list?.[0]?.name);
   console.log(obj, "object");
   const object = JSON.parse(props.value?.data?.list?.[0]?.name);
-  console.log(object, "Odttrtrtrtrrt");
-  console.log(obj.text, "OOOBBBBJECT");
+  // console.log(object, "Odttrtrtrtrrt");
+  // console.log(obj.text, "OOOBBBBJECT");
 
   const [result, setResult] = useState(props.value);
   const [text, setText] = useState();
