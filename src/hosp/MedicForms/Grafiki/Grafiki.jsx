@@ -13,7 +13,7 @@ import "./grafiki.scss";
 
 const TemperatureRecharts = (props) => {
   const [measurements, setMeasurements] = React.useState([]);
-  const [result, setResult] = React.useState([]);
+  // const [result, setResult] = React.useState([]);
   const [newDate, setNewDate] = React.useState("");
   const [newMorning, setNewMorning] = React.useState("");
   const [newEvening, setNewEvening] = React.useState("");
@@ -22,89 +22,77 @@ const TemperatureRecharts = (props) => {
   const data = Array.from({ length: 14 }, (_, i) => ({
     day: i + 1, // дни с 1 по 14
   }));
+  console.log(data, "DAYSSSS");
 
   const arrNew = props.arr;
   console.log(arrNew, "NEWWWWW");
 
-  const handleAddMeasurement = () => {
-    if (newDate && newMorning && newEvening) {
-      const newMeasurement = {
-        date: newDate,
-        day: measurements.length + 1,
-        formattedDate: new Date(newDate).toLocaleDateString("ru-RU", {
+  // const result =
+  //   arrNew?.slice(0, 14).map((num, i) => ({
+  //     date: num.date,
+  //     day: i + 1,
+  //     formattedDate: new Date(num.date).toLocaleDateString("ru-RU", {
+  //       day: "numeric",
+  //       month: "short",
+  //     }),
+  //     morning: parseFloat(num.moTemp),
+  //     evening: parseFloat(num.evTemp),
+  //   })) || [];
+  // Создаём пустой массив на 14 дней
+  const arrDays = Array.from({ length: 14 }, (_, i) => ({
+    day: i + 1,
+    morning: null,
+    evening: null,
+    formattedDate: `День ${i + 1}`,
+  }));
+
+  // Вставляем данные из arrNew по индексу (дню)
+
+  // Альтернативный вариант — сопоставить по индексу массива arrNew (если даты идут подряд)
+  arrNew.forEach((item, i) => {
+    if (i < 14) {
+      arrDays[i] = {
+        day: i + 1,
+        morning: parseFloat(item.moTemp) || null,
+        evening: parseFloat(item.evTemp) || null,
+        formattedDate: new Date(item.date).toLocaleDateString("ru-RU", {
           day: "numeric",
           month: "short",
         }),
-        morning: parseFloat(newMorning),
-        evening: parseFloat(newEvening),
       };
-      setMeasurements([...measurements, newMeasurement]);
-      setNewDate("");
-      setNewMorning("");
-      setNewEvening("");
     }
-  };
-  for (let i = 0; i < arrNew.length; i++) {
-    const num = arrNew[i];
-    const newResult = {
-      date: num.date,
-      day: i + 1,
-      formattedDate: new Date(num.date).toLocaleDateString("ru-RU", {
-        day: "numeric",
-        month: "short",
-      }),
-      morning: parseFloat(num.moTemp),
-      evening: parseFloat(num.evTemp),
-    };
-    setResult([...result, newResult]);
-  }
-
-  // const toggleListVisibility = () => {
-  //   setIsListVisible(!isListVisible);
-  // };
-
-  // Генерируем пустые данные для отображения осей
-  const displayData =
-    measurements.length > 0
-      ? measurements
-      : [{ day: 1, morning: null, evening: null }];
+  });
+  const displayData = arrDays;
+  // const displayData = result.length ? result : [];
+  console.log(displayData, "DISPLAY");
 
   return (
     <>
-      <table style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr style={{ backgroundColor: "#f2f2f2" }}>
-            <th>Дата</th>
-            <th>Утро (°C)</th>
-            <th>Вечер (°C)</th>
-          </tr>
-        </thead>
-
-        <ul
-          style={{
-            listStyle: "none",
-            padding: "0",
-            marginTop: "10px",
-            border: "1px solid #ddd",
-            borderRadius: "4px",
-          }}
-        >
-          {arrNew.map((item, index) => (
-            <li
-              key={index}
-              style={{
-                padding: "8px 16px",
-                borderBottom: "1px solid #eee",
-                backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
-              }}
-            >
-              <strong>Дата:</strong> {item.date},<strong> Утро:</strong>{" "}
-              {item.moTemp}°C,
-              <strong> Вечер:</strong> {item.evTemp}°C
-            </li>
-          ))}
-        </ul>
-      </table>
+      <ul
+        style={{
+          listStyle: "none",
+          padding: "0",
+          marginTop: "10px",
+          border: "1px solid #ddd",
+          borderRadius: "4px",
+          maxWidth: "700px",
+        }}
+      >
+        {arrNew.map((item, index) => (
+          <li
+            key={index}
+            style={{
+              padding: "8px 16px",
+              borderBottom: "1px solid #eee",
+              backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
+            }}
+          >
+            <strong>Дата:</strong> {item.date},<strong> Утро:</strong>{" "}
+            {item.moTemp}°C,
+            <strong> Вечер:</strong> {item.evTemp}°C
+          </li>
+        ))}
+      </ul>
 
       <div
         style={{
@@ -113,71 +101,10 @@ const TemperatureRecharts = (props) => {
           padding: "20px",
         }}
       >
-        <div
-          style={{
-            marginBottom: "20px",
-            display: "flex",
-            gap: "10px",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Дата:</label>
-            <input
-              type="date"
-              value={newDate}
-              onChange={(e) => setNewDate(e.target.value)}
-              style={{ padding: "8px" }}
-            />
-          </div>
-
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Утро (°C):</label>
-            <input
-              type="number"
-              value={newMorning}
-              onChange={(e) => setNewMorning(e.target.value)}
-              step="0.1"
-              min="33"
-              max="42"
-              style={{ width: "80px", padding: "8px" }}
-            />
-          </div>
-
-          <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-            <label>Вечер (°C):</label>
-            <input
-              type="number"
-              value={newEvening}
-              onChange={(e) => setNewEvening(e.target.value)}
-              step="0.1"
-              min="33"
-              max="42"
-              style={{ width: "80px", padding: "8px" }}
-            />
-          </div>
-
-          <button
-            onClick={handleAddMeasurement}
-            disabled={!newDate || !newMorning || !newEvening}
-            style={{
-              padding: "8px 16px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
-            Добавить
-          </button>
-        </div>
-
         <div style={{ position: "relative" }}>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={370}>
             <LineChart
-              data={data}
+              data={displayData}
               margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
@@ -194,7 +121,7 @@ const TemperatureRecharts = (props) => {
               <YAxis
                 domain={[33, 42]}
                 stoke="black"
-                ticks={[34, 36, 38, 40, 42]}
+                ticks={[33, 34, 35, 36, 37, 38, 39, 40, 41, 42]}
                 allowDataOverflow={true}
                 label={{
                   value: "Температура (°C)",
@@ -209,20 +136,20 @@ const TemperatureRecharts = (props) => {
                   value !== null ? [`${value} °C`] : ["Нет данных"]
                 }
                 labelFormatter={(day) => {
-                  const item = result.find((m) => m.day === day);
+                  const item = displayData.find((m) => m.day === day);
                   return item ? item.formattedDate : "День " + day;
                 }}
               />
               <Legend />
 
-              {/* <Line
+              <Line
                 type="monotone"
                 dataKey="morning"
                 name="Утренняя"
                 stroke="#8884d8"
                 strokeWidth={2}
                 activeDot={{ r: 8 }}
-                dot={measurements.length > 0}
+                dot={false}
                 connectNulls={false}
               />
               <Line
@@ -232,13 +159,13 @@ const TemperatureRecharts = (props) => {
                 stroke="#82ca9d"
                 strokeWidth={2}
                 activeDot={{ r: 8 }}
-                dot={measurements.length > 0}
+                dot={false}
                 connectNulls={false}
-              /> */}
+              />
             </LineChart>
           </ResponsiveContainer>
 
-          {measurements.length === 0 && (
+          {/* {measurements.length === 0 && (
             <div
               style={{
                 position: "absolute",
@@ -261,7 +188,7 @@ const TemperatureRecharts = (props) => {
                 Введите данные измерений, чтобы увидеть динамику температуры
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </>
