@@ -13,13 +13,16 @@ import "./grafiki.scss";
 
 const TemperatureRecharts = (props) => {
   const [measurements, setMeasurements] = React.useState([]);
+  const [result, setResult] = React.useState([]);
   const [newDate, setNewDate] = React.useState("");
   const [newMorning, setNewMorning] = React.useState("");
   const [newEvening, setNewEvening] = React.useState("");
   const [isListVisible, setIsListVisible] = React.useState(false);
-  const [result, setResult] = React.useState(props.arr);
+  // const [result, setResult] = React.useState(props.arr);
+  const data = Array.from({ length: 14 }, (_, i) => ({
+    day: i + 1, // дни с 1 по 14
+  }));
 
-  // const [arrNew, setArrNew] = React.useState(props.arr);
   const arrNew = props.arr;
   console.log(arrNew, "NEWWWWW");
 
@@ -41,6 +44,20 @@ const TemperatureRecharts = (props) => {
       setNewEvening("");
     }
   };
+  for (let i = 0; i < arrNew.length; i++) {
+    const num = arrNew[i];
+    const newResult = {
+      date: num.date,
+      day: i + 1,
+      formattedDate: new Date(num.date).toLocaleDateString("ru-RU", {
+        day: "numeric",
+        month: "short",
+      }),
+      morning: parseFloat(num.moTemp),
+      evening: parseFloat(num.evTemp),
+    };
+    setResult([...result, newResult]);
+  }
 
   // const toggleListVisibility = () => {
   //   setIsListVisible(!isListVisible);
@@ -91,8 +108,8 @@ const TemperatureRecharts = (props) => {
 
       <div
         style={{
-          border: "1px solid #ddd",
-          borderRadius: "8px",
+          // border: "1px solid #ddd",
+          // borderRadius: "8px",
           padding: "20px",
         }}
       >
@@ -160,7 +177,7 @@ const TemperatureRecharts = (props) => {
         <div style={{ position: "relative" }}>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart
-              data={displayData}
+              data={data}
               margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
@@ -176,7 +193,9 @@ const TemperatureRecharts = (props) => {
               />
               <YAxis
                 domain={[33, 42]}
-                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
+                stoke="black"
+                ticks={[34, 36, 38, 40, 42]}
+                allowDataOverflow={true}
                 label={{
                   value: "Температура (°C)",
                   angle: -90,
@@ -190,13 +209,13 @@ const TemperatureRecharts = (props) => {
                   value !== null ? [`${value} °C`] : ["Нет данных"]
                 }
                 labelFormatter={(day) => {
-                  const item = measurements.find((m) => m.day === day);
+                  const item = result.find((m) => m.day === day);
                   return item ? item.formattedDate : "День " + day;
                 }}
               />
               <Legend />
 
-              <Line
+              {/* <Line
                 type="monotone"
                 dataKey="morning"
                 name="Утренняя"
@@ -215,7 +234,7 @@ const TemperatureRecharts = (props) => {
                 activeDot={{ r: 8 }}
                 dot={measurements.length > 0}
                 connectNulls={false}
-              />
+              /> */}
             </LineChart>
           </ResponsiveContainer>
 
