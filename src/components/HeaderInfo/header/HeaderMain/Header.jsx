@@ -2,16 +2,22 @@ import { React, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import "./header.scss";
 import { MenuList } from "../../../MenuList/MenuList";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../../redux/authSlice";
+import { setMenuOpen } from "../../../../redux/authSlice";
 
 export const Header = (props) => {
   const [menu, setMenu] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const user = props.user;
-
+  const status = useSelector((state) => state.auth.menuOpen);
+  console.log(status, "STATUSSS");
+  const dispatch = useDispatch();
   // const clickMenuShow = () => {
   //   setMenu(!menu);
   // };
   const clickMenuShow = () => {
+    dispatch(setMenuOpen(false));
     if (!menu) {
       setMenu(true);
       setTimeout(() => setIsAnimating(true), 0); // Задержка для начала анимации
@@ -51,7 +57,9 @@ export const Header = (props) => {
         </div>
       </div>
 
-      {menu && <MenuList onClose={onClickClose} menu={menu && isAnimating} />}
+      {menu && !status ? (
+        <MenuList onClose={onClickClose} menu={menu && isAnimating} />
+      ) : null}
     </>
   );
 };

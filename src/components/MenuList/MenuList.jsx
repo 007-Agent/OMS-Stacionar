@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { IoCloseSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/authSlice";
+import { setMenuOpen } from "../../redux/authSlice";
 export const MenuList = ({ onClose, menu }) => {
   const dispatch = useDispatch();
   const handleLinkClick = () => {
@@ -11,6 +12,8 @@ export const MenuList = ({ onClose, menu }) => {
   };
   const handleExitUser = () => {
     dispatch(logoutUser());
+    dispatch(setMenuOpen(false));
+    onClose();
   };
   return (
     <div className={`menu__content ${menu ? "open" : ""}`}>

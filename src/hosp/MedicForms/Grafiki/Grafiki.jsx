@@ -121,7 +121,7 @@ const TemperatureRecharts = (props) => {
               <YAxis
                 domain={[33, 42]}
                 stoke="black"
-                ticks={[33, 34, 35, 36, 37, 38, 39, 40, 41, 42]}
+                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
                 allowDataOverflow={true}
                 label={{
                   value: "Температура (°C)",

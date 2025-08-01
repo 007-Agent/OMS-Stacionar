@@ -64,11 +64,15 @@ const authSlice = createSlice({
     checkStatus: 'idle',
     logoutStatus: 'idle',
     error: null,
+    menuOpen: false,
   },
   reducers: {
     logout: (state) => {
       state.user = null;
       localStorage.removeItem('token'); 
+    },
+     setMenuOpen: (state, action) => {
+      state.menuOpen = action.payload;  // payload должен быть boolean
     },
   },
   extraReducers: (builder) => {
@@ -79,6 +83,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload; 
+        
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
@@ -110,7 +115,7 @@ const authSlice = createSlice({
 });
 
 // Экспортируем действия и редюсер
-export const { logout } = authSlice.actions;
+export const { logout, setMenuOpen  } = authSlice.actions;
 export default authSlice.reducer;
 
 // import { createSlice } from '@reduxjs/toolkit';
