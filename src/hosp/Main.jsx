@@ -15,36 +15,23 @@ function Main(props) {
   const { searchValue } = useContext(SearchContext);
   const checkStatus = useSelector((state) => state.auth.checkStatus);
   const user = useSelector((state) => state.auth.user);
-  // const nameUser = user.name;
+
   const dispatch = useDispatch();
   console.log(user);
   const handleMenuShow = (event) => {
     setType(event.target.value); // Сохраняем индекс выбранного элемента
   };
-  // const filteredList = list.filter((item) => {
-  //   const lastName = item.fio ? item.fio.split(" ")[0] : ""; // Предполагаем, что фамилия - это первое слово
-  //   return lastName
-  //     .toLowerCase()
-  //     .includes(searchValue ? searchValue.toLowerCase() : "");
-  // });
-  
 
   useEffect(() => {
     refresh();
   }, [type, searchValue, user]);
 
-  // useEffect(() => {
-  //   if (type !== undefined || searchValue) {
-  //     refresh();
-  //   }
-  // }, [type, searchValue]);
   const refresh = () => {
     const query = { type, family: searchValue };
     console.log(query);
 
-    // Выполняем Axios запрос
     axios.post("/rest/hosp/list", query).then((response) => {
-      setList(response.data.data); // Предполагается, что ответ содержит данные в response.data
+      setList(response.data.data);
     });
     console.log(list, "LISTIKS");
   };

@@ -13,9 +13,7 @@ export const Header = (props) => {
   const status = useSelector((state) => state.auth.menuOpen);
   console.log(status, "STATUSSS");
   const dispatch = useDispatch();
-  // const clickMenuShow = () => {
-  //   setMenu(!menu);
-  // };
+ 
   const clickMenuShow = () => {
     dispatch(setMenuOpen(false));
     if (!menu) {
@@ -31,9 +29,7 @@ export const Header = (props) => {
     setTimeout(() => setMenu(false), 300); // Время анимации
   };
 
-  // const onClickClose = () => {
-  //   setMenu(false);
-  // };
+  
 
   return (
     <>

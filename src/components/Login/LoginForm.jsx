@@ -17,7 +17,6 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ username, password }));
-    // dispatch(checkAuth());
   };
 
   const handleCancel = () => {
@@ -57,7 +56,6 @@ const LoginForm = () => {
           ) : (
             ""
           )}{" "}
-          {/* Отображаем ошибку */}
         </div>
       </form>
     </div>
