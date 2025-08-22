@@ -29,7 +29,6 @@ export const TemperatureSheet = (props) => {
   console.log(arr, " Массив нафиг!!!");
   console.log(newRecords, "newRecords11111");
 
-  // const [showLine, setShowLine] = useState(false);
   const clone = (source, exclude) => {
     let dest = null;
     if (typeof source === "function") {
@@ -110,29 +109,58 @@ export const TemperatureSheet = (props) => {
     setRecords(newData);
   };
 
+  // const arrTemp = newRecords
+  //   ? newRecords.reduce((acc, cur) => {
+  //       if (cur.data && cur.data.list) {
+  //         cur.data.list.forEach((v, index) => {
+  //           console.log(v, "PROJECT");
+  //           const value = clone(cur);
+  //           console.log(clone(cur), "CLONNNER");
+  //           console.log(value, "VALUE DIARY");
+  //           console.log(v, "V");
+  //           value.data.list = [v];
+  //           const result = JSON.parse(value?.data?.list?.[0]?.name);
+  //           console.log(value.data.list, "objecttt");
+
+  //           acc.push(result);
+  //         });
+  //       }
+
+  //       return acc;
+  //     }, [])
+  //   : null;
+
   const arrTemp = newRecords
     ? newRecords.reduce((acc, cur) => {
         if (cur.data && cur.data.list) {
-          cur.data.list.forEach((v, index) => {
-            console.log(v, "PROJECT");
+          cur.data.list.forEach((v) => {
             const value = clone(cur);
-            console.log(clone(cur), "CLONNNER");
-            console.log(value, "VALUE DIARY");
-            console.log(v, "V");
             value.data.list = [v];
             const result = JSON.parse(value?.data?.list?.[0]?.name);
-            console.log(value.data.list, "objecttt");
-
             acc.push(result);
           });
         }
-
         return acc;
       }, [])
     : null;
+
+  // Сортируем массив arrTemp по дате
+  const sortedArrTemp = arrTemp
+    ? arrTemp.sort((a, b) => {
+        // Предполагаем, что в результате есть поле date в формате "DD.MM.YYYY"
+        const [dayA, monthA, yearA] = a.date.split(".").map(Number);
+        const [dayB, monthB, yearB] = b.date.split(".").map(Number);
+
+        // Сравниваем годы -> месяцы -> дни
+        return (
+          new Date(yearA, monthA - 1, dayA) - new Date(yearB, monthB - 1, dayB)
+        );
+      })
+    : null;
+
   React.useEffect(() => {
     if (arrTemp) {
-      setArr(arrTemp);
+      setArr(sortedArrTemp);
     }
   }, [records]);
   console.log(arrTemp, "arrTemp");
@@ -163,38 +191,83 @@ export const TemperatureSheet = (props) => {
 
   console.log(arr, "КОНЕЧНЫЙ");
   console.log(arrTemp, "КОНЕЧНЫЙ");
+  // const content = records
+  //   ? records.reduce((acc, cur) => {
+  //       console.log(records, "state data");
+  //       console.log(cur, "state 2222 data");
+  //       if (cur.data && cur.data.list) {
+  //         // Проверка на наличие и массив
+  //         console.log(cur.data, "CURDATA");
+  //         cur.data.list.forEach((v, index) => {
+  //           console.log(v, "PROJECT");
+  //           const value = clone(cur);
+  //           console.log(clone(cur), "CLONNNER");
+  //           console.log(value, "VALUE DIARY");
+  //           console.log(v, "V");
+  //           value.data.list = [v];
+
+  //           acc.push(
+  //             <TempItem
+  //               // key={`${cur.key}-${index}`} // ключ передаём записи
+  //               key={cur.key}
+  //               name={props.name} // имя передаём
+  //               project={props.project}
+  //               user={props.user}
+  //               value={value}
+  //               textValue={v}
+  //               onDelete={DeleteTempItem}
+  //               onClick={AddItemArrTemp} // передали пользователя действующего
+  //             />
+  //           );
+  //         });
+  //       }
+
+  //       return acc;
+  //     }, [])
+  //   : null;
+
   const content = records
     ? records.reduce((acc, cur) => {
-        console.log(records, "state data");
-        console.log(cur, "state 2222 data");
         if (cur.data && cur.data.list) {
-          // Проверка на наличие и массив
-          console.log(cur.data, "CURDATA");
-          cur.data.list.forEach((v, index) => {
-            console.log(v, "PROJECT");
+          // Функция для парсинга даты и времени
+          const parseDateTime = (item) => {
+            try {
+              const data = JSON.parse(item.name || item.text || "{}");
+              const [day, month, year] = data.date.split(".").map(Number);
+              const [hours, minutes] = data.time.split(":").map(Number);
+              return new Date(year, month - 1, day, hours, minutes);
+            } catch (e) {
+              return new Date(0); // Возвращаем минимальную дату при ошибке
+            }
+          };
+
+          // Сортируем массив
+          const sortedList = [...cur.data.list].sort((a, b) => {
+            const dateA = parseDateTime(a);
+            const dateB = parseDateTime(b);
+            return dateA - dateB; // По возрастанию
+          });
+
+          // Перебираем отсортированный массив
+          sortedList.forEach((v, index) => {
             const value = clone(cur);
-            console.log(clone(cur), "CLONNNER");
-            console.log(value, "VALUE DIARY");
-            console.log(v, "V");
             value.data.list = [v];
 
             acc.push(
               <TempItem
-                key={`${cur.key}-${index}`} // ключ передаём записи
-                name={props.name} // имя передаём
+                key={`${cur.key}-${index}`}
+                name={props.name}
                 project={props.project}
                 user={props.user}
                 value={value}
                 textValue={v}
                 onDelete={DeleteTempItem}
-                onClick={AddItemArrTemp} // передали пользователя действующего
+                onClick={AddItemArrTemp}
               />
             );
           });
         }
-
-        // acc[acc.length - 1] = arrays[0];
-        return acc; // Не забываем возвращать
+        return acc;
       }, [])
     : null;
 

@@ -43,7 +43,7 @@ function Main(props) {
           <Search />
           <div className="type_panel">
             <h3>Тип:</h3>
-            {/* <input type="text" onClick={handleMenuShow} /> */}
+            
             <select
               name="selectedFruit"
               className="select__type"
@@ -59,21 +59,7 @@ function Main(props) {
           </div>
         </div>
         <div className="list__patient">
-          {/* {props.isLoading ? (
-            <p>Загрузка...</p> // Показываем индикатор загрузки
-          ) : user !== null ? (
-            list?.map((item) => (
-              <Link
-                to={`/patient-detail/${item.id}`}
-                key={item.id}
-                user={props.user}
-              >
-                <HospList info={item} />
-              </Link>
-            ))
-          ) : (
-            <LoginForm /> // Отображаем форму для авторизации, если пользователь не авторизован
-          )} */}
+         
           {checkStatus === "loading" ? (
             <p>Проверка авторизации...</p> // Индикатор загрузки
           ) : (user && user.name === null) || user === null ? (

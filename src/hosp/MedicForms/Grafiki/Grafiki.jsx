@@ -27,18 +27,6 @@ const TemperatureRecharts = (props) => {
   const arrNew = props.arr;
   console.log(arrNew, "NEWWWWW");
 
-  // const result =
-  //   arrNew?.slice(0, 14).map((num, i) => ({
-  //     date: num.date,
-  //     day: i + 1,
-  //     formattedDate: new Date(num.date).toLocaleDateString("ru-RU", {
-  //       day: "numeric",
-  //       month: "short",
-  //     }),
-  //     morning: parseFloat(num.moTemp),
-  //     evening: parseFloat(num.evTemp),
-  //   })) || [];
-  // Создаём пустой массив на 14 дней
   const arrDays = Array.from({ length: 14 }, (_, i) => ({
     day: i + 1,
     morning: null,
@@ -46,9 +34,6 @@ const TemperatureRecharts = (props) => {
     formattedDate: `День ${i + 1}`,
   }));
 
-  // Вставляем данные из arrNew по индексу (дню)
-
-  // Альтернативный вариант — сопоставить по индексу массива arrNew (если даты идут подряд)
   arrNew.forEach((item, i) => {
     if (i < 14) {
       arrDays[i] = {
@@ -63,7 +48,7 @@ const TemperatureRecharts = (props) => {
     }
   });
   const displayData = arrDays;
-  // const displayData = result.length ? result : [];
+
   console.log(displayData, "DISPLAY");
 
   return (
@@ -78,7 +63,7 @@ const TemperatureRecharts = (props) => {
           maxWidth: "700px",
         }}
       >
-        {arrNew.map((item, index) => (
+        {/* {arrNew.map((item, index) => (
           <li
             key={index}
             style={{
@@ -91,7 +76,33 @@ const TemperatureRecharts = (props) => {
             {item.moTemp}°C,
             <strong> Вечер:</strong> {item.evTemp}°C
           </li>
-        ))}
+        ))} */}
+        {arrNew
+          .sort((a, b) => {
+            // Преобразуем даты из формата "DD.MM.YYYY" в сравнимый вид
+            const [dayA, monthA, yearA] = a.date.split(".").map(Number);
+            const [dayB, monthB, yearB] = b.date.split(".").map(Number);
+
+            // Сравниваем годы -> месяцы -> дни
+            return (
+              new Date(yearA, monthA - 1, dayA) -
+              new Date(yearB, monthB - 1, dayB)
+            );
+          })
+          .map((item, index) => (
+            <li
+              key={index}
+              style={{
+                padding: "8px 16px",
+                borderBottom: "1px solid #eee",
+                backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
+              }}
+            >
+              <strong>Дата:</strong> {item.date},<strong> Утро:</strong>{" "}
+              {item.moTemp}°C,
+              <strong> Вечер:</strong> {item.evTemp}°C
+            </li>
+          ))}
       </ul>
 
       <div
@@ -102,7 +113,7 @@ const TemperatureRecharts = (props) => {
         }}
       >
         <div style={{ position: "relative" }}>
-          <ResponsiveContainer width="100%" height={370}>
+          <ResponsiveContainer width="100%" height={300}>
             <LineChart
               data={displayData}
               margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
@@ -140,7 +151,7 @@ const TemperatureRecharts = (props) => {
                   return item ? item.formattedDate : "День " + day;
                 }}
               />
-              <Legend />
+              {/* <Legend /> */}
 
               <Line
                 type="monotone"
@@ -164,31 +175,6 @@ const TemperatureRecharts = (props) => {
               />
             </LineChart>
           </ResponsiveContainer>
-
-          {/* {measurements.length === 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                textAlign: "center",
-                color: "#999",
-                backgroundColor: "rgba(255,255,255,0.9)",
-                padding: "20px",
-                borderRadius: "8px",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-                maxWidth: "80%",
-              }}
-            >
-              <div style={{ fontSize: "18px", marginBottom: "10px" }}>
-                График температуры пациента
-              </div>
-              <div style={{ fontSize: "14px" }}>
-                Введите данные измерений, чтобы увидеть динамику температуры
-              </div>
-            </div>
-          )} */}
         </div>
       </div>
     </>

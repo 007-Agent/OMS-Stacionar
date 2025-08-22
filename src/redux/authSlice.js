@@ -72,7 +72,7 @@ const authSlice = createSlice({
       localStorage.removeItem('token'); 
     },
      setMenuOpen: (state, action) => {
-      state.menuOpen = action.payload;  // payload должен быть boolean
+      state.menuOpen = action.payload; 
     },
   },
   extraReducers: (builder) => {
