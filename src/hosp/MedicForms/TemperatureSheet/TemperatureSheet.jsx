@@ -229,27 +229,24 @@ export const TemperatureSheet = (props) => {
   const content = records
     ? records.reduce((acc, cur) => {
         if (cur.data && cur.data.list) {
-          // Функция для парсинга даты и времени
-          const parseDateTime = (item) => {
-            try {
-              const data = JSON.parse(item.name || item.text || "{}");
-              const [day, month, year] = data.date.split(".").map(Number);
-              const [hours, minutes] = data.time.split(":").map(Number);
-              return new Date(year, month - 1, day, hours, minutes);
-            } catch (e) {
-              return new Date(0); // Возвращаем минимальную дату при ошибке
-            }
-          };
+          // 1. Создаем копию массива
+          const listCopy = [...cur.data.list];
 
-          // Сортируем массив
-          const sortedList = [...cur.data.list].sort((a, b) => {
-            const dateA = parseDateTime(a);
-            const dateB = parseDateTime(b);
-            return dateA - dateB; // По возрастанию
+          // 2. Сортируем по дате и времени (простыми строками)
+          listCopy.sort((a, b) => {
+            // Достаем данные из JSON
+            const dataA = JSON.parse(a.name || a.text || "{}");
+            const dataB = JSON.parse(b.name || b.text || "{}");
+
+            // Сравниваем сначала даты, потом время
+            if (dataA.date !== dataB.date) {
+              return dataA.date.localeCompare(dataB.date);
+            }
+            return dataA.time.localeCompare(dataB.time);
           });
 
-          // Перебираем отсортированный массив
-          sortedList.forEach((v, index) => {
+          // 3. Перебираем отсортированный массив
+          listCopy.forEach((v, index) => {
             const value = clone(cur);
             value.data.list = [v];
 
