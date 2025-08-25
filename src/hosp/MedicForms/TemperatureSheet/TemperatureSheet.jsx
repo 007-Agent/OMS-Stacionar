@@ -21,7 +21,7 @@ export const TemperatureSheet = (props) => {
   const [records, setRecords] = useState(props.data);
   const [newRecords, setNewRecords] = useState(props.data);
   const [temperatures, setTemperatures] = useState(initialTemperatures);
-
+  const massive = [];
   const [inputTemp, setInputTemp] = useState("");
   const [inputDay, setInputDay] = useState(1);
   console.log(records, "ТРЕШЕР");
@@ -144,14 +144,11 @@ export const TemperatureSheet = (props) => {
       }, [])
     : null;
 
-  // Сортируем массив arrTemp по дате
   const sortedArrTemp = arrTemp
     ? arrTemp.sort((a, b) => {
-        // Предполагаем, что в результате есть поле date в формате "DD.MM.YYYY"
         const [dayA, monthA, yearA] = a.date.split(".").map(Number);
         const [dayB, monthB, yearB] = b.date.split(".").map(Number);
 
-        // Сравниваем годы -> месяцы -> дни
         return (
           new Date(yearA, monthA - 1, dayA) - new Date(yearB, monthB - 1, dayB)
         );
@@ -186,7 +183,7 @@ export const TemperatureSheet = (props) => {
     console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
     const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
     console.log(event.data.list, "УУУУУУУУДДДДД");
-    setArr((prev) => [...prev, resulobj]); // Просто добавляем в конец
+    setArr((prev) => [...prev, resulobj]);
   };
 
   console.log(arr, "КОНЕЧНЫЙ");
@@ -249,7 +246,8 @@ export const TemperatureSheet = (props) => {
           listCopy.forEach((v, index) => {
             const value = clone(cur);
             value.data.list = [v];
-
+            const result = JSON.parse(value?.data?.list?.[0]?.name);
+            massive.push(result);
             acc.push(
               <TempItem
                 key={`${cur.key}-${index}`}
@@ -267,8 +265,9 @@ export const TemperatureSheet = (props) => {
         return acc;
       }, [])
     : null;
-
+  console.log(content, "акакакака");
   console.log(arrTemp, "ППРОМОУТЕРИНГ");
+  console.log(massive);
   return (
     <div className="temp__main">
       <div>

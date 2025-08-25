@@ -1,36 +1,43 @@
 import React, { useState } from "react";
 import debounce from "lodash.debounce";
-import "./text.scss";
+import "./twochange.scss";
 
-export const Text = (props) => {
+export const TwoChangeWord = (props) => {
   const textInput = props.v?.list?.[0]?.name;
 
   console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
   const initialText = textInput;
   const [textValue, setTextValue] = useState(initialText);
-  const handleChange = (event) => {
+  const [mkbValue, setMkbValue] = useState("");
+  const handleTextChange = (event) => {
     const newValue = event.target.value;
-    setTextValue();
+    setTextValue(newValue);
+    debouncedChange(newValue, mkbValue);
+  };
 
-    // Вызываем дебаунс только для изменения состояния Redux
-    debouncedChange(newValue);
+  const handleMkbChange = (event) => {
+    const newValue = event.target.value;
+    setMkbValue(newValue);
+    debouncedChange(textValue, newValue);
   };
   const debouncedChange = React.useCallback(
-    debounce((newValue) => {
+    debounce((text, mkb) => {
       if (props.onChange) {
-        props.onChange(newValue);
+        // Объединяем значения в нужном формате
+        const combinedValue = `${text}${mkb ? `(МКБ:${mkb})` : ""}`;
+        props.onChange(combinedValue);
       }
     }, 3000),
     []
   );
   return (
-    <div className="text__content">
+    <div className="twoanswer__content">
       <h2 className="text__primary">{props.v.name}:</h2>
       <textarea
         value={textValue}
         name="text"
         className="text__from"
-        onChange={handleChange}
+        onChange={handleTextChange}
         onInput={(e) => {
           e.target.style.minHeight = "20px"; // Сброс высоты
           e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
@@ -40,6 +47,15 @@ export const Text = (props) => {
           e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
         }}
       ></textarea>
+      <div style={{ display: "flex", textAlign: "left" }}>
+        <span style={{ fontSize: "21px" }}>Код по МКБ</span>
+        <input
+          type="text"
+          className="input__second"
+          name="mkb"
+          onChange={handleMkbChange}
+        />
+      </div>
     </div>
   );
 };

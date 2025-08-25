@@ -7,6 +7,7 @@ import { MiniText } from "../../../../../components/Answer/MiniText/MiniText";
 import { Text } from "../../../../../components/Answer/Text/Text";
 import { ListType } from "../../../../../components/Answer/List/ListType";
 import { ListBox } from "../../../../../components/Answer/ListBox/ListBox";
+import { TwoChangeWord } from "../../../../../components/Answer/TwoChange/TwoChangeWord";
 export const Question = (props) => {
   console.log(props.v, "VVVVVVVVVVV");
 
@@ -63,6 +64,7 @@ export const Question = (props) => {
     }
   };
   const handleTextChange = (text) => {
+    console.log(text, "ТЕКСТТТТТ");
     if (props.onChange) {
       const value = clone(props.v);
       value.data.list = [];
@@ -114,6 +116,18 @@ export const Question = (props) => {
           id={props.v.data.id}
           value={value}
           onChange={handleRefChange}
+          index={props.index}
+        />
+      );
+    } else if (data.type === 9) {
+      let value = data.list;
+      console.log(value, "dataListBOX");
+      content = (
+        <TwoChangeWord
+          v={data}
+          id={props.v.data.id}
+          value={value}
+          onChange={handleTextChange}
           index={props.index}
         />
       );

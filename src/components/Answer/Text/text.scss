@@ -1,6 +1,9 @@
+$primary-color: #007bff;
+$border-color: #ccc;
+$background-color: #f9f9f9;
 .text__content {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   .text__primary {
     box-sizing: border-box;
     cursor: default;
@@ -9,7 +12,7 @@
     color: rgb(108, 167, 176);
     outline: none;
     text-align: left;
-   
+
     font-size: 21px;
     display: inline;
     opacity: 1;
@@ -22,7 +25,7 @@
     border: 1px solid rgba(108, 167, 176, 0.5);
     color: rgb(0, 0, 0);
     text-align: left;
-    
+
     font-size: 21px;
     margin-bottom: 5px;
   }

@@ -84,20 +84,20 @@ export const TempItem = (props) => {
   function handleChange(event) {
     setIsTextModified(true);
 
-    // 1. Создаём глубокую копию текущего состояния
+    
     const updatedValue = JSON.parse(JSON.stringify(result));
 
-    // 2. Парсим текущий объект из `name`
+  
     const currentData = JSON.parse(updatedValue.data.list[0].name);
 
-    // 3. Обновляем нужное поле
+    
     const { name, value } = event.target;
     currentData[name] = value;
 
-    // 4. Сохраняем обратно в `name`
+    
     updatedValue.data.list[0].name = JSON.stringify(currentData);
 
-    // 5. Обновляем состояние
+    
     setResult(updatedValue);
   }
 
