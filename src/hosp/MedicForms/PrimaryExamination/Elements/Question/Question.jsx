@@ -65,11 +65,13 @@ export const Question = (props) => {
   };
   const handleTextChange = (text) => {
     console.log(text, "ТЕКСТТТТТ");
+    const name = text.name;
     if (props.onChange) {
       const value = clone(props.v);
       value.data.list = [];
-      if (text && text.trim() !== "") {
-        value.data.list.push({ id: null, order: 0, name: text });
+      if (text && name.trim() !== "") {
+        // value.data.list.push({ id: null, order: 0, name: text });
+        value.data.list.push(text);
       }
 
       change(value);

@@ -10,7 +10,7 @@ import { DiaryEntry } from "../MedicForms/DiaryEntry/DiaryEntry";
 import { PrimaryCheck } from "../MedicForms/PrimaryExamination/PrimaryCheck";
 import { DoctorExamination } from "../MedicForms/DoctorCheck/DoctorExamination";
 import { TemperatureSheet } from "../MedicForms/TemperatureSheet/TemperatureSheet";
-import Grafiki from "../MedicForms/Grafiki/Grafiki";
+
 const PROJECT = "hosp";
 
 function MedicalPrice(props) {
@@ -84,15 +84,6 @@ function MedicalPrice(props) {
           name={"records"}
         />
       );
-    } else if (index === "5") {
-      setSelectedComponent(
-        <Grafiki
-          project={PROJECT}
-          user={props.user}
-          data={info.temperature}
-          name={"temperature"}
-        />
-      );
     } else {
       setSelectedComponent(cont);
     }
@@ -127,7 +118,6 @@ function MedicalPrice(props) {
               <option value="2">Осмотр врачом</option>
               <option value="3">Температурный лист</option>
               <option value="4">Дневниковые записи</option>
-              <option value="5">grafikis</option>
             </select>
           ) : (
             <div className="outlone__info">

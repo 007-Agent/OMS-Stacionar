@@ -132,17 +132,7 @@ export const PrimaryCheck = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   const index = textInfo.indexQuest;
-  //   // Проверяем, есть ли индекс вопроса и элемент в textInfo
-  //   if (index >= 0 && textInfo.item.length > 0) {
-  //     const index = textInfo.indexQuest;
-  //     data2[index].data.list = textInfo; // Создаем копию массива
-  //     // Добавляем новый элемент
-  //     setData(data2); // Обновляем состояние
 
-  //   }
-  // }, [textInfo]);
 
   console.log(data2, "MAIN CHECK");
 
