@@ -5,11 +5,12 @@ import { nanoid } from "nanoid";
 import "./twochange.scss";
 
 export const TwoChangeWord = (props) => {
-  const textInput = props.v?.list?.[0]?.name;
-  // const textInput = JSON.parse(props.v?.list?.[0]?.name);
+  // const textInput = props.v?.list?.[0]?.name;
+  const textInput = JSON.parse(props.v?.list?.[0]?.name);
+
   const [result, setResult] = useState();
   console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
-  const initialText = textInput;
+  const initialText = textInput.text;
   const [textValue, setTextValue] = useState(initialText);
   const [mkbValue, setMkbValue] = useState("");
   const current = new Date();
@@ -97,7 +98,7 @@ export const TwoChangeWord = (props) => {
     <div className="twoanswer__content">
       <h2 className="text__primary">{props.v.name}:</h2>
       <textarea
-        value={result}
+        value={textValue}
         name="text"
         className="text__from"
         onChange={handleTextChange}
