@@ -57,7 +57,7 @@ export const TwoChangeWord = (props) => {
     }
 
     try {
-      const query = { mkbCode: info };
+      const query = { mkbCode: textValue };
       const response = await axios.post("/rest/hosp/diagmkb", query);
       console.log(query);
 
@@ -65,7 +65,8 @@ export const TwoChangeWord = (props) => {
         setResult("");
         console.log(response.data.data);
         setResult(response.data.data);
-        setTextValue(response.data.data);
+        // setTextValue(response.data.data);
+        setTextValue((prev) => (prev ? prev + "\n" : "") + response.data.data);
       }
     } catch (error) {
       console.error("Ошибка при запросе:", error);
