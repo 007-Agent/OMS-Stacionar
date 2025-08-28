@@ -47,10 +47,10 @@ export const Question = (props) => {
 
   const change = (value) => {
     if (props.onChange) {
-      // передали объект вопроса с list(внутри выбранные пункты!)
+    
       console.log(value, "EBBBBBBBBBBBBB");
       props.onChange({
-        // передаем объект со свойствами name, index, value, в value лежит вопрос с выбранными пунктами!
+        
         name: props.name,
         index: props.index,
         value: value,
@@ -63,20 +63,39 @@ export const Question = (props) => {
       });
     }
   };
+  // const handleTextChange = (text) => {
+  //   console.log(text, "ТЕКСТТТТТ");
+  //   const name = text.name;
+  //   const value = clone(props.v);
+  //   console.log(value, "XNJ");
+  //   if (props.onChange) {
+  //     if (value.data.list && value.data.list.length > 0) {
+  //       console.log(value.data.list.length, "Длина!!!!");
+  //       value.data.list[0] = text; // Обновляем первый элемент
+  //     } else {
+  //       value.data.list.push(text);
+  //     }
+
+  //     change(value);
+  //     console.log(value, "XXXXX");
+  //   }
+  // };
   const handleTextChange = (text) => {
     console.log(text, "ТЕКСТТТТТ");
     const name = text.name;
-    if (props.onChange) {
-      const value = clone(props.v);
+    const value = clone(props.v);
+    console.log(value, "XNJ");
 
+    if (props.onChange) {
       if (value.data.list && value.data.list.length > 0) {
         console.log(value.data.list.length, "Длина!!!!");
-        value.data.list[0] = text; // Обновляем первый элемент
-      } else {
-        value.data.list.push(text);
+        value.data.list = []; // Очищаем массив, если он не пустой
       }
+      // Добавляем новый элемент в список
+      value.data.list.push(text);
 
       change(value);
+      console.log(value, "XXXXX");
     }
   };
   const handleRefChange = (event) => {
