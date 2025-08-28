@@ -16,7 +16,7 @@ export const PrimaryCheck = (props) => {
   const [save, setSave] = useState(false);
   const data = props.data;
   const id = props.id;
-  console.log(id, "АЙДИ ПАЦ")
+  console.log(id, "АЙДИ ПАЦ");
   const newID = 33165;
   const repCoding = "stat.card.sancur";
   const handleShowComponent = (componentType) => {
@@ -39,7 +39,7 @@ export const PrimaryCheck = (props) => {
         break;
       case "resultHistory":
         startIndex = 74;
-        endIndex = 79;
+        endIndex = 85;
         break;
       default:
         questions = [];
@@ -131,8 +131,6 @@ export const PrimaryCheck = (props) => {
       setResult(true);
     }
   };
-
-
 
   console.log(data2, "MAIN CHECK");
 

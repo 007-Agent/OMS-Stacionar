@@ -68,9 +68,11 @@ export const Question = (props) => {
     const name = text.name;
     if (props.onChange) {
       const value = clone(props.v);
-      value.data.list = [];
-      if (text && name.trim() !== "") {
-        // value.data.list.push({ id: null, order: 0, name: text });
+
+      if (value.data.list && value.data.list.length > 0) {
+        console.log(value.data.list.length, "Длина!!!!");
+        value.data.list[0] = text; // Обновляем первый элемент
+      } else {
         value.data.list.push(text);
       }
 
@@ -144,21 +146,6 @@ export const Question = (props) => {
     <div className="primary__form">
       {information}
       {content}
-      {/* <h2 className="title__primary">{props.v.data.name}:</h2>
-      <textarea
-        value={textValue}
-        name="text"
-        className="text__from"
-        onChange={handleChange}
-        onInput={(e) => {
-          e.target.style.minHeight = "20px"; // Сброс высоты
-          e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
-        }}
-        onClick={(e) => {
-          e.target.style.minHeight = "20px"; // Сброс высоты
-          e.target.style.height = `${e.target.scrollHeight}px`; // Установка высоты на основе прокрутки
-        }}
-      ></textarea> */}
     </div>
   );
 };

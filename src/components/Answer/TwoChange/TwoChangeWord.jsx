@@ -5,12 +5,20 @@ import { nanoid } from "nanoid";
 import "./twochange.scss";
 
 export const TwoChangeWord = (props) => {
-  // const textInput = props.v?.list?.[0]?.name;
-  const textInput = JSON.parse(props.v?.list?.[0]?.name);
+  const textInputString = props.v?.list?.[props.v.list.length - 1]?.name;
 
+  let textInput;
+  try {
+    textInput = textInputString ? JSON.parse(textInputString) : {};
+  } catch (error) {
+    console.error("Ошибка при парсинге JSON:", error);
+    textInput = {}; // или установите textInput в значение по умолчанию
+  }
   const [result, setResult] = useState();
   console.log(textInput, "QQQQQQQQQQQQQQQQQQ");
   const initialText = textInput.text;
+  const Code = textInput.mkb10;
+  const [mkbcode, setMkbCode] = useState(Code);
   const [textValue, setTextValue] = useState(initialText);
   const [mkbValue, setMkbValue] = useState("");
   const current = new Date();
@@ -38,17 +46,9 @@ export const TwoChangeWord = (props) => {
   //   };
   const handleMkbChange = (event) => {
     setInfo(event.target.value);
+    setMkbCode(event.target.value);
   };
   console.log(info, "INFOOOOO");
-
-  const debouncedChange = React.useCallback(
-    debounce((text, mkb) => {
-      if (props.onChange) {
-        props.onChange(newRecord);
-      }
-    }, 3000),
-    []
-  );
 
   const handleRestDiagnoz = async () => {
     if (!info.trim()) {
@@ -62,8 +62,10 @@ export const TwoChangeWord = (props) => {
       console.log(query);
 
       if (response.data) {
+        setResult("");
         console.log(response.data.data);
         setResult(response.data.data);
+        setTextValue(response.data.data);
       }
     } catch (error) {
       console.error("Ошибка при запросе:", error);
@@ -114,6 +116,7 @@ export const TwoChangeWord = (props) => {
       <div style={{ display: "flex", textAlign: "left" }}>
         <span style={{ fontSize: "21px" }}>Код по МКБ</span>
         <input
+          value={mkbcode}
           type="text"
           className="input__second"
           name="mkb"
