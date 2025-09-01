@@ -76,6 +76,9 @@ import "./epicrysis.scss";
 export const Epicrysis = (props) => {
   const data = props.data;
   const [result, setResult] = useState([]);
+  // const digit = result[10]?.name?.text;
+
+  // console.log(digit, "DIGIT22");
   const getExtractedValues = (data) => {
     const extractedValues = [];
 
@@ -85,8 +88,16 @@ export const Epicrysis = (props) => {
       }
       const answer = data[i];
       console.log(answer, "answerrr");
-      const value =
-        answer?.data?.list?.[answer.data.list.length - 1]?.name || "";
+      let value;
+      if (answer?.data?.list?.[answer.data.list.length - 1]?.key) {
+        const parsed = JSON.parse(
+          answer?.data?.list?.[answer.data.list.length - 1]?.name
+        );
+        value = parsed.text || "";
+      } else {
+        value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+      }
+      // const value = answer?.data?.list?.[answer.data.list.length - 1] || "";
 
       extractedValues.push(value);
     }
@@ -143,6 +154,8 @@ export const Epicrysis = (props) => {
     }
   }, [data]);
   console.log(result, "EPYCRISIS1212");
+  // props.v?.list?.[props.v.list.length - 1]?.name;
+
   return (
     <div className="medical-card">
       <h1 className="medical-card__title">Выписной эпикриз</h1>
@@ -154,7 +167,8 @@ export const Epicrysis = (props) => {
         <div className="field-group">
           <label className="field-label">Диагноз. Основное заболевание:</label>
           <textarea
-            value={result[0]}
+            value={result[10]?.text}
+            // value={JSON.parse(result[10]?.text)}
             className="textarea-field"
             onChange={(e) =>
               handleDiagnosisChange("mainDisease", "text", e.target.value)
