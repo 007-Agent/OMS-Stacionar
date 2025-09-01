@@ -77,7 +77,12 @@ export const Epicrysis = (props) => {
   const data = props.data;
   const [result, setResult] = useState([]);
   // const digit = result[10]?.name?.text;
-
+  const [diagnoses, setDiagnoses] = useState({
+    mainDisease: { text: "", mkbCode: "" },
+    complications: { text: "", mkbCode: "" },
+    externalCause: { text: "", mkbCode: "" },
+    concomitantDiseases: { text: "", mkbCode: "" },
+  });
   // console.log(digit, "DIGIT22");
   const getExtractedValues = (data) => {
     const extractedValues = [];
@@ -105,12 +110,6 @@ export const Epicrysis = (props) => {
   };
 
   console.log(data, "EPYCRISIS");
-  const [diagnoses, setDiagnoses] = useState({
-    mainDisease: { text: "", mkbCode: "" },
-    complications: { text: "", mkbCode: "" },
-    externalCause: { text: "", mkbCode: "" },
-    concomitantDiseases: { text: "", mkbCode: "" },
-  });
 
   const [additionalInfo, setAdditionalInfo] = useState({
     admissionState: "",
@@ -153,9 +152,31 @@ export const Epicrysis = (props) => {
       setResult(extractedValues);
     }
   }, [data]);
+  React.useEffect(() => {
+    if (result.length > 0) {
+      setDiagnoses({
+        mainDisease: {
+          text: result[10]?.[0] || "",
+          mkbCode: result[10]?.[1] || "",
+        },
+        complications: {
+          text: result[11]?.[0] || "",
+          mkbCode: result[11]?.[1] || "",
+        },
+        externalCause: {
+          text: result[12]?.[0] || "",
+          mkbCode: result[12]?.[1] || "",
+        },
+        concomitantDiseases: {
+          text: result[13]?.[0] || "",
+          mkbCode: result[13]?.[1] || "",
+        },
+      });
+    }
+  }, [result]);
   console.log(result, "EPYCRISIS1212");
   // props.v?.list?.[props.v.list.length - 1]?.name;
-
+  console.log(diagnoses, "diagnnnnnn");
   return (
     <div className="medical-card">
       <h1 className="medical-card__title">Выписной эпикриз</h1>
@@ -167,7 +188,7 @@ export const Epicrysis = (props) => {
         <div className="field-group">
           <label className="field-label">Диагноз. Основное заболевание:</label>
           <textarea
-            value={result[10][0]}
+            value={diagnoses.mainDisease.text}
             // value={JSON.parse(result[10]?.text)}
             className="textarea-field"
             onChange={(e) =>
@@ -177,7 +198,7 @@ export const Epicrysis = (props) => {
           <input
             className="input-field"
             type="text"
-            value={result[10][1]}
+            value={diagnoses.mainDisease.mkbCode}
             onChange={(e) =>
               handleDiagnosisChange("mainDisease", "mkbCode", e.target.value)
             }
