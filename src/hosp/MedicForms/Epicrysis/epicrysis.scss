@@ -1,0 +1,123 @@
+// Переменные для цветов и размеров
+$primary-color: #007bff;
+$border-color: #ccc;
+$background-color: #f9f9f9;
+$label-color: #333;
+$input-width: 150px;
+$textarea-min-height: 60px;
+$section-margin: 20px;
+
+.medical-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  &__title {
+    font-size: 28px;
+    color: $label-color;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  &__section {
+    margin-bottom: $section-margin;
+
+    .section-title {
+      font-size: 24px;
+      color: $label-color;
+      margin-bottom: 15px;
+      border-bottom: 2px solid $primary-color;
+      padding-bottom: 5px;
+    }
+
+    .field-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+
+      .field-label {
+        font-size: 18px;
+        color: $label-color;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      .textarea-field {
+        width: 100%;
+        min-height: $textarea-min-height;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        resize: vertical;
+        overflow: hidden;
+        transition: border-color 0.3s;
+        margin-bottom: 10px;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+        }
+      }
+
+      .input-field {
+        width: $input-width;
+        padding: 8px;
+        font-size: 16px;
+        border: 1px solid $border-color;
+        border-radius: 4px;
+        transition: border-color 0.3s;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .save-button {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 12px;
+    font-size: 18px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+// Адаптивность для мобильных
+@media (max-width: 768px) {
+  .medical-card {
+    padding: 15px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    .section-title {
+      font-size: 20px;
+    }
+
+    .field-group .input-field {
+      width: 100%;
+    }
+
+    .save-button {
+      width: 100%;
+    }
+  }
+}

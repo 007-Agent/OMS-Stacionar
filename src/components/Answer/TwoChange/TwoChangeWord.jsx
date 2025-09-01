@@ -6,7 +6,7 @@ import "./twochange.scss";
 
 export const TwoChangeWord = (props) => {
   const textInputString = props.v?.list?.[props.v.list.length - 1]?.name;
-
+  
   let textInput;
   try {
     textInput = textInputString ? JSON.parse(textInputString) : {};
@@ -33,6 +33,8 @@ export const TwoChangeWord = (props) => {
     return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
   };
 
+ 
+
   const handleTextChange = (event) => {
     const newValue = event.target.value;
     setTextValue(newValue);
@@ -57,7 +59,7 @@ export const TwoChangeWord = (props) => {
     }
 
     try {
-      const query = { mkbCode: textValue };
+      const query = { mkbCode: info };
       const response = await axios.post("/rest/hosp/diagmkb", query);
       console.log(query);
 
@@ -65,8 +67,7 @@ export const TwoChangeWord = (props) => {
         setResult("");
         console.log(response.data.data);
         setResult(response.data.data);
-        // setTextValue(response.data.data);
-        setTextValue((prev) => (prev ? prev + "\n" : "") + response.data.data);
+        setTextValue(response.data.data);
       }
     } catch (error) {
       console.error("Ошибка при запросе:", error);

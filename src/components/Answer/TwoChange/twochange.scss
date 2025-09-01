@@ -6,51 +6,50 @@ $background-color: #f9f9f9;
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 800px; // Максимальная ширина 800px
-  margin: 0 auto; // Центрирование блока
-  padding: 20px; // Внутренние отступы
-  border: 1px solid $border-color; // Рамка вокруг блока
-  border-radius: 8px; // Закругление углов
-  background-color: $background-color; // Цвет фона
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); // Тень
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background-color: $background-color;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
   .text__primary {
-    font-size: 21px; // Размер шрифта заголовка
-    color: #333; // Цвет текста заголовка
-    margin-bottom: 15px; // Отступ снизу
-    text-align: left; // Выравнивание текста влево
+    font-size: 21px;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: left;
   }
 
   .text__from {
-    width: 100%; // Ширина текстового поля (не 100%)
-    height: 29px; // Минимальная высота
-    // Максимальная высота
-
-    font-size: 20px; // Размер шрифта
-    border: 1px solid $border-color; // Рамка
-    border-radius: 4px; // Закругление углов
-    resize: none; // Запрет изменения размера
-    transition: border-color 0.3s; // Плавный переход цвета рамки
-    text-align: left; // Выравнивание текста влево
-    margin-bottom: 15px; // Отступ снизу
+    width: 100%;
+    min-height: 29px; // ← ЗАМЕНИТЕ height НА min-height
+    font-size: 20px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    resize: vertical; // ← ДОБАВЬТЕ ЭТО для ручного изменения размера
+    transition: border-color 0.3s;
+    text-align: left;
+    margin-bottom: 15px;
+    overflow: hidden; // ← ДОБАВЬТЕ ЭТО
 
     &:focus {
-      border-color: $primary-color; // Цвет рамки при фокусе
-      outline: none; // Убираем стандартный контур
+      border-color: $primary-color;
+      outline: none;
     }
   }
 
   .input__second {
-    width: 110px; // Ширина инпута (буква + 7 знаков)
-    padding: 5px; // Внутренние отступы
-    font-size: 16px; // Размер шрифта
-    border: 1px solid $border-color; // Рамка
-    border-radius: 4px; // Закругление углов
-    transition: border-color 0.3s; // Плавный переход цвета рамки
+    width: 110px;
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    transition: border-color 0.3s;
 
     &:focus {
-      border-color: $primary-color; // Цвет рамки при фокусе
-      outline: none; // Убираем стандартный контур
+      border-color: $primary-color;
+      outline: none;
     }
   }
 }
