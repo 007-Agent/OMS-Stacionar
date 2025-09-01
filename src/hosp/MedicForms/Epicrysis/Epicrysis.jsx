@@ -93,7 +93,7 @@ export const Epicrysis = (props) => {
         const parsed = JSON.parse(
           answer?.data?.list?.[answer.data.list.length - 1]?.name
         );
-        value = parsed.text || "";
+        value = [parsed.text, parsed.mkb10];
       } else {
         value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
       }
@@ -167,7 +167,7 @@ export const Epicrysis = (props) => {
         <div className="field-group">
           <label className="field-label">Диагноз. Основное заболевание:</label>
           <textarea
-            value={result[10]?.text}
+            value={result[10][0]}
             // value={JSON.parse(result[10]?.text)}
             className="textarea-field"
             onChange={(e) =>
@@ -177,6 +177,7 @@ export const Epicrysis = (props) => {
           <input
             className="input-field"
             type="text"
+            value={result[10][1]}
             onChange={(e) =>
               handleDiagnosisChange("mainDisease", "mkbCode", e.target.value)
             }
