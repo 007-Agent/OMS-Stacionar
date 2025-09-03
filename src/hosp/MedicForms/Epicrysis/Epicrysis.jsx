@@ -75,8 +75,35 @@ import "./epicrysis.scss";
 // };
 export const Epicrysis = (props) => {
   const data = props.data;
+  const inspection = props.inspection;
+  console.log(inspection, "INSPT");
   const [result, setResult] = useState([]);
   // const digit = result[10]?.name?.text;
+
+  // const getInspectionValues = (inspection) => {
+  //   const InspectionValues = [];
+
+  //   for (let i = 0; i < inspection.length; i++) {
+  //     if (inspection[i].id === null || inspection[i].id === undefined) {
+  //       continue;
+  //     }
+  //     const inspect = inspection[i];
+  //     console.log(inspect, "inspectttt");
+  //     let value;
+  //     if (inspect?.data?.list?.[inspect.data.list.length - 1]?.key) {
+  //       const parsed =
+  //         inspect?.data?.list?.[inspect.data.list.length - 1]?.name;
+  //       value = parsed;
+  //     } else {
+  //       value = inspect?.data?.list?.[answer.data.list.length - 1]?.name;
+  //     }
+  //     // const value = answer?.data?.list?.[answer.data.list.length - 1] || "";
+
+  //     InspectionValues.push(value);
+  //   }
+  //   return InspectionValues;
+  // };
+
   const [diagnoses, setDiagnoses] = useState({
     mainDisease: { text: "", mkbCode: "" },
     complications: { text: "", mkbCode: "" },
@@ -84,6 +111,42 @@ export const Epicrysis = (props) => {
     concomitantDiseases: { text: "", mkbCode: "" },
   });
   // console.log(digit, "DIGIT22");
+  // const getExtractedValues = (data) => {
+  //   const extractedValues = [];
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     if (data[i].id === null || data[i].id === undefined) {
+  //       continue;
+  //     }
+  //     const answer = data[i];
+  //     console.log(answer, "answerrr");
+  //     let value;
+
+  //     if (
+  //       // typeof answer?.data?.list?.[answer.data.list.length - 1]?.name ===
+  //       // "String"
+  //       answer?.data?.list?.[answer.data.list.length - 1]?.name
+  //     ) {
+  //       if (answer?.data?.list?.[answer.data.list.length - 1]?.name) {
+  //         // const parsed = JSON.parse(
+  //         //   answer?.data?.list?.[answer.data.list.length - 1]?.name
+  //         // );
+  //         // value = [parsed.text, parsed.mkb10];
+  //         value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+  //       }
+
+  //       // console.log(parsed, "PARSS");
+  //       // value = [parsed.text, parsed.mkb10];
+  //     } else {
+  //       value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+  //     }
+  //     // const value = answer?.data?.list?.[answer.data.list.length - 1] || "";
+
+  //     extractedValues.push(value);
+  //   }
+  //   return extractedValues;
+  // };
+
   const getExtractedValues = (data) => {
     const extractedValues = [];
 
@@ -92,20 +155,22 @@ export const Epicrysis = (props) => {
         continue;
       }
       const answer = data[i];
-      console.log(answer, "answerrr");
-      let value;
-      if (answer?.data?.list?.[answer.data.list.length - 1]?.key) {
-        const parsed = JSON.parse(
-          answer?.data?.list?.[answer.data.list.length - 1]?.name
-        );
-        value = [parsed.text, parsed.mkb10];
-      } else {
-        value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+      let value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+
+      if (typeof value === "string") {
+        try {
+          // Пытаемся распарсить JSON
+          const parsed = JSON.parse(value);
+          value = [parsed.text, parsed.mkb10]; // если парсинг успешен — заменяем строку на объект/массив
+        } catch (e) {
+          // Если парсинг не удался — оставляем строку как есть
+          console.warn("Не удалось распарсить JSON:", value);
+        }
       }
-      // const value = answer?.data?.list?.[answer.data.list.length - 1] || "";
 
       extractedValues.push(value);
     }
+
     return extractedValues;
   };
 
@@ -152,6 +217,12 @@ export const Epicrysis = (props) => {
       setResult(extractedValues);
     }
   }, [data]);
+  // React.useEffect(() => {
+  //   if (inspection && inspection.length > 0) {
+  //     const InspectionValues = getInspectionValues(inspection); // Получаем массив извлечённых значений
+  //     setmainInspect(InspectionValues);
+  //   }
+  // }, [inspection]);
   React.useEffect(() => {
     if (result.length > 0) {
       setDiagnoses({
@@ -212,6 +283,7 @@ export const Epicrysis = (props) => {
           </label>
           <textarea
             className="textarea-field"
+            value={diagnoses.complications.text}
             onChange={(e) =>
               handleDiagnosisChange("complications", "text", e.target.value)
             }
@@ -219,6 +291,7 @@ export const Epicrysis = (props) => {
           <input
             className="input-field"
             type="text"
+            value={diagnoses.complications.mkbCode}
             onChange={(e) =>
               handleDiagnosisChange("complications", "mkbCode", e.target.value)
             }
@@ -232,6 +305,7 @@ export const Epicrysis = (props) => {
           </label>
           <textarea
             className="textarea-field"
+            value={diagnoses.externalCause.text}
             onChange={(e) =>
               handleDiagnosisChange("externalCause", "text", e.target.value)
             }
@@ -240,6 +314,7 @@ export const Epicrysis = (props) => {
           <input
             className="input-field"
             type="text"
+            value={diagnoses.externalCause.mkbCode}
             onChange={(e) =>
               handleDiagnosisChange("externalCause", "mkbCode", e.target.value)
             }
@@ -251,6 +326,7 @@ export const Epicrysis = (props) => {
           <label className="field-label">Сопутствующие заболевания:</label>
           <textarea
             className="textarea-field"
+            value={diagnoses.concomitantDiseases.text}
             onChange={(e) =>
               handleDiagnosisChange(
                 "concomitantDiseases",
@@ -263,6 +339,7 @@ export const Epicrysis = (props) => {
           <input
             className="input-field"
             type="text"
+            value={diagnoses.concomitantDiseases.mkbCode}
             onChange={(e) =>
               handleDiagnosisChange(
                 "concomitantDiseases",

@@ -93,6 +93,7 @@ function MedicalPrice(props) {
           user={props.user}
           data={info.secondcheck}
           name={"records"}
+          inspection={info.inspection}
           id={id}
         />
       );
