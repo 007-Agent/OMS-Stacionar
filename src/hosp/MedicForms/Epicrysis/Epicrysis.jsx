@@ -78,31 +78,8 @@ export const Epicrysis = (props) => {
   const inspection = props.inspection;
   console.log(inspection, "INSPT");
   const [result, setResult] = useState([]);
+  const [mainInspect, setmainInspect] = useState([]);
   // const digit = result[10]?.name?.text;
-
-  // const getInspectionValues = (inspection) => {
-  //   const InspectionValues = [];
-
-  //   for (let i = 0; i < inspection.length; i++) {
-  //     if (inspection[i].id === null || inspection[i].id === undefined) {
-  //       continue;
-  //     }
-  //     const inspect = inspection[i];
-  //     console.log(inspect, "inspectttt");
-  //     let value;
-  //     if (inspect?.data?.list?.[inspect.data.list.length - 1]?.key) {
-  //       const parsed =
-  //         inspect?.data?.list?.[inspect.data.list.length - 1]?.name;
-  //       value = parsed;
-  //     } else {
-  //       value = inspect?.data?.list?.[answer.data.list.length - 1]?.name;
-  //     }
-  //     // const value = answer?.data?.list?.[answer.data.list.length - 1] || "";
-
-  //     InspectionValues.push(value);
-  //   }
-  //   return InspectionValues;
-  // };
 
   const [diagnoses, setDiagnoses] = useState({
     mainDisease: { text: "", mkbCode: "" },
@@ -147,6 +124,32 @@ export const Epicrysis = (props) => {
   //   return extractedValues;
   // };
 
+  // const getExtractedValues = (data) => {
+  //   const extractedValues = [];
+
+  //   for (let i = 0; i < data.length; i++) {
+  //     if (data[i].id === null || data[i].id === undefined) {
+  //       continue;
+  //     }
+  //     const answer = data[i];
+  //     let value = answer?.data?.list?.[answer.data.list.length - 1]?.name;
+
+  //     if (typeof value === "string") {
+  //       try {
+  //         // Пытаемся распарсить JSON
+  //         const parsed = JSON.parse(value);
+  //         value = [parsed.text, parsed.mkb10]; // если парсинг успешен — заменяем строку на объект/массив
+  //       } catch (e) {
+  //         // Если парсинг не удался — оставляем строку как есть
+  //         console.warn("Не удалось распарсить JSON:", value);
+  //       }
+  //     }
+
+  //     extractedValues.push(value);
+  //   }
+
+  //   return extractedValues;
+  // };
   const getExtractedValues = (data) => {
     const extractedValues = [];
 
@@ -159,11 +162,17 @@ export const Epicrysis = (props) => {
 
       if (typeof value === "string") {
         try {
-          // Пытаемся распарсить JSON
           const parsed = JSON.parse(value);
-          value = [parsed.text, parsed.mkb10]; // если парсинг успешен — заменяем строку на объект/массив
+
+          if (
+            parsed &&
+            typeof parsed === "object" &&
+            "text" in parsed &&
+            "mkb10" in parsed
+          ) {
+            value = [parsed.text, parsed.mkb10];
+          }
         } catch (e) {
-          // Если парсинг не удался — оставляем строку как есть
           console.warn("Не удалось распарсить JSON:", value);
         }
       }
@@ -172,6 +181,40 @@ export const Epicrysis = (props) => {
     }
 
     return extractedValues;
+  };
+  const getInspectionValues = (inspection) => {
+    const InspectionValues = [];
+
+    for (let i = 0; i < inspection.length; i++) {
+      if (inspection[i].id === null || inspection[i].id === undefined) {
+        continue;
+      }
+
+      const inspect = inspection[i];
+      console.log(inspect, "inspectttt");
+
+      let value = inspect?.data?.list?.[inspect.data.list.length - 1]?.name;
+      console.log(typeof value);
+      if (typeof value === "string") {
+        try {
+          const parsed = JSON.parse(value);
+
+          if (
+            parsed &&
+            typeof parsed === "object" &&
+            "text" in parsed &&
+            "mkb10" in parsed
+          ) {
+            value = [parsed.text, parsed.mkb10];
+          }
+        } catch (e) {
+          console.warn("Не удалось распарсить JSON:", value);
+        }
+      }
+
+      InspectionValues.push(value);
+    }
+    return InspectionValues;
   };
 
   console.log(data, "EPYCRISIS");
@@ -217,12 +260,12 @@ export const Epicrysis = (props) => {
       setResult(extractedValues);
     }
   }, [data]);
-  // React.useEffect(() => {
-  //   if (inspection && inspection.length > 0) {
-  //     const InspectionValues = getInspectionValues(inspection); // Получаем массив извлечённых значений
-  //     setmainInspect(InspectionValues);
-  //   }
-  // }, [inspection]);
+  React.useEffect(() => {
+    if (inspection && inspection.length > 0) {
+      const InspectionValues = getInspectionValues(inspection); // Получаем массив извлечённых значений
+      setmainInspect(InspectionValues);
+    }
+  }, [inspection]);
   React.useEffect(() => {
     if (result.length > 0) {
       setDiagnoses({
@@ -246,6 +289,7 @@ export const Epicrysis = (props) => {
     }
   }, [result]);
   console.log(result, "EPYCRISIS1212");
+  console.log(mainInspect, "EPYCRISIS3333");
   // props.v?.list?.[props.v.list.length - 1]?.name;
   console.log(diagnoses, "diagnnnnnn");
   return (

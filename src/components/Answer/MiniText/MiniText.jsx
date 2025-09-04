@@ -6,7 +6,17 @@ export const MiniText = (props) => {
 
   console.log(miniTextInput, "QQQQQQQQQQQQQQQQQQ");
   const initialState = miniTextInput;
+  const current = new Date();
   const [miniTextValue, setTextValue] = useState(initialState);
+
+  const strDate = (date) => {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+  };
+
+  const cutTime = (date) => {
+    return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`;
+  };
+
   const handleChange = (event) => {
     const newTexting = event.target.value;
     setTextValue();
@@ -17,7 +27,17 @@ export const MiniText = (props) => {
   const debouncedChange = React.useCallback(
     debounce((newTexting) => {
       if (props.onChange) {
-        props.onChange(newTexting);
+        const newRecord = {
+          code: null,
+          key: null,
+          id: null,
+          name: newTexting, // Используем введенное значение
+          order: 0,
+          date: strDate(current),
+          time: cutTime(current),
+        };
+
+        props.onChange(newRecord);
       }
     }, 2000),
     []
