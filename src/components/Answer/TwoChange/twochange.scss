@@ -38,6 +38,38 @@ $background-color: #f9f9f9;
       outline: none;
     }
   }
+  .click__spend {
+    cursor: pointer;
+
+    justify-content: center;
+    padding: 6px 6px;
+    background-color: rgb(108, 167, 176);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    font-size: 16px;
+    opacity: 1;
+    width: 108px;
+    margin-left: 15px;
+    height: 31px;
+  }   
+  .click__save {
+    cursor: pointer;
+
+    justify-content: center;
+    padding: 6px 6px;
+    background-color: rgb(108, 167, 176);
+    color: rgb(255, 255, 255);
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(108, 167, 176, 0.5);
+    font-size: 16px;
+    opacity: 1;
+    width: 108px;
+    margin-left: 15px;
+    height: 31px;
+  }
 
   .input__second {
     width: 110px;

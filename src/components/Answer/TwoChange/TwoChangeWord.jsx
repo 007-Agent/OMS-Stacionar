@@ -242,8 +242,12 @@ export const TwoChangeWord = (props) => {
           name="mkb"
           onChange={handleMkbChange}
         />
-        <button onClick={handleRestDiagnoz}>Отправить</button>
-        <button onClick={handleSave}>Сохранить</button>
+        <button onClick={handleRestDiagnoz} className="click__spend">
+          Отправить
+        </button>
+        <button onClick={handleSave} className="click__save">
+          Сохранить
+        </button>
       </div>
     </div>
   );
