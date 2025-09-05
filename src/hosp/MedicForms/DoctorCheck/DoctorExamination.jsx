@@ -25,7 +25,7 @@ export const DoctorExamination = (props) => {
     try {
       const response = await axios.post(url, {
         id,
-        repCode: "stat.card.epicrisis",
+        repCode: "stat.card.inspection",
       });
       console.log(response.data, "ответ от сервера");
       if (response.status === 200) {
@@ -53,7 +53,7 @@ export const DoctorExamination = (props) => {
 
         const link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        link.setAttribute("download", "stat_card_epycrisis.pdf");
+        link.setAttribute("download", "stat_card_secondCheck.pdf");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
