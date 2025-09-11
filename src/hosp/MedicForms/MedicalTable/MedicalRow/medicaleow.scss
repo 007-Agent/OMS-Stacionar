@@ -1,0 +1,43 @@
+.td__checkbox {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background-color: transparent;
+  width: 21px;
+  height: 21px;
+}
+
+tr {
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.td {
+  padding: 8px 12px;
+  border-right: 1px solid #eee;
+  vertical-align: top;
+  min-width: 80px;
+  input{
+     width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    
+   
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+  }
+  input[type="text"],
+  input[type="date"],
+  textarea {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+  }
+}

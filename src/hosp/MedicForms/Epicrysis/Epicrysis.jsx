@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BiPrinter } from "react-icons/bi";
-import { Question } from "../PrimaryExamination/Elements/Question/Question";
+// import { Question } from "../PrimaryExamination/Elements/Question/Question";
+import LittlePage from "./LittlePage/LittlePage";
 import axios from "axios";
 import "./epicrysis.scss";
 // export const Epicrysis = (props) => {
@@ -299,7 +300,7 @@ export const Epicrysis = (props) => {
       {/* Диагнозы с type=4 */}
       <div className="medical-card__section">
         <h2 className="section-title">Диагнозы</h2>
-
+        <LittlePage />
         <div className="field-group">
           <label className="field-label">Диагноз. Основное заболевание:</label>
           <textarea

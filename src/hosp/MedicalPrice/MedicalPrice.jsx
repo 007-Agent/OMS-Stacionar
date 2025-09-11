@@ -11,6 +11,7 @@ import { PrimaryCheck } from "../MedicForms/PrimaryExamination/PrimaryCheck";
 import { DoctorExamination } from "../MedicForms/DoctorCheck/DoctorExamination";
 import { TemperatureSheet } from "../MedicForms/TemperatureSheet/TemperatureSheet";
 import { Epicrysis } from "../MedicForms/Epicrysis/Epicrysis";
+import { MedicalTable } from "../MedicForms/MedicalTable/MedicalTable";
 
 const PROJECT = "hosp";
 
@@ -88,6 +89,17 @@ function MedicalPrice(props) {
       );
     } else if (index === "5") {
       setSelectedComponent(
+        <MedicalTable
+          project={PROJECT}
+          user={props.user}
+          data={info.summary}
+          name={"records"}
+          inspection={info.inspection}
+          id={id}
+        />
+      );
+    } else if (index === "6") {
+      setSelectedComponent(
         <Epicrysis
           project={PROJECT}
           user={props.user}
@@ -131,7 +143,8 @@ function MedicalPrice(props) {
               <option value="2">Осмотр врачом</option>
               <option value="3">Температурный лист</option>
               <option value="4">Дневниковые записи</option>
-              <option value="5">Выписной эпикриз</option>
+              <option value="5">Назначения и их выполнения</option>
+              <option value="6">Выписной эпикриз</option>
             </select>
           ) : (
             <div className="outlone__info">

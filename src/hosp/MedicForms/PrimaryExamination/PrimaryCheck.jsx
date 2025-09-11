@@ -39,7 +39,7 @@ export const PrimaryCheck = (props) => {
         break;
       case "resultHistory":
         startIndex = 74;
-        endIndex = 104;
+        endIndex = 120;
         break;
       default:
         questions = [];

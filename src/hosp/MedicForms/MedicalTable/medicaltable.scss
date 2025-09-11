@@ -1,0 +1,51 @@
+.table {
+  width: 1500px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 20px;
+  color: green;
+  border: 2px solid green;
+}
+
+.th {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+}
+
+.thDay {
+  border: 1px solid green;
+  border-right: 1px solid green;
+  text-align: center;
+  font-size: 16px;
+  background-color: #e8f5e8;
+
+  &:nth-last-child(1) {
+    border-right: none;
+  }
+}
+
+.td {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: left;
+}
+
+.tdDay {
+  border: 1px solid green;
+  border-right: 1px solid green;
+  padding: 4px;
+  text-align: center;
+  font-size: 16px;
+
+  &:nth-last-child(1) {
+    border-right: none;
+  }
+}
+
+.tdCenter {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid green;
+}
