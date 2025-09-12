@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./medicaltable.scss";
+import axios from "axios";
 import MedicationRow from "./MedicalRow/MedicalRow";
 import { nanoid } from "nanoid";
 export const MedicalTable = (props) => {
   console.log(props.data, "rnnnvnv");
   const data = props.data;
-
+  console.log(props.name);
   const [newRecords, setNewRecords] = useState(props.data);
   const [records, setRecords] = useState(props.data);
   console.log("ufefefiwf");
@@ -63,14 +64,14 @@ export const MedicalTable = (props) => {
       const newRecord = {
         key: nanoid(),
         name: JSON.stringify({
-          type: "temperature",
+          type: "summary",
           user: { id: props.user.id, name: props.user.name },
           date: strDate(current),
           time: cutTime(current),
           text: "",
         }),
-        date: strDate(current),
-        time: cutTime(current),
+        date: "",
+        time: "",
       };
       found.data.list = found.data.list.concat(newRecord);
       setRecords(newData);
@@ -81,6 +82,23 @@ export const MedicalTable = (props) => {
 
   const handleClickSave = (element) => {
     console.log(element, "ELENMN");
+    const result = newRecords;
+    result[1] = element;
+    setNewRecords(result);
+    console.log(result, "SDSDSD");
+    console.log(newRecords, "NWNWNWNW");
+  };
+  const handleClickAxios = async () => {
+    try {
+      const response = await axios.post(
+        `/rest/${props.project}/${props.name}/update`,
+        newRecords
+      );
+      console.log("Данные отправлены успешно:", response.data);
+    } catch (error) {
+      console.error("Ошибка при отправке:", error);
+      alert("Ошибка отправки данных. Проверьте консоль."); // Уведомление об ошибке
+    }
   };
 
   const arrTemp = records
@@ -97,6 +115,7 @@ export const MedicalTable = (props) => {
                 value={value}
                 textValue={v}
                 onChange={handleClickSave}
+                project={props.project}
               />
             );
           });
@@ -143,6 +162,9 @@ export const MedicalTable = (props) => {
           {arrTemp}
         </tbody>
       </table>
+      <button onClick={handleClickAxios} className="sendButton">
+        Отправить данные
+      </button>
     </div>
   );
 };

@@ -8,36 +8,188 @@ const MedicationRow = (props) => {
   console.log(info);
 
   console.log(initialData, "intiall");
+  // const [editableItem, setEditableItem] = useState({
+  //   medication: initialData?.medication || "",
+  //   date: initialData?.date || "",
+  //   cancelDate: initialData?.cancelDate || "",
+  //   marks: initialData?.marks || {
+  //     "day-1": "",
+  //     "day-2": "",
+  //     "day-3": "",
+  //     "day-4": "",
+  //     "day-5": "",
+  //     "day-6": "",
+  //     "day-7": "",
+  //     "day-8": "",
+  //     "day-9": "",
+  //     "day-10": "",
+  //     "day-11": "",
+  //     "day-12": "",
+  //     "day-13": "",
+  //     "day-14": "",
+  //   },
+  //   text: initialData?.text || "",
+  // });
+
+  // useEffect(() => {
+  //   if (props.value) {
+  //     setinitialData(props.value);
+  //     const newInfo = JSON.parse(props.value?.data?.list?.[0]?.name || "{}");
+  //     setEditableItem({
+  //       medication: props.value?.medication || "",
+  //       date: props.value?.date || "",
+  //       cancelDate: props.value?.cancelDate || "",
+  //       marks: props.value?.marks || {
+  //         "day-1": "",
+  //         "day-2": "",
+  //         "day-3": "",
+  //         "day-4": "",
+  //         "day-5": "",
+  //         "day-6": "",
+  //         "day-7": "",
+  //         "day-8": "",
+  //         "day-9": "",
+  //         "day-10": "",
+  //         "day-11": "",
+  //         "day-12": "",
+  //         "day-13": "",
+  //         "day-14": "",
+  //       },
+  //       text: props.value?.text || "",
+
+  //     });
+  //   }
+  // }, [props.value]);
+
+  // const handleChange = (field, value) => {
+  //   const updatedItem = { ...editableItem, [field]: value };
+  //   setEditableItem(updatedItem);
+
+  //   const mergedData = { ...info, ...updatedItem };
+
+  //   const newInitialData = {
+  //     ...initialData,
+  //     data: {
+  //       ...initialData.data,
+  //       list: [
+  //         {
+  //           ...initialData.data.list[0],
+  //           name: JSON.stringify(mergedData),
+  //         },
+  //         ...initialData.data.list.slice(1),
+  //       ],
+  //     },
+  //   };
+
+  //   setinitialData(newInitialData);
+  //   console.log(newInitialData, "newInitialData");
+  //   console.log(mergedData, "Merged data in handleChange");
+  //   console.log("Marks in mergedData:", mergedData.marks);
+
+  //   if (props.onChange) {
+  //     props.onChange(newInitialData);
+  //   }
+  // };
+
+  // console.log(editableItem);
+
+  // const handleMarkChange = (dayIndex, value) => {
+  //   const dayKey = `day-${dayIndex}`;
+  //   const newMarks = { ...editableItem.marks, [dayKey]: value };
+  //   const updatedItem = { ...editableItem, marks: newMarks };
+  //   setEditableItem(updatedItem);
+  //   console.log(updatedItem, "updatedItem");
+  //   console.log(editableItem);
+
+  //   handleChange("marks", newMarks);
+  // };
   const [editableItem, setEditableItem] = useState({
     medication: initialData?.medication || "",
     date: initialData?.date || "",
     cancelDate: initialData?.cancelDate || "",
-    marks: initialData?.marks || {
-      "day-1": "",
-      "day-2": "",
-      "day-3": "",
-      "day-4": "",
-      "day-5": "",
-      "day-6": "",
-      "day-7": "",
-      "day-8": "",
-      "day-9": "",
-      "day-10": "",
-      "day-11": "",
-      "day-12": "",
-      "day-13": "",
-      "day-14": "",
-    },
+    day1: initialData?.day1 || "",
+    day2: initialData?.day2 || "",
+    day3: initialData?.day3 || "",
+    day4: initialData?.day4 || "",
+    day5: initialData?.day5 || "",
+    day6: initialData?.day6 || "",
+    day7: initialData?.day7 || "",
+    day8: initialData?.day8 || "",
+    day9: initialData?.day9 || "",
+    day10: initialData?.day10 || "",
+    day11: initialData?.day11 || "",
+    day12: initialData?.day12 || "",
+    day13: initialData?.day13 || "",
+    day14: initialData?.day14 || "",
     text: initialData?.text || "",
   });
-  const handleChange = (field, value) => {
-    const updatedItem = { ...editableItem, [field]: value };
+  const convertToISOFormat = (dateStr) => {
+    if (!dateStr) return "";
+    const [day, month, year] = dateStr.split(".");
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  };
+  const isoDate1 = convertToISOFormat(editableItem.date);
+  const isoDate2 = convertToISOFormat(editableItem.cancelDate);
+
+  // Обновлено: парсим JSON и устанавливаем плоские поля
+  useEffect(() => {
+    if (props.value) {
+      setinitialData(props.value);
+      const newInfo = JSON.parse(props.value?.data?.list?.[0]?.name || "{}");
+
+      // Инициализируем все day1-day14, если они отсутствуют в newInfo
+      const defaultDays = {};
+      for (let i = 1; i <= 14; i++) {
+        defaultDays[`day${i}`] = ""; // Пустая строка по умолчанию
+      }
+
+      setEditableItem({
+        medication: newInfo.medication || "",
+        date: newInfo.date || "",
+        cancelDate: newInfo.cancelDate || "",
+        ...defaultDays, // Распаковываем дефолтные дни
+        day1: newInfo.day1 || "",
+        day2: newInfo.day2 || "",
+        day3: newInfo.day3 || "",
+        day4: newInfo.day4 || "",
+        day5: newInfo.day5 || "",
+        day6: newInfo.day6 || "",
+        day7: newInfo.day7 || "",
+        day8: newInfo.day8 || "",
+        day9: newInfo.day9 || "",
+        day10: newInfo.day10 || "",
+        day11: newInfo.day11 || "",
+        day12: newInfo.day12 || "",
+        day13: newInfo.day13 || "",
+        day14: newInfo.day14 || "",
+        text: newInfo.text || "",
+      });
+    }
+  }, [props.value]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}.${month}.${year}`;
+  };
+  const handleChange = (field, value, type) => {
+    let newValue = value;
+    console.log(newValue);
+    console.log(field === "date");
+    if (field === "date") {
+      // преобразовать введённую дату из формата DD.MM.YYYY в YYYY-MM-DD
+      newValue = formatDate(value);
+    }
+    if (field === "cancelDate") {
+      // преобразовать введённую дату из формата DD.MM.YYYY в YYYY-MM-DD
+      newValue = formatDate(value);
+    }
+    const updatedItem = { ...editableItem, [field]: newValue };
+
     setEditableItem(updatedItem);
 
-    // Merge: соединяем info с updatedItem
-    const mergedData = { ...info, ...updatedItem };
+    const mergedData = { ...info, ...updatedItem }; // info — это распарсенный newInfo из useEffect
 
-    // Обновляем initialData: создаём копию и заменяем name на новый JSON
     const newInitialData = {
       ...initialData,
       data: {
@@ -53,20 +205,23 @@ const MedicationRow = (props) => {
     };
 
     setinitialData(newInitialData);
+    console.log(newInitialData, "newInitialData");
+    console.log(mergedData, "Merged data in handleChange");
 
     if (props.onChange) {
       props.onChange(newInitialData);
     }
+  };
 
-    console.log(mergedData, "Merged data in handleChange");
-  };
-  console.log(editableItem);
   const handleMarkChange = (dayIndex, value) => {
-    const dayKey = `day-${dayIndex}`;
-    const newMarks = { ...editableItem.marks, [dayKey]: value };
-    const updatedItem = { ...editableItem, marks: newMarks };
+    const field = `day${dayIndex}`;
+    const updatedItem = { ...editableItem, [field]: value };
     setEditableItem(updatedItem);
+    console.log(updatedItem, "updatedItem");
+
+    handleChange(field, value);
   };
+
   return (
     <>
       <tr>
@@ -80,14 +235,14 @@ const MedicationRow = (props) => {
         <td className="td">
           <input
             type="date"
-            value={editableItem.date}
+            value={isoDate1}
             onChange={(e) => handleChange("date", e.target.value)}
           />
         </td>
         <td className="td">
           <input
             type="date"
-            value={editableItem.cancelDate}
+            value={isoDate2}
             onChange={(e) => handleChange("cancelDate", e.target.value)}
           />
         </td>
@@ -99,7 +254,7 @@ const MedicationRow = (props) => {
                 name={`day-${dayIndex}`}
                 type="checkbox"
                 className="td__checkbox"
-                checked={editableItem.marks[`day-${dayIndex}`] === "✓"}
+                checked={editableItem["day" + dayIndex] === "✓"}
                 onChange={(e) =>
                   handleMarkChange(dayIndex, e.target.checked ? "✓" : "")
                 }

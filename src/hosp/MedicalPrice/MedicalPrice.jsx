@@ -93,7 +93,7 @@ function MedicalPrice(props) {
           project={PROJECT}
           user={props.user}
           data={info.summary}
-          name={"records"}
+          name={"summary"}
           inspection={info.inspection}
           id={id}
         />

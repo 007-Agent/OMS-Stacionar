@@ -9,6 +9,7 @@ export const Record = (props) => {
 
   console.log(obj.text, "OOOBBBBJECT");
   console.log(value, "ЧТО ТАКОЕ ЭТО");
+  console.log(props.project, "PRPRPR");
   const title = obj.text;
   // console.log(props.user.name, "POLZOVATEL");
   // Преобразуем строку в объект
