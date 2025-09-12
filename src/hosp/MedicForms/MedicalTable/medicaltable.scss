@@ -1,51 +1,104 @@
 .table {
-  width: 1500px;
+  width: 1700px;
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 20px;
   color: green;
   border: 2px solid green;
+
+  table-layout: fixed; /* фиксируем ширину колонок */
 }
 
+/* Заголовки */
 .th {
   border: 1px solid green;
   padding: 8px;
   text-align: center;
   background-color: #f0f8f0;
 }
+.th_new {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+  width: 700px;
+}
+.th_date {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+  width: 130px;
+}
 
+/* Ширина для основных заголовков */
+.th-medication {
+  width: 250px; /* Лекарственный препарат */
+}
+
+.th-date {
+  width: 100px; /* Дата назначения и Дата отмены */
+}
+
+.th-marks {
+  /* Группа отметок (14 дней) — ширина не фиксируем, она распределена по .thDay */
+}
+
+.th-reaction {
+  width: 300px; /* Сведения о реакции */
+}
+
+/* Заголовки дней */
 .thDay {
   border: 1px solid green;
   border-right: 1px solid green;
   text-align: center;
   font-size: 16px;
   background-color: #e8f5e8;
+  width: 50px; /* Каждый день ~50px */
 
   &:nth-last-child(1) {
     border-right: none;
   }
 }
 
+/* Ячейки данных */
 .td {
   border: 1px solid green;
   padding: 8px;
   text-align: left;
 }
 
+/* Ячейки дней */
 .tdDay {
   border: 1px solid green;
   border-right: 1px solid green;
   padding: 4px;
   text-align: center;
   font-size: 16px;
+  width: 50px; /* Ширина совпадает с заголовком */
 
   &:nth-last-child(1) {
     border-right: none;
   }
 }
 
+/* Центрированные ячейки */
 .tdCenter {
   padding: 8px;
   text-align: center;
   border: 1px solid green;
+}
+
+/* Дополнительные классы для ширины столбцов в теле таблицы */
+.td-medication {
+  width: 250px;
+}
+
+.td-date {
+  width: 100px;
+}
+
+.td-reaction {
+  width: 300px;
 }

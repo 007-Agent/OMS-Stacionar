@@ -79,6 +79,10 @@ export const MedicalTable = (props) => {
     }
   };
 
+  const handleClickSave = (element) => {
+    console.log(element, "ELENMN");
+  };
+
   const arrTemp = records
     ? records.reduce((acc, cur) => {
         if (cur.data && cur.data.list) {
@@ -92,6 +96,7 @@ export const MedicalTable = (props) => {
                 name={props.name} // имя передаём
                 value={value}
                 textValue={v}
+                onChange={handleClickSave}
               />
             );
           });
@@ -112,13 +117,13 @@ export const MedicalTable = (props) => {
               Лекарственный препарат (наименование, лекарственная форма,
               дозировка, способ введения, лечебное питание)
             </th>
-            <th className="th" rowSpan="2">
+            <th className="th_date" rowSpan="2">
               Дата назначения
             </th>
-            <th className="th" rowSpan="2">
+            <th className="th_date" rowSpan="2">
               Дата отмены
             </th>
-            <th className="th" colSpan="14">
+            <th className="th_new" colSpan="14">
               Отметки об исполнении назначения лекарственного препарата
             </th>
             <th className="th" rowSpan="2">
