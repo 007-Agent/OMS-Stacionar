@@ -10,7 +10,10 @@
     height: 30px;
     .date__info {
       display: flex;
+      align-items: center;
       gap: 0 15px;
+      font-size: 20px;
+      font-weight: 600;
 
       // h2 {
       //   display: flex;
@@ -20,14 +23,25 @@
       //   font-size: 20px;
       //   font-weight: 600;
       // }
-
+      h2 {
+        font-size: 20px;
+      }
+      input {
+        width: 130px;
+      }
       .wertyu {
         display: flex;
         text-align: center;
         align-items: center;
         height: 37px;
+        gap: 0 15px;
         h2 {
           margin-bottom: 0;
+        }
+        .change__days {
+          border-bottom: 1px solid black;
+          width: 40px;
+          text-align: center;
         }
       }
     }
