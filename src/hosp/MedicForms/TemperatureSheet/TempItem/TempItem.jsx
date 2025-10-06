@@ -11,11 +11,12 @@ export const TempItem = (props) => {
   const object = JSON.parse(props.value?.data?.list?.[0]?.name);
   // console.log(object, "Odttrtrtrtrrt");
   // console.log(obj.text, "OOOBBBBJECT");
-
+  console.log(props.index, "НУИНДЕКСССС");
   const [result, setResult] = useState(props.value);
   const [text, setText] = useState();
   const [isTextModified, setIsTextModified] = useState(false);
   const [isSaved, setIsSaved] = React.useState(false);
+  const currentObj = JSON.parse(result?.data?.list?.[0]?.name || "{}");
 
   // function handleChange(event) {
   //   setIsTextModified(true);
@@ -81,6 +82,7 @@ export const TempItem = (props) => {
   //   setResult(value);
   //   console.log(value, "Values efiwefnuiwenfuiwebnfweuibfwuifbwe");
   // }
+
   function handleChange(event) {
     setIsTextModified(true);
 
@@ -101,7 +103,7 @@ export const TempItem = (props) => {
     setIsTextModified(false);
     saved();
     if (props.onClick) {
-      props.onClick(result);
+      props.onClick([result, props.index]);
       console.log(result, "ПИСЕЦЦЦ");
     }
     axios
@@ -115,11 +117,9 @@ export const TempItem = (props) => {
       });
   }
 
-  // функция, вызываемая при клике "Сохранить"
   const saved = () => {
-    // тут ваша логика сохранения
     // после успешного сохранения обновляем состояние
-    setIsSaved((prev) => !prev); // меняем состояние, чтобы сработал useEffect
+    setIsSaved((prev) => !prev);
   };
 
   // внутри useEffect:
@@ -136,9 +136,32 @@ export const TempItem = (props) => {
     <div className={styles.content}>
       <div className={styles.row}>
         <div className={styles.date__info}>
-          <span>{obj.date}</span>
-          <span>{obj.time}</span>
+          {/* <span>{obj.date}</span>
+          <span>{obj.time}</span> */}
           {/* <h2>{`День болезни: ${obj.day}`}</h2> */}
+          <input
+            type="text"
+            onChange={handleChange}
+            value={currentObj.date || ""}
+            name="date"
+          />
+          <input
+            type="time"
+            onChange={handleChange}
+            value={currentObj.time || ""}
+            name="time"
+          />
+
+          <div className={styles.wertyu}>
+            <h2 className={styles.text__days}>День болезни: </h2>
+            <input
+              type="text"
+              onChange={handleChange}
+              value={currentObj.day}
+              className={styles.change__days}
+              name="day"
+            />
+          </div>
         </div>
         <div>{obj.user?.name}</div>
       </div>
@@ -165,7 +188,7 @@ export const TempItem = (props) => {
               <input
                 type="text"
                 onChange={handleChange}
-                value={obj.moTemp}
+                value={currentObj.moTemp}
                 name="moTemp"
               />
             </td>
@@ -173,7 +196,7 @@ export const TempItem = (props) => {
               <input
                 type="text"
                 onChange={handleChange}
-                value={obj.evTemp}
+                value={currentObj.evTemp}
                 name={"evTemp"}
               />
             </td>
@@ -181,7 +204,7 @@ export const TempItem = (props) => {
               <input
                 type="text"
                 onChange={handleChange}
-                value={obj.moArtPress}
+                value={currentObj.moArtPress}
                 name={"moArtPress"}
               />
             </td>
@@ -189,7 +212,7 @@ export const TempItem = (props) => {
               <input
                 type="text"
                 onChange={handleChange}
-                value={obj.evArtPress}
+                value={currentObj.evArtPress}
                 name={"evArtPress"}
               />
             </td>

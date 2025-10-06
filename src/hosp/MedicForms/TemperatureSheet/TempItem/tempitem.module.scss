@@ -11,21 +11,24 @@
     .date__info {
       display: flex;
       gap: 0 15px;
-      span {
+
+      // h2 {
+      //   display: flex;
+
+      //   color: rgb(92, 140, 148);
+
+      //   font-size: 20px;
+      //   font-weight: 600;
+      // }
+
+      .wertyu {
         display: flex;
-
-        color: rgb(92, 140, 148);
-
-        font-size: 20px;
-        font-weight: 600;
-      }
-      h2 {
-        display: flex;
-
-        color: rgb(92, 140, 148);
-
-        font-size: 20px;
-        font-weight: 600;
+        text-align: center;
+        align-items: center;
+        height: 37px;
+        h2 {
+          margin-bottom: 0;
+        }
       }
     }
   }

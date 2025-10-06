@@ -15,39 +15,66 @@ const TemperatureRecharts = (props) => {
   const [measurements, setMeasurements] = React.useState([]);
   // const [result, setResult] = React.useState([]);
   const [newDate, setNewDate] = React.useState("");
+  const [displayData, setDisplayData] = React.useState([]);
   const [newMorning, setNewMorning] = React.useState("");
   const [newEvening, setNewEvening] = React.useState("");
   const [isListVisible, setIsListVisible] = React.useState(false);
   // const [result, setResult] = React.useState(props.arr);
-  const data = Array.from({ length: 14 }, (_, i) => ({
-    day: i + 1, // дни с 1 по 14
-  }));
-  console.log(data, "DAYSSSS");
 
-  const arrNew = props.arr;
-  console.log(arrNew, "NEWWWWW");
+  React.useEffect(() => {
+    const arrDays = Array.from({ length: 14 }, (_, i) => ({
+      day: i + 1,
+      morning: null,
+      evening: null,
+      formattedDate: `День ${i + 1}`,
+    }));
 
-  const arrDays = Array.from({ length: 14 }, (_, i) => ({
-    day: i + 1,
-    morning: null,
-    evening: null,
-    formattedDate: `День ${i + 1}`,
-  }));
+    props.arr.forEach((item, i) => {
+      if (i < 14) {
+        arrDays[i] = {
+          day: i + 1,
+          morning: parseFloat(item.moTemp) || null,
+          evening: parseFloat(item.evTemp) || null,
+          formattedDate: new Date(item.date).toLocaleDateString("ru-RU", {
+            day: "numeric",
+            month: "short",
+          }),
+        };
+      }
+    });
 
-  arrNew.forEach((item, i) => {
-    if (i < 14) {
-      arrDays[i] = {
-        day: i + 1,
-        morning: parseFloat(item.moTemp) || null,
-        evening: parseFloat(item.evTemp) || null,
-        formattedDate: new Date(item.date).toLocaleDateString("ru-RU", {
-          day: "numeric",
-          month: "short",
-        }),
-      };
-    }
-  });
-  const displayData = arrDays;
+    setDisplayData(arrDays); // Обновляем состояние
+  }, [props.arr]);
+
+  // const data = Array.from({ length: 14 }, (_, i) => ({
+  //   day: i + 1, // дни с 1 по 14
+  // }));
+  // console.log(data, "DAYSSSS");
+
+  // const arrNew = props.arr;
+  // console.log(arrNew, "NEWWWWW");
+
+  // const arrDays = Array.from({ length: 14 }, (_, i) => ({
+  //   day: i + 1,
+  //   morning: null,
+  //   evening: null,
+  //   formattedDate: `День ${i + 1}`,
+  // }));
+
+  // arrNew.forEach((item, i) => {
+  //   if (i < 14) {
+  //     arrDays[i] = {
+  //       day: i + 1,
+  //       morning: parseFloat(item.moTemp) || null,
+  //       evening: parseFloat(item.evTemp) || null,
+  //       formattedDate: new Date(item.date).toLocaleDateString("ru-RU", {
+  //         day: "numeric",
+  //         month: "short",
+  //       }),
+  //     };
+  //   }
+  // });
+  // const displayData = arrDays;
 
   console.log(displayData, "DISPLAY");
 
@@ -77,7 +104,7 @@ const TemperatureRecharts = (props) => {
             <strong> Вечер:</strong> {item.evTemp}°C
           </li>
         ))} */}
-        {arrNew
+        {props.arr
           .sort((a, b) => {
             // Преобразуем даты из формата "DD.MM.YYYY" в сравнимый вид
             const [dayA, monthA, yearA] = a.date.split(".").map(Number);
@@ -132,7 +159,7 @@ const TemperatureRecharts = (props) => {
               <YAxis
                 domain={[33, 42]}
                 stoke="black"
-                ticks={[34, 35, 36, 37, 38, 39, 40, 41, 42]}
+                ticks={[35, 36, 37, 38, 39, 40, 41]}
                 allowDataOverflow={true}
                 label={{
                   value: "Температура (°C)",

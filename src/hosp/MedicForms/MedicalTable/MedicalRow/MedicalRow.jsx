@@ -172,7 +172,7 @@ const MedicationRow = (props) => {
     const [year, month, day] = dateString.split("-");
     return `${day}.${month}.${year}`;
   };
-  const handleChange = (field, value, type) => {
+  const handleChange = (field, value) => {
     let newValue = value;
     console.log(newValue);
     console.log(field === "date");

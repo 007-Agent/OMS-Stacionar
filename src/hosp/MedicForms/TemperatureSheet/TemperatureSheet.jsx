@@ -73,7 +73,7 @@ export const TemperatureSheet = (props) => {
   const addRecord = () => {
     const newData = clone(records);
     console.log(newData);
-
+    let index = 0;
     console.log(newData, "EDEDE");
     const found = newData.find((v) => v.data?.list);
 
@@ -88,6 +88,7 @@ export const TemperatureSheet = (props) => {
           time: cutTime(current),
           text: "",
         }),
+        index: index++,
         date: strDate(current),
         time: cutTime(current),
       };
@@ -157,6 +158,7 @@ export const TemperatureSheet = (props) => {
 
   React.useEffect(() => {
     if (arrTemp) {
+      console.log(arrTemp, "GGNNNNNNOOOO");
       setArr(sortedArrTemp);
     }
   }, [records]);
@@ -181,9 +183,15 @@ export const TemperatureSheet = (props) => {
   // };
   const AddItemArrTemp = (event) => {
     console.log(event, "ИНТЕРЕСНО ОЧЕНЬ");
-    const resulobj = JSON.parse(event?.data?.list?.[0]?.name);
-    console.log(event.data.list, "УУУУУУУУДДДДД");
-    setArr((prev) => [...prev, resulobj]);
+    const index1 = event?.[1];
+    console.log(index1, "eeeevyfrfr");
+    const resulobj = JSON.parse(event[0].data?.list?.[0]?.name);
+    // console.log(event.data.list, "УУУУУУУУДДДДД");
+    setArr((prev) => {
+      const newArr = [...prev];
+      newArr[index1] = resulobj;
+      return newArr;
+    });
   };
 
   console.log(arr, "КОНЕЧНЫЙ");
@@ -250,6 +258,7 @@ export const TemperatureSheet = (props) => {
             massive.push(result);
             acc.push(
               <TempItem
+                index={index}
                 key={`${cur.key}-${index}`}
                 name={props.name}
                 project={props.project}
@@ -258,6 +267,8 @@ export const TemperatureSheet = (props) => {
                 textValue={v}
                 onDelete={DeleteTempItem}
                 onClick={AddItemArrTemp}
+                date={strDate}
+                time={cutTime}
               />
             );
           });
