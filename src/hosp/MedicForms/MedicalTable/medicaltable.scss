@@ -1,12 +1,16 @@
 .table {
-  width: 1700px;
+  width: 3000px; /* Увеличил ширину таблицы, чтобы вместить новые колонки */
   margin: 0 auto;
   border-collapse: collapse;
-  font-size: 20px;
+  font-size: 15px;
   color: green;
   border: 2px solid green;
-
   table-layout: fixed; /* фиксируем ширину колонок */
+
+  .th_date-begin {
+    width: 130px;
+    border: 1px solid black;
+  }
 }
 
 /* Заголовки */
@@ -16,6 +20,7 @@
   text-align: center;
   background-color: #f0f8f0;
 }
+
 .th_new {
   border: 1px solid green;
   padding: 8px;
@@ -23,7 +28,16 @@
   background-color: #f0f8f0;
   width: 700px;
 }
+
 .th_date {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+  width: 240px;
+}
+
+.th-new-date {
   border: 1px solid green;
   padding: 8px;
   text-align: center;
@@ -31,24 +45,30 @@
   width: 130px;
 }
 
-/* Ширина для основных заголовков */
+.th-new-text {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+  width: 250px;
+}
+
+.th-new-time {
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  background-color: #f0f8f0;
+  width: 100px; /* Для времени */
+}
+
 .th-medication {
-  width: 250px; /* Лекарственный препарат */
+  width: 250px;
 }
 
 .th-date {
-  width: 100px; /* Дата назначения и Дата отмены */
+  width: 50px;
 }
 
-.th-marks {
-  /* Группа отметок (14 дней) — ширина не фиксируем, она распределена по .thDay */
-}
-
-.th-reaction {
-  width: 300px; /* Сведения о реакции */
-}
-
-/* Заголовки дней */
 .thDay {
   border: 1px solid green;
   border-right: 1px solid green;
@@ -62,43 +82,80 @@
   }
 }
 
-/* Ячейки данных */
 .td {
   border: 1px solid green;
   padding: 8px;
   text-align: left;
 }
 
-/* Ячейки дней */
 .tdDay {
   border: 1px solid green;
   border-right: 1px solid green;
   padding: 4px;
   text-align: center;
   font-size: 16px;
-  width: 50px; /* Ширина совпадает с заголовком */
+  width: 50px;
 
   &:nth-last-child(1) {
     border-right: none;
   }
 }
 
-/* Центрированные ячейки */
 .tdCenter {
   padding: 8px;
   text-align: center;
   border: 1px solid green;
 }
 
-/* Дополнительные классы для ширины столбцов в теле таблицы */
 .td-medication {
   width: 250px;
 }
 
 .td-date {
-  width: 100px;
+  width: 50px;
 }
 
 .td-reaction {
   width: 300px;
+}
+
+.td-new-date {
+  width: 80px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+}
+.th-new-date-1 {
+  width: 135px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+}
+.th-new-date-3 {
+  width: 135px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+}
+.th-new-text-doc {
+  width: 200px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+}
+
+.td-new-text {
+  width: 250px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
+  display: flex;
+  justify-content: left;
+}
+
+.td-new-time {
+  width: 100px;
+  border: 1px solid green;
+  padding: 8px;
+  text-align: center;
 }

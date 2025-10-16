@@ -56,6 +56,12 @@
       color: #34495e;
       font-size: 1.1rem;
     }
+    .content_birth {
+      display: flex;
+      max-width: 318px;
+      justify-content: center;
+      gap: 0 20px;
+    }
   }
 
   .hospital-period {

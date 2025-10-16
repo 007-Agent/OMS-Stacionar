@@ -81,7 +81,7 @@ export const Epicrysis = (props) => {
   const [result, setResult] = useState([]);
   const [mainInspect, setmainInspect] = useState([]);
   // const digit = result[10]?.name?.text;
-
+  const [liitleOpen, setLittleOpen] = useState(false);
   const [diagnoses, setDiagnoses] = useState({
     mainDisease: { text: "", mkbCode: "" },
     complications: { text: "", mkbCode: "" },
@@ -89,6 +89,7 @@ export const Epicrysis = (props) => {
     concomitantDiseases: { text: "", mkbCode: "" },
   });
   // console.log(digit, "DIGIT22");
+
   // const getExtractedValues = (data) => {
   //   const extractedValues = [];
 
@@ -151,6 +152,10 @@ export const Epicrysis = (props) => {
 
   //   return extractedValues;
   // };
+  const handleClickInformation = () => {
+    setLittleOpen(!liitleOpen);
+  };
+
   const getExtractedValues = (data) => {
     const extractedValues = [];
 
@@ -299,8 +304,10 @@ export const Epicrysis = (props) => {
 
       {/* Диагнозы с type=4 */}
       <div className="medical-card__section">
+        <button className="patient-info-btn" onClick={handleClickInformation}>Анкета пациента</button>
+        {liitleOpen ? <LittlePage id={props.id} /> : ""}
         <h2 className="section-title">Диагнозы</h2>
-        <LittlePage />
+
         <div className="field-group">
           <label className="field-label">Диагноз. Основное заболевание:</label>
           <textarea
@@ -409,6 +416,7 @@ export const Epicrysis = (props) => {
               handleAdditionalChange("admissionState", e.target.value)
             }
             placeholder="Введите состояние..."
+            value={result[0]}
           />
         </div>
 

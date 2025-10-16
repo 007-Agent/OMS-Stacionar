@@ -84,6 +84,9 @@ export const DoctorExamination = (props) => {
       .post(`/rest/${props.project}/${props.name}/update`, {
         data: data2,
       })
+      // .post(`/rest/hosp/man`, {
+      //   hospId: id,
+      // })
       .then((response) => {
         console.log(response.data);
       });

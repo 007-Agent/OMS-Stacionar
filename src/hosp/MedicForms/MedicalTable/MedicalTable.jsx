@@ -136,17 +136,39 @@ export const MedicalTable = (props) => {
               Лекарственный препарат (наименование, лекарственная форма,
               дозировка, способ введения, лечебное питание)
             </th>
-            <th className="th_date" rowSpan="2">
+            <th className="th_date-begin" rowSpan="2">
               Дата назначения
             </th>
             <th className="th_date" rowSpan="2">
+              лечащий врач, сделавший назначение
+            </th>
+            <th className="th_date-begin" rowSpan="2">
               Дата отмены
+            </th>
+            <th className="th_date" rowSpan="2">
+              Врач, отменивший назначение
             </th>
             <th className="th_new" colSpan="14">
               Отметки об исполнении назначения лекарственного препарата
             </th>
             <th className="th" rowSpan="2">
               Сведения о реакции на применение
+            </th>
+            {/* Новые колонки */}
+            <th className="th-new-date-1" rowSpan="2">
+              Дата
+            </th>
+            <th className="th-new-time" rowSpan="2">
+              Время
+            </th>
+            <th className="th-new-text-doc" rowSpan="2">
+              Кто записал
+            </th>
+            <th className="th-new-date-3" rowSpan="2">
+              Дата исполнения
+            </th>
+            <th className="th-new-text-doc" rowSpan="2">
+              Мед работник, ответственный за исполнение
             </th>
           </tr>
           <tr>

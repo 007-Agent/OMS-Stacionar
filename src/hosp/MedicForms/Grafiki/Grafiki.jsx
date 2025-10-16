@@ -90,27 +90,11 @@ const TemperatureRecharts = (props) => {
           maxWidth: "700px",
         }}
       >
-        {/* {arrNew.map((item, index) => (
-          <li
-            key={index}
-            style={{
-              padding: "8px 16px",
-              borderBottom: "1px solid #eee",
-              backgroundColor: index % 2 === 0 ? "#f9f9f9" : "white",
-            }}
-          >
-            <strong>Дата:</strong> {item.date},<strong> Утро:</strong>{" "}
-            {item.moTemp}°C,
-            <strong> Вечер:</strong> {item.evTemp}°C
-          </li>
-        ))} */}
         {props.arr
           .sort((a, b) => {
-            // Преобразуем даты из формата "DD.MM.YYYY" в сравнимый вид
             const [dayA, monthA, yearA] = a.date.split(".").map(Number);
             const [dayB, monthB, yearB] = b.date.split(".").map(Number);
 
-            // Сравниваем годы -> месяцы -> дни
             return (
               new Date(yearA, monthA - 1, dayA) -
               new Date(yearB, monthB - 1, dayB)
@@ -157,7 +141,7 @@ const TemperatureRecharts = (props) => {
                 tick={{ fill: "#666" }}
               />
               <YAxis
-                domain={[33, 42]}
+                domain={[34, 42]}
                 stoke="black"
                 ticks={[35, 36, 37, 38, 39, 40, 41]}
                 allowDataOverflow={true}

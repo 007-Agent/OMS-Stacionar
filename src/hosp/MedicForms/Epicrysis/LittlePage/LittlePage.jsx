@@ -1,125 +1,98 @@
 import React, { useState } from "react";
 import "./littlepage.scss";
+import axios from "axios";
 
-const LittlePage = () => {
-  const [form, setForm] = useState({
-    organization: "",
-    ogrn: "",
-    department: "",
-    medicalCardNumber: "",
-    patientName: "",
-    birthDate: "",
-    gender: "",
-    registrationResidence: {
-      region: "",
-      district: "",
-      city: "",
-      locality: "",
-      street: "",
-      house: "",
-      building: "",
-      apartment: "",
-    },
-    registrationStay: {
-      region: "",
-      district: "",
-      city: "",
-      locality: "",
-      street: "",
-      house: "",
-      building: "",
-      apartment: "",
-    },
-    admissionType: "",
-    hospitalPeriodStartDate: "",
-    hospitalPeriodStartTimeHour: "",
-    hospitalPeriodStartTimeMinute: "",
-    hospitalPeriodEndDate: "",
-    hospitalPeriodEndTimeHour: "",
-    hospitalPeriodEndTimeMinute: "",
-    daysInHospital: "",
-    dischargeOutcome: "",
-    dischargeResult: "",
-    additionalInfo: "",
-  });
+const LittlePage = (props) => {
+  const [form, setForm] = useState();
+  const id = props.id;
+  console.log(id, "IDDDD");
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  console.log(data, "ЭПИКРИЗЗ");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Для вложенных объектов (регистрации)
-    if (name.startsWith("residence.")) {
-      const key = name.split(".")[1];
-      setForm((prev) => ({
-        ...prev,
-        registrationResidence: { ...prev.registrationResidence, [key]: value },
-      }));
-    } else if (name.startsWith("stay.")) {
-      const key = name.split(".")[1];
-      setForm((prev) => ({
-        ...prev,
-        registrationStay: { ...prev.registrationStay, [key]: value },
-      }));
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
+  React.useEffect(() => {
+    if (!id) {
+      setError("ID не передан");
+      setLoading(false);
+      return;
     }
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Отправка формы:", form);
-    // Здесь можно добавить отправку на сервер и валидацию
-  };
+    axios
+      .post("/rest/hosp/man", { hospId: id })
+      .then((response) => {
+        const result = response.data.data;
+        if (result) {
+          setData(result);
+        } else {
+          setError("Данные не найдены");
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [id]);
+  const object = data;
 
-  return (
-    <form className="medical-form" onSubmit={handleSubmit}>
+  // React.useEffect(() => {
+  //   if (data) {
+  //     const defaultForm = {
+  //       organization: "",
+
+  //       department: "",
+  //       medicalCardNumber: "",
+  //       patientName: "",
+  //       birthDate: "",
+  //       gender: "",
+
+  //       region: "",
+  //       district: "",
+  //       city: "",
+  //       locality: "",
+  //       street: "",
+  //       house: "",
+  //       building: "",
+  //       apartment: "",
+  //     };
+
+  //     setForm({
+  //       ...defaultForm,
+  //       ...data,
+  //     });
+  //   }
+  // }, [data]);
+  console.log(data, "ЭПИКРИЗЗ");
+  console.log(object, "ЭПИКРИЗЗ");
+
+  if (loading) {
+    return <p>Загрузка данных...</p>;
+  }
+
+  // 2. Если ошибка — показываем ошибку
+  return error ? (
+    <p>Ошибка: {error}</p>
+  ) : loading ? (
+    <p>Загрузка данных...</p>
+  ) : (
+    <form className="medical-form">
       <h2>Анкета медицинской организации</h2>
 
       <label>
         Наименование медицинской организации (ФИО ИП):
-        <input
-          type="text"
-          name="organization"
-          value={form.organization}
-          onChange={handleChange}
-          placeholder="Введите наименование"
-          required
-        />
-      </label>
-
-      <label>
-        ОГРН (ОГРНИП):
-        <input
-          type="text"
-          name="ogrn"
-          value={form.ogrn}
-          onChange={handleChange}
-          placeholder="Введите ОГРН"
-          required
-        />
+        <input type="text" name="organization" value={data.ankFio} />
       </label>
 
       <label>
         Наименование отделения (структурного подразделения):
-        <input
-          type="text"
-          name="department"
-          value={form.department}
-          onChange={handleChange}
-          placeholder="Введите отделение"
-          required
-        />
+        <input type="text" name="department" />
       </label>
 
       <label>
         Номер медицинской карты:
-        <input
-          type="text"
-          name="medicalCardNumber"
-          value={form.medicalCardNumber}
-          onChange={handleChange}
-          placeholder="Введите номер карты"
-          required
-        />
+        <input type="text" name="medicalCardNumber" />
       </label>
 
       <fieldset>
@@ -127,135 +100,97 @@ const LittlePage = () => {
 
         <label>
           Фамилия, имя, отчество (при наличии):
-          <input
-            type="text"
-            name="patientName"
-            value={form.patientName}
-            onChange={handleChange}
-            placeholder="ФИО пациента"
-            required
-          />
+          <input type="text" name="patientName" value={data.ankFio} />
         </label>
+        <div className="content__birth">
+          <label>
+            Дата рождения:
+            <input
+              type="text"
+              name="birthDate"
+              value={String(data.ankBday || "")}
+            />
+          </label>
 
-        <label>
-          Дата рождения:
-          <input
-            type="date"
-            name="birthDate"
-            value={form.birthDate}
-            onChange={handleChange}
-            required
-          />
-        </label>
-
-        <label>
-          Пол:
-          <select
-            name="gender"
-            value={form.gender}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Выберите пол</option>
-            <option value="male">Мужской</option>
-            <option value="female">Женский</option>
-            <option value="other">Другой</option>
-          </select>
-        </label>
+          <label>
+            Пол:
+            <input
+              type="text"
+              value={String(data.ankPolId === "2" ? "Женский" : "Мужской")}
+            />
+          </label>
+        </div>
       </fieldset>
 
       <fieldset>
         <legend>Регистрация по месту жительства</legend>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+          <label>
+            Субъект РФ:
+            <input
+              type="text"
+              name="residence.region"
+              placeholder="Регион"
+              value={data.ankRegion}
+            />
+          </label>
 
-        <label>
-          Субъект РФ:
-          <input
-            type="text"
-            name="residence.region"
-            value={form.registrationResidence.region}
-            onChange={handleChange}
-            placeholder="Регион"
-            required
-          />
-        </label>
+          <label>
+            Район:
+            <input
+              type="text"
+              name="residence.district"
+              placeholder="Район"
+              value={data.ankStreet}
+            />
+          </label>
 
-        <label>
-          Район:
-          <input
-            type="text"
-            name="residence.district"
-            value={form.registrationResidence.district}
-            onChange={handleChange}
-            placeholder="Район"
-          />
-        </label>
+          <label>
+            Город:
+            <input
+              type="text"
+              name="residence.city"
+              placeholder="Город"
+              value={data.ankRegion}
+            />
+          </label>
 
-        <label>
-          Город:
-          <input
-            type="text"
-            name="residence.city"
-            value={form.registrationResidence.city}
-            onChange={handleChange}
-            placeholder="Город"
-            required
-          />
-        </label>
+          <label>
+            Населенный пункт:
+            <input
+              type="text"
+              name="residence.locality"
+              placeholder="Населенный пункт"
+            />
+          </label>
+          <label>
+            Дом:
+            <input
+              type="text"
+              name="residence.house"
+              placeholder="Дом"
+              value={data.ankHouse}
+            />
+          </label>
 
-        <label>
-          Населенный пункт:
-          <input
-            type="text"
-            name="residence.locality"
-            value={form.registrationResidence.locality}
-            onChange={handleChange}
-            placeholder="Населенный пункт"
-          />
-        </label>
+          <label>
+            Квартира:
+            <input
+              type="text"
+              name="residence.apartment"
+              placeholder="Квартира"
+              value={data.ankFlat}
+            />
+          </label>
+        </div>
 
         <label>
           Улица:
           <input
             type="text"
             name="residence.street"
-            value={form.registrationResidence.street}
-            onChange={handleChange}
             placeholder="Улица"
-            required
-          />
-        </label>
-
-        <label>
-          Дом:
-          <input
-            type="text"
-            name="residence.house"
-            value={form.registrationResidence.house}
-            onChange={handleChange}
-            placeholder="Дом"
-            required
-          />
-        </label>
-
-        <label>
-          Строение/корпус:
-          <input
-            type="text"
-            name="residence.building"
-            value={form.registrationResidence.building}
-            onChange={handleChange}
-            placeholder="Строение/корпус"
-          />
-        </label>
-
-        <label>
-          Квартира:
-          <input
-            type="text"
-            name="residence.apartment"
-            value={form.registrationResidence.apartment}
-            onChange={handleChange}
-            placeholder="Квартира"
+            value={data.ankStreet}
           />
         </label>
       </fieldset>
@@ -263,91 +198,73 @@ const LittlePage = () => {
       <fieldset>
         <legend>Регистрация по месту пребывания</legend>
 
-        <label>
-          Субъект РФ:
-          <input
-            type="text"
-            name="stay.region"
-            value={form.registrationStay.region}
-            onChange={handleChange}
-            placeholder="Регион"
-          />
-        </label>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+          <label>
+            Субъект РФ:
+            <input
+              type="text"
+              name="residence.region"
+              placeholder="Регион"
+              value={data.ankRegion}
+            />
+          </label>
 
-        <label>
-          Район:
-          <input
-            type="text"
-            name="stay.district"
-            value={form.registrationStay.district}
-            onChange={handleChange}
-            placeholder="Район"
-          />
-        </label>
+          <label>
+            Район:
+            <input
+              type="text"
+              name="residence.district"
+              placeholder="Район"
+              value={data.ankStreet}
+            />
+          </label>
 
-        <label>
-          Город:
-          <input
-            type="text"
-            name="stay.city"
-            value={form.registrationStay.city}
-            onChange={handleChange}
-            placeholder="Город"
-          />
-        </label>
+          <label>
+            Город:
+            <input
+              type="text"
+              name="residence.city"
+              placeholder="Город"
+              value={data.ankRegion}
+            />
+          </label>
 
-        <label>
-          Населенный пункт:
-          <input
-            type="text"
-            name="stay.locality"
-            value={form.registrationStay.locality}
-            onChange={handleChange}
-            placeholder="Населенный пункт"
-          />
-        </label>
+          <label>
+            Населенный пункт:
+            <input
+              type="text"
+              name="residence.locality"
+              placeholder="Населенный пункт"
+            />
+          </label>
+          <label>
+            Дом:
+            <input
+              type="text"
+              name="residence.house"
+              placeholder="Дом"
+              value={data.ankHouse}
+            />
+          </label>
+
+          <label>
+            Квартира:
+            <input
+              type="text"
+              name="residence.apartment"
+              placeholder="Квартира"
+              value={data.ankFlat}
+            />
+          </label>
+        </div>
 
         <label>
           Улица:
           <input
             type="text"
-            name="stay.street"
-            value={form.registrationStay.street}
-            onChange={handleChange}
+            name="residence.street"
             placeholder="Улица"
-          />
-        </label>
-
-        <label>
-          Дом:
-          <input
-            type="text"
-            name="stay.house"
-            value={form.registrationStay.house}
-            onChange={handleChange}
-            placeholder="Дом"
-          />
-        </label>
-
-        <label>
-          Строение/корпус:
-          <input
-            type="text"
-            name="stay.building"
-            value={form.registrationStay.building}
-            onChange={handleChange}
-            placeholder="Строение/корпус"
-          />
-        </label>
-
-        <label>
-          Квартира:
-          <input
-            type="text"
-            name="stay.apartment"
-            value={form.registrationStay.apartment}
-            onChange={handleChange}
-            placeholder="Квартира"
+            required
           />
         </label>
       </fieldset>
@@ -357,12 +274,7 @@ const LittlePage = () => {
 
         <label>
           Поступил:
-          <select
-            name="admissionType"
-            value={form.admissionType}
-            onChange={handleChange}
-            required
-          >
+          <select name="admissionType" required>
             <option value="">Выберите</option>
             <option value="1">В стационар</option>
             <option value="2">В дневной стационар</option>
@@ -373,37 +285,16 @@ const LittlePage = () => {
           <div>
             <label>
               Период с (дата):
-              <input
-                type="date"
-                name="hospitalPeriodStartDate"
-                value={form.hospitalPeriodStartDate}
-                onChange={handleChange}
-                required
-              />
+              <input type="date" name="hospitalPeriodStartDate" required />
             </label>
 
             <label>
-              Время (час):
+              Время (час : мин):
               <input
                 type="number"
                 name="hospitalPeriodStartTimeHour"
-                value={form.hospitalPeriodStartTimeHour}
-                onChange={handleChange}
                 min="0"
                 max="23"
-                required
-              />
-            </label>
-
-            <label>
-              Время (мин):
-              <input
-                type="number"
-                name="hospitalPeriodStartTimeMinute"
-                value={form.hospitalPeriodStartTimeMinute}
-                onChange={handleChange}
-                min="0"
-                max="59"
                 required
               />
             </label>
@@ -412,37 +303,16 @@ const LittlePage = () => {
           <div>
             <label>
               По (дата):
-              <input
-                type="date"
-                name="hospitalPeriodEndDate"
-                value={form.hospitalPeriodEndDate}
-                onChange={handleChange}
-                required
-              />
+              <input type="date" name="hospitalPeriodEndDate" required />
             </label>
 
             <label>
-              Время (час):
+              Время (час : мин):
               <input
                 type="number"
                 name="hospitalPeriodEndTimeHour"
-                value={form.hospitalPeriodEndTimeHour}
-                onChange={handleChange}
                 min="0"
                 max="23"
-                required
-              />
-            </label>
-
-            <label>
-              Время (мин):
-              <input
-                type="number"
-                name="hospitalPeriodEndTimeMinute"
-                value={form.hospitalPeriodEndTimeMinute}
-                onChange={handleChange}
-                min="0"
-                max="59"
                 required
               />
             </label>
@@ -451,14 +321,7 @@ const LittlePage = () => {
 
         <label>
           Количество дней нахождения:
-          <input
-            type="number"
-            name="daysInHospital"
-            value={form.daysInHospital}
-            onChange={handleChange}
-            min="0"
-            required
-          />
+          <input type="number" name="daysInHospital" min="0" required />
         </label>
       </fieldset>
 
@@ -467,12 +330,7 @@ const LittlePage = () => {
 
         <label>
           Исход госпитализации:
-          <select
-            name="dischargeOutcome"
-            value={form.dischargeOutcome}
-            onChange={handleChange}
-            required
-          >
+          <select name="dischargeOutcome" required>
             <option value="">Выберите</option>
             <option value="1">Выписан</option>
             <option value="2">В дневной стационар</option>
@@ -482,12 +340,7 @@ const LittlePage = () => {
 
         <label>
           Результат госпитализации:
-          <select
-            name="dischargeResult"
-            value={form.dischargeResult}
-            onChange={handleChange}
-            required
-          >
+          <select name="dischargeResult" required>
             <option value="">Выберите</option>
             <option value="1">Выздоровление</option>
             <option value="2">Улучшение</option>
@@ -501,8 +354,6 @@ const LittlePage = () => {
         Дополнительные сведения о пациенте и госпитализации:
         <textarea
           name="additionalInfo"
-          value={form.additionalInfo}
-          onChange={handleChange}
           placeholder="Введите дополнительные сведения"
           rows="4"
         />
@@ -514,4 +365,3 @@ const LittlePage = () => {
 };
 
 export default LittlePage;
-

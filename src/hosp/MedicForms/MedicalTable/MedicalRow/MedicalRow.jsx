@@ -8,7 +8,7 @@ const MedicationRow = (props) => {
   console.log(info);
 
   console.log(initialData, "intiall");
-  // const [editableItem, setEditableItem] = useState({
+
   //   medication: initialData?.medication || "",
   //   date: initialData?.date || "",
   //   cancelDate: initialData?.cancelDate || "",
@@ -140,14 +140,14 @@ const MedicationRow = (props) => {
       // Инициализируем все day1-day14, если они отсутствуют в newInfo
       const defaultDays = {};
       for (let i = 1; i <= 14; i++) {
-        defaultDays[`day${i}`] = ""; // Пустая строка по умолчанию
+        defaultDays[`day${i}`] = "";
       }
 
       setEditableItem({
         medication: newInfo.medication || "",
         date: newInfo.date || "",
         cancelDate: newInfo.cancelDate || "",
-        ...defaultDays, // Распаковываем дефолтные дни
+        ...defaultDays,
         day1: newInfo.day1 || "",
         day2: newInfo.day2 || "",
         day3: newInfo.day3 || "",
@@ -224,32 +224,46 @@ const MedicationRow = (props) => {
 
   return (
     <>
-      <tr>
-        <td className="td">
-          <input
-            type="text"
+      <tr className="">
+        <td className="td-medication td-full-textarea">
+          <textarea
             value={editableItem.medication}
-            onChange={(e) => handleChange("medication", e.target.value)} // Обновляем medication при изменении
+            onChange={(e) => handleChange("medication", e.target.value)}
+            className="textarea_full_no_padding"
           />
         </td>
-        <td className="td">
+        <td className="td-date">
           <input
             type="date"
             value={isoDate1}
             onChange={(e) => handleChange("date", e.target.value)}
           />
         </td>
-        <td className="td">
+        <td className="td-docotr-end">
+          <input
+            type="text"
+            value={editableItem.doctor}
+            onChange={(e) => handleChange("doctor", e.target.value)}
+          />
+        </td>
+        <td className="td-date">
           <input
             type="date"
             value={isoDate2}
             onChange={(e) => handleChange("cancelDate", e.target.value)}
           />
         </td>
+        <td className="td-docotr-end">
+          <input
+            type="text"
+            value={editableItem.cancelDoctor}
+            onChange={(e) => handleChange("cancelDoctor", e.target.value)}
+          />
+        </td>
         {Array.from({ length: 14 }, (_, i) => {
-          const dayIndex = i + 1; // Индекс с 1
+          const dayIndex = i + 1;
           return (
-            <td key={dayIndex} className="td">
+            <td key={dayIndex} className="tdDay">
               <input
                 name={`day-${dayIndex}`}
                 type="checkbox"
@@ -262,13 +276,46 @@ const MedicationRow = (props) => {
             </td>
           );
         })}
-        <td className="td">
+        <td className="td-reaction">
           <textarea
             value={editableItem.text}
             onChange={(e) => handleChange("text", e.target.value)}
             rows={2}
             cols={20}
             className="textarea_full"
+          />
+        </td>
+        <td className="td-new-date">
+          <input
+            type="date"
+            onChange={(e) => handleChange("reactionDate", e.target.value)}
+          />
+        </td>
+        <td className="td-new-time">
+          <input
+            type="time"
+            value={editableItem.time}
+            onChange={(e) => handleChange("time", e.target.value)}
+          />
+        </td>
+        <td className="td-new-text">
+          <input
+            type="text"
+            value={editableItem.whoRecorded}
+            onChange={(e) => handleChange("whoRecorded", e.target.value)}
+          />
+        </td>
+        <td className="td-new-date">
+          <input
+            type="date"
+            onChange={(e) => handleChange("executionDate", e.target.value)}
+          />
+        </td>
+        <td className="td-new-text">
+          <input
+            type="text"
+            value={editableItem.medicalWorker}
+            onChange={(e) => handleChange("medicalWorker", e.target.value)}
           />
         </td>
       </tr>
