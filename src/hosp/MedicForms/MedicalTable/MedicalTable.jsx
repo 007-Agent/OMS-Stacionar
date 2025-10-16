@@ -88,18 +88,7 @@ export const MedicalTable = (props) => {
     console.log(result, "SDSDSD");
     console.log(newRecords, "NWNWNWNW");
   };
-  const handleClickAxios = async () => {
-    try {
-      const response = await axios.post(
-        `/rest/${props.project}/${props.name}/update`,
-        newRecords
-      );
-      console.log("Данные отправлены успешно:", response.data);
-    } catch (error) {
-      console.error("Ошибка при отправке:", error);
-      alert("Ошибка отправки данных. Проверьте консоль."); // Уведомление об ошибке
-    }
-  };
+  
 
   const arrTemp = records
     ? records.reduce((acc, cur) => {
@@ -132,7 +121,7 @@ export const MedicalTable = (props) => {
       <table className="table">
         <thead>
           <tr>
-            <th className="th" rowSpan="2">
+            <th className="th-main__text" rowSpan="2" >
               Лекарственный препарат (наименование, лекарственная форма,
               дозировка, способ введения, лечебное питание)
             </th>
@@ -154,22 +143,7 @@ export const MedicalTable = (props) => {
             <th className="th" rowSpan="2">
               Сведения о реакции на применение
             </th>
-            {/* Новые колонки */}
-            <th className="th-new-date-1" rowSpan="2">
-              Дата
-            </th>
-            <th className="th-new-time" rowSpan="2">
-              Время
-            </th>
-            <th className="th-new-text-doc" rowSpan="2">
-              Кто записал
-            </th>
-            <th className="th-new-date-3" rowSpan="2">
-              Дата исполнения
-            </th>
-            <th className="th-new-text-doc" rowSpan="2">
-              Мед работник, ответственный за исполнение
-            </th>
+            
           </tr>
           <tr>
             {Array.from({ length: 14 }, (_, i) => (
@@ -184,9 +158,7 @@ export const MedicalTable = (props) => {
           {arrTemp}
         </tbody>
       </table>
-      <button onClick={handleClickAxios} className="sendButton">
-        Отправить данные
-      </button>
+     
     </div>
   );
 };

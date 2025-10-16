@@ -1,0 +1,88 @@
+// operation.scss
+
+.operation-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); // Полупрозрачный чёрный overlay
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; // Высокий z-index для наложения поверх всего
+  animation: fadeIn 0.3s ease-out; // Анимация появления
+
+  .operation-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    animation: scaleIn 0.3s ease-out; // Анимация масштабирования
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 15px;
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+          box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+      }
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:first-child {
+          background-color: #6c757d;
+          color: white;
+        }
+
+        &.medical__save {
+          background-color: #28a745;
+          color: white;
+        }
+
+        &:hover {
+          &:first-child {
+            background-color: #5a6268;
+          }
+
+          &.medical__save {
+            background-color: #218838;
+          }
+        }
+      }
+    }
+  }
+}

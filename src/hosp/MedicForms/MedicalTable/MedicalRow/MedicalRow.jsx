@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./medicaleow.scss";
+import OperationModal from "../operationList/OperationModal";
 import { ImCross } from "react-icons/im";
 
 const MedicationRow = (props) => {
   const [initialData, setinitialData] = useState(props.value);
   const info = JSON.parse(props.value?.data?.list?.[0]?.name);
   console.log(info);
-
+  const [openOperation, setOpenOperation] = useState(false);
+  const [indexDay, setIndexDay] = useState();
   console.log(initialData, "intiall");
 
   //   medication: initialData?.medication || "",
@@ -104,24 +106,25 @@ const MedicationRow = (props) => {
   //   handleChange("marks", newMarks);
   // };
   const [editableItem, setEditableItem] = useState({
-    medication: initialData?.medication || "",
+    namepur: initialData?.medication || "",
     date: initialData?.date || "",
-    cancelDate: initialData?.cancelDate || "",
-    day1: initialData?.day1 || "",
-    day2: initialData?.day2 || "",
-    day3: initialData?.day3 || "",
-    day4: initialData?.day4 || "",
-    day5: initialData?.day5 || "",
-    day6: initialData?.day6 || "",
-    day7: initialData?.day7 || "",
-    day8: initialData?.day8 || "",
-    day9: initialData?.day9 || "",
-    day10: initialData?.day10 || "",
-    day11: initialData?.day11 || "",
-    day12: initialData?.day12 || "",
-    day13: initialData?.day13 || "",
-    day14: initialData?.day14 || "",
-    text: initialData?.text || "",
+    doctorpur: initialData?.doctorpur || "",
+    datapur: initialData?.cancelDate || "",
+    // day1: initialData?.day1 || "",
+    // day2: initialData?.day2 || "",
+    // day3: initialData?.day3 || "",
+    // day4: initialData?.day4 || "",
+    // day5: initialData?.day5 || "",
+    // day6: initialData?.day6 || "",
+    // day7: initialData?.day7 || "",
+    // day8: initialData?.day8 || "",
+    // day9: initialData?.day9 || "",
+    // day10: initialData?.day10 || "",
+    // day11: initialData?.day11 || "",
+    // day12: initialData?.day12 || "",
+    // day13: initialData?.day13 || "",
+    // day14: initialData?.day14 || "",
+    reaction: initialData?.reaction || "",
   });
   const convertToISOFormat = (dateStr) => {
     if (!dateStr) return "";
@@ -131,38 +134,19 @@ const MedicationRow = (props) => {
   const isoDate1 = convertToISOFormat(editableItem.date);
   const isoDate2 = convertToISOFormat(editableItem.cancelDate);
 
-  // Обновлено: парсим JSON и устанавливаем плоские поля
   useEffect(() => {
     if (props.value) {
       setinitialData(props.value);
       const newInfo = JSON.parse(props.value?.data?.list?.[0]?.name || "{}");
-
-      // Инициализируем все day1-day14, если они отсутствуют в newInfo
-      const defaultDays = {};
-      for (let i = 1; i <= 14; i++) {
-        defaultDays[`day${i}`] = "";
-      }
+      console.log(newInfo, "newINFO");
 
       setEditableItem({
-        medication: newInfo.medication || "",
+        namepur: newInfo.namepur || "",
         date: newInfo.date || "",
-        cancelDate: newInfo.cancelDate || "",
-        ...defaultDays,
-        day1: newInfo.day1 || "",
-        day2: newInfo.day2 || "",
-        day3: newInfo.day3 || "",
-        day4: newInfo.day4 || "",
-        day5: newInfo.day5 || "",
-        day6: newInfo.day6 || "",
-        day7: newInfo.day7 || "",
-        day8: newInfo.day8 || "",
-        day9: newInfo.day9 || "",
-        day10: newInfo.day10 || "",
-        day11: newInfo.day11 || "",
-        day12: newInfo.day12 || "",
-        day13: newInfo.day13 || "",
-        day14: newInfo.day14 || "",
-        text: newInfo.text || "",
+        doctorpur: newInfo.doctorpur || "",
+        datapur: newInfo.datapur || "",
+
+        reaction: newInfo.reaction || "",
       });
     }
   }, [props.value]);
@@ -213,21 +197,19 @@ const MedicationRow = (props) => {
     }
   };
 
-  const handleMarkChange = (dayIndex, value) => {
-    const field = `day${dayIndex}`;
-    const updatedItem = { ...editableItem, [field]: value };
-    setEditableItem(updatedItem);
-    console.log(updatedItem, "updatedItem");
-
-    handleChange(field, value);
+  const handleMarkChange = (dayIndex) => {
+    setIndexDay(dayIndex);
   };
-
+  const HandleOnclose = () => {
+    setOpenOperation(false);
+  };
+  console.log(editableItem);
   return (
     <>
       <tr className="">
         <td className="td-medication td-full-textarea">
           <textarea
-            value={editableItem.medication}
+            value={editableItem.namepur}
             onChange={(e) => handleChange("medication", e.target.value)}
             className="textarea_full_no_padding"
           />
@@ -242,7 +224,7 @@ const MedicationRow = (props) => {
         <td className="td-docotr-end">
           <input
             type="text"
-            value={editableItem.doctor}
+            value={editableItem.doctorpur}
             onChange={(e) => handleChange("doctor", e.target.value)}
           />
         </td>
@@ -256,7 +238,7 @@ const MedicationRow = (props) => {
         <td className="td-docotr-end">
           <input
             type="text"
-            value={editableItem.cancelDoctor}
+            value={editableItem.datapur}
             onChange={(e) => handleChange("cancelDoctor", e.target.value)}
           />
         </td>
@@ -269,56 +251,25 @@ const MedicationRow = (props) => {
                 type="checkbox"
                 className="td__checkbox"
                 checked={editableItem["day" + dayIndex] === "✓"}
-                onChange={(e) =>
-                  handleMarkChange(dayIndex, e.target.checked ? "✓" : "")
-                }
+                onChange={(e) => handleMarkChange(dayIndex)}
+                onClick={(e) => setOpenOperation(!openOperation)}
               />
             </td>
           );
         })}
         <td className="td-reaction">
           <textarea
-            value={editableItem.text}
+            value={editableItem.reaction}
             onChange={(e) => handleChange("text", e.target.value)}
             rows={2}
             cols={20}
             className="textarea_full"
           />
         </td>
-        <td className="td-new-date">
-          <input
-            type="date"
-            onChange={(e) => handleChange("reactionDate", e.target.value)}
-          />
-        </td>
-        <td className="td-new-time">
-          <input
-            type="time"
-            value={editableItem.time}
-            onChange={(e) => handleChange("time", e.target.value)}
-          />
-        </td>
-        <td className="td-new-text">
-          <input
-            type="text"
-            value={editableItem.whoRecorded}
-            onChange={(e) => handleChange("whoRecorded", e.target.value)}
-          />
-        </td>
-        <td className="td-new-date">
-          <input
-            type="date"
-            onChange={(e) => handleChange("executionDate", e.target.value)}
-          />
-        </td>
-        <td className="td-new-text">
-          <input
-            type="text"
-            value={editableItem.medicalWorker}
-            onChange={(e) => handleChange("medicalWorker", e.target.value)}
-          />
-        </td>
       </tr>
+      {openOperation && (
+        <OperationModal onClose={HandleOnclose} index={indexDay} />
+      )}
     </>
   );
 };
