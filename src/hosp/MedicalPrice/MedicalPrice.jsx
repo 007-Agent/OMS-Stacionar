@@ -27,19 +27,38 @@ function MedicalPrice(props) {
   const [selectedComponent, setSelectedComponent] = useState();
   const cont = <div>Выберите тип медицинской формы</div>;
   const [info, setInfo] = useState({});
+  const [patient, setPatient] = useState();
   const { id } = useParams();
 
   // Функция для обновления данных
+  // const refresh = async () => {
+  //   const query = { hospId: id };
+  //   console.log(query, "QUERYYYYY");
+  //   setIsLoading(false);
+  //   try {
+  //     const response = await axios.post("/rest/hosp/full", query);
+  //     setInfo(response.data.data);
+  //     setIsLoading(true); // Предполагаем, что данные находятся в response.data
+  //   } catch (err) {
+  //     console.error("Ошибка при выполнении запроса:", err);
+  //   }
+
+  // };
   const refresh = async () => {
     const query = { hospId: id };
     console.log(query, "QUERYYYYY");
     setIsLoading(false);
     try {
-      const response = await axios.post("/rest/hosp/full", query);
-      setInfo(response.data.data);
-      setIsLoading(true); // Предполагаем, что данные находятся в response.data
+      const [response1, response2] = await Promise.all([
+        axios.post("/rest/hosp/full", query),
+        axios.post("/rest/hosp/patientfull", query),
+      ]);
+      setPatient(response2.data.data);
+      setInfo(response1.data.data);
+      setIsLoading(true);
     } catch (err) {
       console.error("Ошибка при выполнении запроса:", err);
+      setIsLoading(false);
     }
   };
   const handleMenuShow = (event) => {
@@ -123,6 +142,7 @@ function MedicalPrice(props) {
   }, [id]); // Зависимость от id, чтобы выполнять запрос при его изменении
   console.log(info.records, "fjfweiofhweiohfwefhwe");
   console.log(info, "ddddddddddd");
+  console.log(patient, "ddddddddddd");
 
   return (
     <>
@@ -152,7 +172,7 @@ function MedicalPrice(props) {
             </div>
           )}
         </div>
-        <div>{isLoading && <Info info={info} />}</div>
+        <div>{isLoading && <Info info={info} id={id} info2 = {patient}/>}</div>
 
         {isLoading && selectedComponent}
       </div>

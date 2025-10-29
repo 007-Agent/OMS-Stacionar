@@ -3,8 +3,32 @@
   flex-direction: column;
   align-items: center;
   max-width: 900px;
-        margin: 0 auto;
-        margin-bottom: 20px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-family: Arial;
+  .style_info {
+    margin: 8px 0px 0px;
+    width: 100%;
+    text-align: right;
+    color: rgb(0, 0, 0);
+    font-family: Arial;
+    font-size: 24px;
+    label {
+      color: rgb(108, 167, 176);
+    }
+  }
+  .info__blog {
+    display: flex;
+    justify-content: start;
+    margin: 8px 0px 0px;
+    width: 100%;
+    text-align: right;
+    color: rgb(0, 0, 0);
+    font-family: Arial;
+    font-size: 24px;
+    gap: 0 5px;
+  }
   .info__row {
     display: flex;
     justify-content: space-between;
@@ -49,7 +73,7 @@
 @media (max-width: 960px) {
   .info__content {
     max-width: 800px;
-        margin: 0 auto;
-        margin-bottom: 20px;
+    margin: 0 auto;
+    margin-bottom: 20px;
   }
 }
