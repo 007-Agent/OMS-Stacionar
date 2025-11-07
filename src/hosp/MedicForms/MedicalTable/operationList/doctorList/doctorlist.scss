@@ -1,72 +1,31 @@
-.doctor-list {
-  position: fixed;
-  top: 200px;
-  left: 394px;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(255, 255, 255, 1);
-  display: flex;
-  flex-direction: column;
-  z-index: 9999;
-  animation: fadeIn 0.3s ease-out;
-  width: 500px;
+.doctor-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   height: 500px;
-
-  .doctor-search-input {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-bottom: 1px solid #eee;
-    box-sizing: border-box;
-    font-size: 17px;
-    font-weight: 500;
-
-    &:focus {
-      outline: none;
-      border-bottom-color: #007bff;
-    }
-  }
-
-  .doctor-list-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    height: 500px;
-    overflow-y: auto;
-  }
+  overflow-y: auto;
 
   .doctor-list-item {
     padding: 10px;
     cursor: pointer;
-    border-bottom: 1px solid #f0f0f0;
+    font-size: 20px;
+    color: black;
+    font-family: Arial;
 
     &:hover {
-      background: #f8f9fa;
+      background: #8597a8;
     }
 
-    &:last-child {
-      border-bottom: none;
+    // Добавьте это для выделения выбранного доктора (из Redux)
+    &.selected {
+      background-color: #cce5ff; // Светло-синий фон, например
+      color: #0056b3; // Темно-синий текст
+      font-weight: bold; // Жирный шрифт для акцента
+      border-left: 4px solid #007bff;
     }
-  }
 
-  .no-results {
-    padding: 10px;
-    color: #999;
-    text-align: center;
-    font-style: italic;
-  }
-
-  .close-doctor-list {
-    width: 100%;
-    padding: 10px;
-    background: #f0f0f0;
-    border: none;
-    border-top: 1px solid #eee;
-    cursor: pointer;
-    font-size: 14px;
-
-    &:hover {
-      background: #e9ecef;
+    &:focus {
+      outline: none;
     }
   }
 }

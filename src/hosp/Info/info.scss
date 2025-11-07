@@ -8,6 +8,9 @@
   font-size: 24px;
   font-family: Arial;
   .style_info {
+    display: flex;
+    flex-direction: column;
+    gap: 7px 0;
     margin: 8px 0px 0px;
     width: 100%;
     text-align: right;
@@ -17,6 +20,11 @@
     label {
       color: rgb(108, 167, 176);
     }
+  }
+  .info__blog-second {
+    display: flex;
+    align-items: center;
+    gap: 0 15px;
   }
   .info__blog {
     display: flex;

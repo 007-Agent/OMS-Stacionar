@@ -53,7 +53,7 @@ export const Info = (props) => {
           <p></p>
         </div>
 
-        <div className="info__blog">
+        <div className="info__blog-second">
           <label>Дата С: </label>
           <p>{info2.dateb}</p>
           <label>Дата По</label>

@@ -12,7 +12,31 @@
     border: 1px solid black;
   }
 }
+.addButton {
+  background-color: rgb(108, 167, 176);
 
+  color: #ffffff;
+  padding: 7px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+
+  &:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+  }
+}
 /* Заголовки */
 .th {
   border: 1px solid green;
