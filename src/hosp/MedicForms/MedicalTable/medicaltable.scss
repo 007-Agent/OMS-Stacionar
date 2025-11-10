@@ -1,14 +1,15 @@
 .table {
-  width: 2000px; /* Увеличил ширину таблицы, чтобы вместить новые колонки */
+  width: 1980px; /* Увеличил ширину таблицы, чтобы вместить новые колонки */
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 15px;
   color: green;
   border: 2px solid green;
   table-layout: fixed; /* фиксируем ширину колонок */
+  min-height: 150px;
 
   .th_date-begin {
-    width: 95px;
+    width: 89px;
     border: 1px solid black;
   }
 }
@@ -50,7 +51,7 @@
   padding: 8px;
   text-align: center;
   background-color: #f0f8f0;
-  width: 300px;
+  width: 220px;
 }
 
 .th_new {
@@ -58,7 +59,7 @@
   padding: 8px;
   text-align: center;
   background-color: #f0f8f0;
-  width: 520px;
+  width: 490px;
 }
 
 .th_date {
@@ -66,7 +67,7 @@
   padding: 8px;
   text-align: center;
   background-color: #f0f8f0;
-  width: 240px;
+  width: 200px;
 }
 
 .th-new-date {

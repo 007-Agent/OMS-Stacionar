@@ -12,16 +12,41 @@ export default function OperationModal(props) {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const index = props.index;
-
+  console.log(initialData == undefined);
+  // const isoDate2 = convertToISOFormat(initialData[2]);
   const searchText = useSelector((state) => state.text.doctorInfo);
   const [spisok, setSpisok] = useState("*");
   const [modalData, setData] = useState({}); // Будем использовать для всех данных инпутов
 
   console.log(initialData, "TRTRTR");
   console.log(props.value == undefined);
+  const convertToISOFormat = (dateStr) => {
+    if (!dateStr || typeof dateStr !== "string" || !dateStr.includes("."))
+      return "";
+    const parts = dateStr.split(".");
+    if (parts.length !== 3) return "";
+    const [day, month, year] = parts;
+    // Дополнительно: проверьте, что day, month, year — числа
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return "";
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  };
+
+  const formatDateToDDMMYYYY = (dateString) => {
+    if (!dateString || !dateString.includes("-")) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}.${month}.${year}`;
+  };
+  // const isoDate1 = convertToISOFormat(initialData[`markdate${index}`]) || "";
+  const isoDate1 = initialData
+    ? convertToISOFormat(initialData[`markdate${index}`])
+    : "";
 
   useEffect(() => {
-    if (props.value == undefined) {
+    if (
+      !initialData ||
+      Object.keys(initialData).length === 0 ||
+      initialData == undefined
+    ) {
       // Инициализация modalData с пустыми значениями
       const baseKeys = [
         `markdate${index}`,
@@ -34,18 +59,11 @@ export default function OperationModal(props) {
       });
       setData(newData);
     } else {
-      // Если props.value есть, копируем его в modalData для редактирования
       setData({ ...props.value });
     }
-  }, [index]); // Добавил зависимости для корректности
+  }, [index]);
 
   console.log(modalData, "MLDT");
-
-  const handleSave = () => {
-    // Передаём modalData (обновлённые данные) в onSave
-    // Если нужно, можно передать объект { ...modalData } или адаптировать под props.onSave
-    props.onSave(modalData); // Изменено: передаём modalData вместо неопределённых переменных
-  };
 
   const handleDoctorList = async () => {
     try {
@@ -63,7 +81,7 @@ export default function OperationModal(props) {
     setDoctor(doctorItem);
 
     setData({ ...modalData, [`markdoctor${index}`]: doctorItem });
-
+    setInitialData({ ...initialData, [`markdoctor${index}`]: doctorItem });
     setLoading(false);
   };
 
@@ -73,21 +91,41 @@ export default function OperationModal(props) {
 
   // Обработчик для даты
   const handleDateChange = (e) => {
-    setData({ ...modalData, [`markdate${index}`]: e.target.value });
+    const dateValue = e.target.value;
+    const formattedDate = formatDateToDDMMYYYY(dateValue);
+    setData({ ...modalData, [`markdate${index}`]: formattedDate });
   };
 
   // Обработчик для времени
   const handleTimeChange = (e) => {
-    setData({ ...modalData, [`marktime${index}`]: e.target.value });
+    let timeValue = e.target.value; // Например, "14:52"
+
+    // Если время без секунд (длина 5: HH:MM), добавляем :00
+    if (timeValue.length === 5 && timeValue.includes(":")) {
+      timeValue += ":00";
+    }
+
+    // Обновляем modalData с полным форматом
+    setData({ ...modalData, [`marktime${index}`]: timeValue });
   };
 
   React.useEffect(() => {}, [spisok]);
   React.useEffect(() => {
     setSpisok(searchText);
   }, [searchText]);
+  useEffect(() => {
+    setInitialData(modalData);
+  }, [modalData]);
 
+  const handleSave = () => {
+    setInitialData(modalData);
+    if (props.onChange) {
+      props.onChange(initialData);
+      console.log(initialData, "OKKKKEEEY")
+    }
+  };
   console.log(loading, "ladng");
-
+  console.log(isoDate1, "ISODATE!!!");
   return (
     <>
       <tr className="operation-modal-row">
@@ -100,7 +138,7 @@ export default function OperationModal(props) {
                 <div style={{ display: "flex", position: "relative" }}>
                   <input
                     type="text"
-                    value={modalData[`markdoctor${index}`] || ""} // Выводим значение из modalData
+                    value={modalData[`markdoctor${index}`] || "frf"}
                   />
                   <LuFileSearch
                     className="icon_list"
@@ -120,7 +158,8 @@ export default function OperationModal(props) {
                 Дата:
                 <input
                   type="date"
-                  value={modalData[`markdate${index}`] || ""} // Выводим значение из modalData
+                  // value={initialData[`markdate${index}`] || ""} // Выводим значение из modalData
+                  value={isoDate1 || "rfrfr"}
                   onChange={handleDateChange} // Обновляем modalData при изменении
                 />
               </label>
@@ -128,7 +167,7 @@ export default function OperationModal(props) {
                 Время:
                 <input
                   type="time"
-                  value={modalData[`marktime${index}`] || ""} // Выводим значение из modalData
+                  value={modalData[`marktime${index}`] || "rfrfr"} // Выводим значение из modalData
                   onChange={handleTimeChange} // Обновляем modalData при изменении
                 />
               </label>

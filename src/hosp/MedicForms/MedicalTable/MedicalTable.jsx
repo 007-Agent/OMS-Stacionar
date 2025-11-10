@@ -88,14 +88,15 @@ export const MedicalTable = (props) => {
     console.log(result, "SDSDSD");
     console.log(newRecords, "NWNWNWNW");
   };
-  
 
   const arrTemp = records
     ? records.reduce((acc, cur) => {
         if (cur.data && cur.data.list) {
           cur.data.list.forEach((v) => {
             const value = clone(cur);
+
             value.data.list = [v];
+            console.log(v, "VALININ");
             const result = JSON.parse(value?.data?.list?.[0]?.name);
             acc.push(
               <MedicationRow
@@ -121,7 +122,7 @@ export const MedicalTable = (props) => {
       <table className="table">
         <thead>
           <tr>
-            <th className="th-main__text" rowSpan="2" >
+            <th className="th-main__text" rowSpan="2">
               Лекарственный препарат (наименование, лекарственная форма,
               дозировка, способ введения, лечебное питание)
             </th>
@@ -143,12 +144,11 @@ export const MedicalTable = (props) => {
             <th className="th" rowSpan="2">
               Сведения о реакции на применение
             </th>
-            
           </tr>
           <tr>
             {Array.from({ length: 14 }, (_, i) => (
               <th key={i} className="thDay">
-                День {i + 1}
+                {i + 1}
               </th>
             ))}
           </tr>
@@ -158,7 +158,6 @@ export const MedicalTable = (props) => {
           {arrTemp}
         </tbody>
       </table>
-     
     </div>
   );
 };

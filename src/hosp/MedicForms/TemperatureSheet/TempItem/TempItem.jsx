@@ -85,7 +85,7 @@ export const TempItem = (props) => {
 
   function handleChange(event) {
     setIsTextModified(true);
-
+    
     const updatedValue = JSON.parse(JSON.stringify(result));
     console.log(updatedValue, "updatedValue");
 
