@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./medicaleow.scss";
 import OperationModal from "../operationList/OperationModal";
 import { ImCross } from "react-icons/im";
@@ -34,9 +34,25 @@ const MedicationRow = (props) => {
 
     save();
   };
-  console.log(initialData, "fuifuif")
+  const namepurRef = useRef(null);
+  const reactionRef = useRef(null);
+
+  // Функция для авто-расширения textarea
+  const adjustTextareaHeight = (textarea) => {
+    if (textarea) {
+      textarea.style.height = "auto"; // Сбрасываем высоту
+      textarea.style.height = textarea.scrollHeight + "px"; // Устанавливаем на основе содержимого
+    }
+  };
+
+  // useEffect для инициализации высоты при изменении initialData (если данные загружаются извне)
+  useEffect(() => {
+    adjustTextareaHeight(namepurRef.current);
+    adjustTextareaHeight(reactionRef.current);
+  }, [initialData.namepur, initialData.reaction]);
+  console.log(initialData, "fuifuif");
   const save = () => {
-    console.log(initialData, "WWWWWWW")
+    console.log(initialData, "WWWWWWW");
     const updatedValue = JSON.stringify(initialData);
     console.log(updatedValue, "UPDTV");
     // Обновляем result перед отправкой (если нужно)
@@ -44,7 +60,6 @@ const MedicationRow = (props) => {
     updatedResult.data.list[0].name = updatedValue;
     setResult(updatedResult); // Обновляем состояние result
 
-    
     console.log(updatedResult, "RSLLY");
 
     axios
@@ -189,7 +204,10 @@ const MedicationRow = (props) => {
         <td className="td-medication td-full-textarea">
           <textarea
             value={initialData.namepur || ""}
-            onChange={(e) => handleChange("namepur", e.target.value)}
+            onChange={(e) => {
+              handleChange("namepur", e.target.value);
+              adjustTextareaHeight(e.target); // Авто-расширение при вводе
+            }}
             className="textarea_full_no_padding"
           />
         </td>

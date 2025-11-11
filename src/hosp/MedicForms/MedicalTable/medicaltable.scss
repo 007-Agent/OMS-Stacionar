@@ -1,5 +1,5 @@
 .table {
-  width: 1980px; /* Увеличил ширину таблицы, чтобы вместить новые колонки */
+  width: 1850px; /* Увеличил ширину таблицы, чтобы вместить новые колонки */
   margin: 0 auto;
   border-collapse: collapse;
   font-size: 15px;
@@ -44,7 +44,7 @@
   padding: 8px;
   text-align: center;
   background-color: #f0f8f0;
-  width: 250px;
+  width: 110px;
 }
 .th-main__text {
   border: 1px solid black;
@@ -119,6 +119,7 @@
   border: 1px solid green;
   padding: 8px;
   text-align: left;
+  min-height: 40px;
 }
 
 .tdDay {
